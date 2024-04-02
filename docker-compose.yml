@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Mdpsecurise12."
+      QL_PID: "Developer"  # Changez si nécessaire pour votre édition de SQL Server.
+    ports:
+      - "1433:1433"  # Port par défaut de SQL Server
+    networks:
+      - app-network
+
+  app-service:
+    build: ./src
+    container_name: app-service
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+volumes:
+  mongodb-data:
+    driver: local
+  sqlserver-data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

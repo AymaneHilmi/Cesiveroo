@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prettify": "prettier -l --write \"**/*.js\"",
-    "test": "jest",
-    "dev": "nodemon --inspect=0.0.0.0:9229 -L src/index.js"
+    "prettify": "../node_modules/.bin/prettier -l --write \\\"**/*.js\\\"",
+    "test": "../node_modules/.bin/jest",
+    "dev": "../node_modules/.bin/nodemon --inspect=0.0.0.0:9229 -L src/index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
