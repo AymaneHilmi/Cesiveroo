@@ -1,6 +1,6 @@
 # Cesiveroo une application qui va révolutionner la livraison de nouriture
 
-## Our Backend : SQL Server and MongoDB
+## Notre Backend : SQL Server et MongoDB
 Démarer le Backend: `docker compose up`
 
 ### MongoDB
