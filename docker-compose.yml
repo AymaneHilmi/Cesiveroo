@@ -18,8 +18,18 @@ services:
       QL_PID: "Developer"  # Changez si nécessaire pour votre édition de SQL Server.
     ports:
       - "1433:1433"  # Port par défaut de SQL Server
+    volumes:
+      - sqlserver-data:/var/opt/sql-server
+      - ./data/sql-server/init:/var/opt/sql-server/scripts
     networks:
       - app-network
+    command:
+      - /bin/bash
+      - -c
+      - |
+        /opt/mssql/bin/sqlservr & sleep 10;
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Mdpsecurise12." -d master -i /var/opt/sql-server/scripts/init-sql-server.sql
+        wait
 
   app-service:
     build: ./src
