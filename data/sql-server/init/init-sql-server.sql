@@ -17,7 +17,8 @@ GO
 IF OBJECT_ID('Clients', 'U') IS NULL
 BEGIN
     CREATE TABLE Clients (
-        ClientID INT PRIMARY KEY IDENTITY(1,1),
+        -- ClientID is an UUID
+        ClientID NVARCHAR(36) PRIMARY KEY,
         name NVARCHAR(100),
         email NVARCHAR(100),
         phone NVARCHAR(50),
@@ -34,7 +35,7 @@ GO
 IF OBJECT_ID('Livreurs', 'U') IS NULL
 BEGIN
     CREATE TABLE Livreurs (
-        LivreurID INT PRIMARY KEY IDENTITY(1,1),
+        LivreurID NVARCHAR(36) PRIMARY KEY,
         name NVARCHAR(100),
         email NVARCHAR(100),
         phone NVARCHAR(50),
@@ -52,7 +53,7 @@ GO
 IF OBJECT_ID('Restaurants', 'U') IS NULL
 BEGIN
     CREATE TABLE Restaurants (
-        RestaurantID INT PRIMARY KEY IDENTITY(1,1),
+        RestaurantID NVARCHAR(36) PRIMARY KEY,
         name NVARCHAR(100),
         email NVARCHAR(100),
         phone NVARCHAR(50),
@@ -71,7 +72,7 @@ IF OBJECT_ID('Articles', 'U') IS NULL
 BEGIN
     CREATE TABLE Articles (
         ArticleID INT PRIMARY KEY IDENTITY(1,1),
-        RestaurantID INT,
+        RestaurantID NVARCHAR(36),
         name NVARCHAR(100),
         ingredients NVARCHAR(255),
         price DECIMAL(10, 2),
@@ -85,9 +86,9 @@ GO
 IF OBJECT_ID('Commandes', 'U') IS NULL
 BEGIN
     CREATE TABLE Commandes (
-        CommandeID INT PRIMARY KEY IDENTITY(1,1),
-        ClientID INT,
-        LivreurID INT,
+        CommandeID NVARCHAR(36) PRIMARY KEY,
+        ClientID NVARCHAR(36),
+        LivreurID NVARCHAR(36),
         ArticleID INT,
         orderDate DATETIME,
         deliveryDate DATETIME,
@@ -105,7 +106,7 @@ IF OBJECT_ID('Menus', 'U') IS NULL
 BEGIN
     CREATE TABLE Menus (
         MenuID INT PRIMARY KEY IDENTITY(1,1),
-        RestaurantID INT,
+        RestaurantID NVARCHAR(36),
         name NVARCHAR(100),
         price DECIMAL(10, 2),
     );

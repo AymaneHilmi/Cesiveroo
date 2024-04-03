@@ -1,4 +1,5 @@
 const sql = require('mssql');
+const { v4: uuidv4 } = require('uuid');
 // Connexion à SQL Server
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -45,21 +46,22 @@ exports.getClientById = async (req, res) => {
   }
 };
 
-// Créer un nouveau client
+// Créer un nouveau client avec UUID
 exports.createClient = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode } = req.body;
+    const clientId = uuidv4();
     const query = `
-      INSERT INTO Clients (name, email, phone, streetNumber, streetName, city, postalCode) 
-      OUTPUT INSERTED.ClientID
-      VALUES ('${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}')`;
-    const result = await executeQuery(query);
-    const newClientId = result[0].ClientID; // Récupère l'identifiant d'insertion à partir de la première ligne du résultat
-    res.status(201).json({ id: newClientId, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
+      INSERT INTO Clients (ClientID, name, email, phone, streetNumber, streetName, city, postalCode) 
+      VALUES ('${clientId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}')`;
+    await executeQuery(query);
+    res.status(201).json({ id: clientId, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
+
+
 
 
 
