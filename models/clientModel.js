@@ -1,44 +1,57 @@
-const mongoose = require('mongoose');
+const sql = require('mssql');
 
-const clientSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+// Définition du schéma du client
+const clientSchema = {
+  name: {
+    type: sql.NVarChar,
+    required: true
+  },
+  email: {
+    type: sql.NVarChar,
+    required: true
+  },
+  phone: {
+    type: sql.NVarChar,
+    required: true
+  },
+  address: {
+    streetNumber: {
+      type: sql.NVarChar,
+      required: true,
     },
-    email: {
-        type: String,
-        required: true
+    streetName: {
+      type: sql.NVarChar,
+      required: true,
     },
-    phone: {
-        type: String,
-        required: true
+    city: {
+      type: sql.NVarChar,
+      required: true,
     },
-    address: {
-        streetNumber: {
-          type: String,
-          required: true,
-        },
-        streetName: {
-          type: String,
-          required: true,
-        },
-        city: {
-          type: String,
-          required: true,
-        },
-        postalCode: {
-          type: String,
-          required: true,
-        },
-      },
-}
-, { versionKey: false,
-    timestamps: true}
+    postalCode: {
+      type: sql.NVarChar,
+      required: true,
+    },
+  },
+};
 
-);
+// Définition du modèle SQL
+const Client = {
+  tableName: 'Clients',
+  columns: Object.keys(clientSchema).join(','),
+};
 
-clientSchema.statics.removeById = async function (clientId) {
-    return this.deleteOne({ _id: clientId });
-  };
-  
-module.exports = mongoose.model('Client', clientSchema);
+// Fonction pour insérer un client dans la base de données
+Client.create = async (clientData) => {
+  try {
+    const keys = Object.keys(clientData).join(',');
+    const values = Object.values(clientData).map(val => typeof val === 'string' ? `'${val}'` : val).join(',');
+    const query = `INSERT INTO ${Client.tableName} (${keys}) VALUES (${values})`;
+    const pool = await sql.connect(config);
+    await pool.request().query(query);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+// Export du modèle
+module.exports = Client;

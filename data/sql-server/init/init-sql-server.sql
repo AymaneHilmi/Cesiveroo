@@ -1,5 +1,5 @@
 -- Check if the database exists and create it if it doesn't
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = N'Cesiveroo')
+IF NOT EXISTS(SELECT name FROM master.sys.databases WHERE name = 'Cesiveroo')
 BEGIN
     CREATE DATABASE Cesiveroo;
     PRINT 'La base de données Cesiveroo a été créée.';
@@ -13,58 +13,56 @@ GO
 USE Cesiveroo
 GO
 
--- Création de la table Client avec détail d'adresse
-IF OBJECT_ID('Client', 'U') IS NULL
+-- Création de la table Clients avec détail d'adresse
+IF OBJECT_ID('Clients', 'U') IS NULL
 BEGIN
-    CREATE TABLE Client (
+    CREATE TABLE Clients (
         ClientID INT PRIMARY KEY IDENTITY(1,1),
-        Nom NVARCHAR(100),
-        Prenom NVARCHAR(100),
-        StreetNumber NVARCHAR(10),
-        StreetName NVARCHAR(255),
-        City NVARCHAR(100),
-        PostalCode NVARCHAR(20),
-        Email NVARCHAR(100),
-        Numero NVARCHAR(50)
+        name NVARCHAR(100),
+        email NVARCHAR(100),
+        phone NVARCHAR(50),
+        streetNumber NVARCHAR(10),
+        streetName NVARCHAR(255),
+        city NVARCHAR(100),
+        postalCode NVARCHAR(20)
     );
-    PRINT 'La table Client a été créée avec succès.';
+    PRINT 'La table Clients a été créée avec succès.';
 END
 GO
 
--- Création de la table Livreur avec détail d'adresse
-IF OBJECT_ID('Livreur', 'U') IS NULL
+-- Création de la table Livreurs avec détail d'adresse
+IF OBJECT_ID('Livreurs', 'U') IS NULL
 BEGIN
-    CREATE TABLE Livreur (
+    CREATE TABLE Livreurs (
         LivreurID INT PRIMARY KEY IDENTITY(1,1),
-        Nom NVARCHAR(100),
-        Prenom NVARCHAR(100),
-        StreetNumber NVARCHAR(10),
-        StreetName NVARCHAR(255),
-        City NVARCHAR(100),
-        PostalCode NVARCHAR(20),
-        Email NVARCHAR(100),
-        Numero NVARCHAR(50),
-        BankInfo NVARCHAR(255)
+        name NVARCHAR(100),
+        email NVARCHAR(100),
+        phone NVARCHAR(50),
+        streetNumber NVARCHAR(10),
+        streetName NVARCHAR(255),
+        city NVARCHAR(100),
+        postalCode NVARCHAR(20),
+        bankInfo NVARCHAR(255)
     );
-    PRINT 'La table Livreur a été créée avec succès.';
+    PRINT 'La table Livreurs a été créée avec succès.';
 END
 GO
 
--- Création de la table Restaurant avec détail d'adresse
-IF OBJECT_ID('Restaurant', 'U') IS NULL
+-- Création de la table Restaurants avec détail d'adresse et informations bancaires
+IF OBJECT_ID('Restaurants', 'U') IS NULL
 BEGIN
-    CREATE TABLE Restaurant (
+    CREATE TABLE Restaurants (
         RestaurantID INT PRIMARY KEY IDENTITY(1,1),
-        Nom NVARCHAR(100),
-        StreetNumber NVARCHAR(10),
-        StreetName NVARCHAR(255),
-        City NVARCHAR(100),
-        PostalCode NVARCHAR(20),
-        Email NVARCHAR(100),
-        Numero NVARCHAR(50),
-        Bank NVARCHAR(255)
+        name NVARCHAR(100),
+        email NVARCHAR(100),
+        phone NVARCHAR(50),
+        streetNumber NVARCHAR(10),
+        streetName NVARCHAR(255),
+        city NVARCHAR(100),
+        postalCode NVARCHAR(20),
+        bankInfo NVARCHAR(255)
     );
-    PRINT 'La table Restaurant a été créée avec succès.';
+    PRINT 'La table Restaurants a été créée avec succès.';
 END
 GO
 
@@ -72,43 +70,59 @@ GO
 IF OBJECT_ID('Articles', 'U') IS NULL
 BEGIN
     CREATE TABLE Articles (
-        ArticlesID INT PRIMARY KEY IDENTITY(1,1),
+        ArticleID INT PRIMARY KEY IDENTITY(1,1),
         RestaurantID INT,
-        Nom NVARCHAR(100),
-        Ingredients NVARCHAR(255),
-        Prix DECIMAL(10, 2),
-        FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+        name NVARCHAR(100),
+        ingredients NVARCHAR(255),
+        price DECIMAL(10, 2),
+        FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
     );
     PRINT 'La table Articles a été créée avec succès.';
 END
 GO
 
--- Création de la table Commande
-IF OBJECT_ID('Commande', 'U') IS NULL
+-- Création de la table Commandes
+IF OBJECT_ID('Commandes', 'U') IS NULL
 BEGIN
-    CREATE TABLE Commande (
+    CREATE TABLE Commandes (
         CommandeID INT PRIMARY KEY IDENTITY(1,1),
         ClientID INT,
         LivreurID INT,
-        ArticlesID INT,
-        DateCommande DATETIME,
-        DateLivraison DATETIME,
-        Prix DECIMAL(10, 2),
-        FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
-        FOREIGN KEY (LivreurID) REFERENCES Livreur(LivreurID),
-        FOREIGN KEY (ArticlesID) REFERENCES Articles(ArticlesID)
+        ArticleID INT,
+        orderDate DATETIME,
+        deliveryDate DATETIME,
+        price DECIMAL(10, 2),
+        FOREIGN KEY (ClientID) REFERENCES Clients(ClientID),
+        FOREIGN KEY (LivreurID) REFERENCES Livreurs(LivreurID),
+        FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID)
     );
-    PRINT 'La table Commande a été créée avec succès.';
+    PRINT 'La table Commandes a été créée avec succès.';
 END
 GO
 
+-- Création de la table Menus
+IF OBJECT_ID('Menus', 'U') IS NULL
+BEGIN
+    CREATE TABLE Menus (
+        MenuID INT PRIMARY KEY IDENTITY(1,1),
+        RestaurantID INT,
+        name NVARCHAR(100),
+        price DECIMAL(10, 2),
+    );
+    PRINT 'La table Menus a été créée avec succès.';
+END
+GO
 
----- SEE THE DATABASE TABLES IN TERMINAL
---SELECT name FROM master.sys.databases;
---GO
---
----- SEE THE TABLES NAMES IN TERMINAL
---SELECT TABLE_NAME
---FROM INFORMATION_SCHEMA.TABLES
---WHERE TABLE_TYPE = 'BASE TABLE';
---GO
+-- Création de la table ArticlesMenus pour gérer les associations entre les menus et les articles
+IF OBJECT_ID('ArticlesMenus', 'U') IS NULL
+BEGIN
+    CREATE TABLE ArticlesMenus (
+        MenuID INT,
+        ArticleID INT,
+        PRIMARY KEY (MenuID, ArticleID),
+        FOREIGN KEY (MenuID) REFERENCES Menus(MenuID),
+        FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID)
+    );
+    PRINT 'La table ArticlesMenus a été créée avec succès.';
+END
+GO
