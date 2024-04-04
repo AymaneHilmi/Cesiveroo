@@ -38,7 +38,7 @@ exports.getAllClients = async (req, res) => {
 // Récupérer un client par son ID
 exports.getClientById = async (req, res) => {
   try {
-    const query = `SELECT * FROM Clients WHERE ClientID = ${req.params.id}`;
+    const query = `SELECT * FROM Clients WHERE ClientID = '${req.params.id}'`;
     const client = await executeQuery(query);
     if (!client[0]) {
       return res.status(404).json({ message: 'Client not found' });
@@ -94,9 +94,11 @@ exports.deleteClient = async (req, res) => {
   try {
     // The ID of the client to delete is passed in the URL but it's an UUID with special characters
     // So we need to wrap it in single quotes to make it a string
-    encodeURI(req.params.id);
     const query = `DELETE FROM Clients WHERE ClientID = '${req.params.id}'`;
     await executeQuery(query);
+    if (!client[0]) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
     res.status(200).json({ message: 'Client deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
