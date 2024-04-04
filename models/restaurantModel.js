@@ -1,7 +1,7 @@
 const sql = require('mssql');
 
-// Définition du schéma du Article
-const clientSchema = {
+// Définition du schéma du Restaurant
+const restaurantSchema = {
   name: {
     type: sql.NVarChar,
     required: true
@@ -31,20 +31,24 @@ const clientSchema = {
       type: sql.NVarChar,
       required: true,
     },
+    bankInfo: {
+      type: sql.NVarChar,
+      required: true,
+    }
   },
 };
 
 // Définition du modèle SQL
-const Client = {
-  tableName: 'Clients',
-  columns: Object.keys(clientSchema).join(','),
+const Restaurant = {
+  tableName: 'Restaurants',
+  columns: Object.keys(restaurantSchema).join(','),
 };
 
 // Fonction pour insérer un client dans la base de données
-Client.create = async (clientData) => {
+Restaurant.create = async (restaurantData) => {
   try {
-    const keys = Object.keys(clientData).join(',');
-    const values = Object.values(clientData).map(val => typeof val === 'string' ? `'${val}'` : val).join(',');
+    const keys = Object.keys(restaurantData).join(',');
+    const values = Object.values(restaurantData).map(val => typeof val === 'string' ? `'${val}'` : val).join(',');
     const query = `INSERT INTO ${Client.tableName} (${keys}) VALUES (${values})`;
     const pool = await sql.connect(config);
     await pool.request().query(query);

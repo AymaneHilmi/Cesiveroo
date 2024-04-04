@@ -22,9 +22,9 @@ async function executeQuery(query) {
 }
 
 // Récupérer tous les clients
-exports.getAllArticles = async (req, res) => {
+exports.getAllRestaurants = async (req, res) => {
   try {
-    const query = 'SELECT * FROM Clients';
+    const query = 'SELECT * FROM Restaurants';
     const clients = await executeQuery(query);
     res.status(200).json(clients);
   } catch (err) {
@@ -33,12 +33,12 @@ exports.getAllArticles = async (req, res) => {
 };
 
 // Récupérer un client par son ID
-exports.getArticleById = async (req, res) => {
+exports.getRestaurantById = async (req, res) => {
   try {
-    const query = `SELECT * FROM Clients WHERE ClientID = ${req.params.id}`;
+    const query = `SELECT * FROM Restaurants WHERE RestaurantID = ${req.params.id}`;
     const client = await executeQuery(query);
     if (!client[0]) {
-      return res.status(404).json({ message: 'Client not found' });
+      return res.status(404).json({ message: 'Restaurant not found' });
     }
     res.status(200).json(client[0]);
   } catch (err) {
@@ -46,16 +46,16 @@ exports.getArticleById = async (req, res) => {
   }
 };
 
-// Créer un nouveau client avec UUID
-exports.createArticle = async (req, res) => {
+// Créer un nouveau restaurant avec UUID
+exports.createRestaurant = async (req, res) => {
   try {
-    const { name, email, phone, streetNumber, streetName, city, postalCode } = req.body;
-    const clientId = uuidv4();
+    const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo } = req.body;
+    const RestaurantID = uuidv4();
     const query = `
-      INSERT INTO Clients (ClientID, name, email, phone, streetNumber, streetName, city, postalCode) 
-      VALUES ('${clientId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}')`;
+      INSERT INTO Restaurants (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo) 
+      VALUES ('${RestaurantID}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${bankInfo}')`;
     await executeQuery(query);
-    res.status(201).json({ id: clientId, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
+    res.status(201).json({ id: RestaurantID, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -63,7 +63,7 @@ exports.createArticle = async (req, res) => {
 
 
 // Mettre à jour un client
-exports.updateArticle = async (req, res) => {
+exports.updateRestaurant = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode } = req.body;
     const query = `
@@ -79,7 +79,7 @@ exports.updateArticle = async (req, res) => {
 };
 
 // Supprimer un client
-exports.deleteArticle = async (req, res) => {
+exports.deleteRestaurant = async (req, res) => {
   try {
     const query = `DELETE FROM Clients WHERE ClientID = ${req.params.id}`;
     await executeQuery(query);
