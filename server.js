@@ -1,6 +1,7 @@
 const express = require('express');
 const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
+
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
 
 const app = express();
