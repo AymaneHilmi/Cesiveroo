@@ -1,7 +1,7 @@
 const express = require('express');
 const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
-const commercialRoutes = require('./routes/commercialRoutes');
+const { authenticateClient, authorizeCommercial } = require('./middlewares');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,25 +13,29 @@ const config = {
   user: 'SA', // Remplace avec le nom d'utilisateur de ta base de données
   password: 'Mdpsecurise12.', // Remplace avec le mot de passe de ta base de données
   server: 'localhost', // Remplace avec l'adresse du serveur SQL
-  port : 1433,
+  port: 1433,
   database: 'Cesiveroo', // Remplace avec le nom de ta base de données
-  options: {
-    encrypt: false,
-  },
+  encrypt : false // Désactive le cryptage
 };
 
 // Connexion à SQL Server
-sql.connect(config)
-  .then(() => {
+sql.connect(config, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
     console.log('Connected to SQL Server');
-  })
-  .catch((err) => {
-    console.error('Error connecting to SQL Server:', err);
-  });
+  }
+});
+
+// Middleware d'authentification pour les clients
+app.use('/api/clients', authenticateClient);
+
+// Middleware d'autorisation pour les commerciaux
+app.use('/api/commercial', authorizeCommercial);
 
 // Routes des clients
 app.use('/api/clients', clientRoutes);
-app.use('/api/commercial', commercialRoutes);
+
 
 // Démarrage du serveur
 app.listen(PORT, () => {
