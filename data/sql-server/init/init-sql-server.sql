@@ -25,7 +25,7 @@ BEGIN
         streetNumber NVARCHAR(10),
         streetName NVARCHAR(255),
         city NVARCHAR(100),
-        postalCode NVARCHAR(20)
+        postalCode NVARCHAR(20),
         hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Clients a été créée avec succès.';
