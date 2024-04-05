@@ -74,16 +74,15 @@ GO
 IF OBJECT_ID('Articles', 'U') IS NULL
 BEGIN
     CREATE TABLE Articles (
-        ArticleID INT PRIMARY KEY IDENTITY(1,1),
+        ArticleID INT PRIMARY KEY IDENTITY(1,1), -- Définit la colonne ArticleID comme auto-increment
         RestaurantID NVARCHAR(36),
-        name NVARCHAR(100),
-        ingredients NVARCHAR(255),
-        price DECIMAL(10, 2),
+        Name NVARCHAR(100),
+        Ingredients NVARCHAR(255),
+        Price DECIMAL(10, 2),
         FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
     );
     PRINT 'La table Articles a été créée avec succès.';
 END
-GO
 
 -- Création de la table Commandes
 IF OBJECT_ID('Commandes', 'U') IS NULL
@@ -108,7 +107,7 @@ GO
 IF OBJECT_ID('Menus', 'U') IS NULL
 BEGIN
     CREATE TABLE Menus (
-        MenuID INT PRIMARY KEY IDENTITY(1,1),
+        MenuID INT PRIMARY KEY,
         RestaurantID NVARCHAR(36),
         name NVARCHAR(100),
         price DECIMAL(10, 2),

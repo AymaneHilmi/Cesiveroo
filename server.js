@@ -1,7 +1,9 @@
 const express = require('express');
 const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
-
+const restaurantsRoutes = require('./routes/restaurantRoutes');
+// const commercialRoutes = require('./routes/commercialRoutes');
+const articleRoutes = require('./routes/articleRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
 
 const app = express();
@@ -37,6 +39,12 @@ app.use('/api/commercial', authorizeCommercial);
 // Routes des clients
 app.use('/api/clients', clientRoutes);
 
+
+// Routes des restaurants
+app.use('/api/restaurants', restaurantsRoutes);
+
+// Routes des articles
+app.use('/api/articles', articleRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {

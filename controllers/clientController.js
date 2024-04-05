@@ -53,10 +53,10 @@ exports.getClientById = async (req, res) => {
 exports.createClient = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, password } = req.body;
-    
+
     // Générer un identifiant unique pour le client
     const clientId = uuidv4();
-    
+
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -121,12 +121,12 @@ exports.login = async (req, res) => {
     // Déterminer le rôle du client
     let role = 'client';
     // Générer un token JWT avec le rôle du client
-    const token = jwt.sign({ 
-      email: client.email, 
+    const token = jwt.sign({
+      email: client.email,
       id: client.ClientID,
       role: role
     }, 'secret', { expiresIn: '1h' });
-    
+
     res.status(200).json({ token });
 
   } catch (err) {
