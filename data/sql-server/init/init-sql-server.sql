@@ -44,7 +44,8 @@ BEGIN
         streetName NVARCHAR(255),
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
-        bankInfo NVARCHAR(255)
+        bankInfo NVARCHAR(255),
+        hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Livreurs a été créée avec succès.';
 END
@@ -62,7 +63,8 @@ BEGIN
         streetName NVARCHAR(255),
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
-        bankInfo NVARCHAR(255)
+        bankInfo NVARCHAR(255),
+        hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Restaurants a été créée avec succès.';
 END
