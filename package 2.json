@@ -1,0 +1,22 @@
+{
+  "name": "cesiveroo",
+  "version": "1.0.0",
+  "description": "## Notre Backend : SQL Server et MongoDB Démarer le Backend: `docker compose up`",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "expo": "^49.0.23",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^10.0.2",
+    "nodemon": "^3.1.0",
+    "react-native": "^0.73.6",
+    "uuid": "^9.0.1"
+  }
+}

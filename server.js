@@ -2,10 +2,14 @@ const express = require('express');
 const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
 const restaurantsRoutes = require('./routes/restaurantRoutes');
+const secret = require('./secret');
 // const commercialRoutes = require('./routes/commercialRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
+const { generate } = require('fast-glob/out/managers/tasks');
+const { random } = require('nanoid');
 
+// Générer un secret pour les tokens JWT
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -50,3 +54,4 @@ app.use('/api/articles', articleRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

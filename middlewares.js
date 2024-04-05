@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const secret = require('./secret');
 // Middleware d'authentification pour les clients
 exports.authenticateClient = (req, res, next) => {
   // Récupérer le token d'authentification
@@ -15,7 +15,7 @@ exports.authenticateClient = (req, res, next) => {
   // Extraire le token de la chaîne 'Bearer token'
   const bearer = token.split(' ')[1];
   // Vérifier et décoder le token
-  jwt.verify(bearer, 'secret', (err, decoded) => {
+  jwt.verify(bearer, secret, (err, decoded) => {
     if (err && req.method !== 'POST' && req.path !== '/api/clients/register') {
       return res.status(401).json({ message: 'Invalid token', error: err});
     }

@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Client = require('../models/clientModel');
-
+const secret = require('../secret');
 // Connexion à SQL Server
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -93,9 +93,10 @@ exports.updateClient = async (req, res) => {
 exports.deleteClient = async (req, res) => {
   try {
     const query = `DELETE FROM Clients WHERE ClientID = '${req.params.id}'`;
-    const client = await executeQuery(query);
-    // Répondre avec un message de succès uniquement si le client n'a pas été trouvé
-    if (!client) {
+    // Exécuter la requête SQL pour supprimer le client
+    const result = await executeQuery(query);
+    // Vérifier si un client a été supprimé (result.rowCount > 0)
+    if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ message: 'Client not found' });
     }
     res.status(200).json({ message: 'Client deleted successfully' });
@@ -103,6 +104,7 @@ exports.deleteClient = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Connexion d'un client
 exports.login = async (req, res) => {
@@ -121,12 +123,7 @@ exports.login = async (req, res) => {
     // Déterminer le rôle du client
     let role = 'client';
     // Générer un token JWT avec le rôle du client
-    const token = jwt.sign({
-      email: client.email,
-      id: client.ClientID,
-      role: role
-    }, 'secret', { expiresIn: '1h' });
-
+    const token = jwt.sign({ id: client.ClientID, email: client.email, role }, secret, { expiresIn: '1h' });
     res.status(200).json({ token });
 
   } catch (err) {
