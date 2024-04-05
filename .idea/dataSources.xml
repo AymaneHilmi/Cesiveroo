@@ -2,10 +2,10 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="SQL Server" uuid="4a9910ba-26aa-4fea-8173-2acf8efe8bfd">
-      <driver-ref>sqlserver.localdb.jtds</driver-ref>
+      <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:jtds:sqlserver://localhost:1433;databaseName=master;user=SA;password=Mdpsecurise12.;encrypt=false</jdbc-url>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://\localhost:1433;databaseName=Cesiveroo;user=SA;password=Mdpsecurise12.;encrypt=false</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -3,6 +3,7 @@ const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
 const restaurantsRoutes = require('./routes/restaurantRoutes');
 const commercialRoutes = require('./routes/commercialRoutes');
+const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +37,9 @@ app.use('/api/commercial', commercialRoutes);
 
 // Routes des restaurants
 app.use('/api/restaurants', restaurantsRoutes);
+
+// Routes des articles
+app.use('/api/articles', articleRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
