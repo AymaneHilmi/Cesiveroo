@@ -7,6 +7,7 @@ router.get('/', clientController.getAllClients);
 
 // Route pour récupérer un client par ID
 router.get('/:id', clientController.getClientById);
+
 // Route pour créer un nouveau client
 router.post('/', clientController.createClient);
 

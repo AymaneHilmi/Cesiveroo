@@ -2,19 +2,22 @@ const express = require('express');
 const router = express.Router();
 const restaurantController = require('../controllers/restaurantController');
 
-// Route pour récupérer tous les clients
+// Route pour récupérer tous les restaurant
 router.get('/', restaurantController.getAllRestaurants);
 
-// Route pour récupérer un client par ID
+// Route pour récupérer un restaurant par ID
 router.get('/:id', restaurantController.getRestaurantById);
 
-// Route pour créer un nouveau client
+// Route pour créer un nouveau restaurant
 router.post('/', restaurantController.createRestaurant);
 
-// Route pour mettre à jour un client existant
+// Route pour mettre à jour un restaurant existant
 router.put('/:id', restaurantController.updateRestaurant);
 
-// Route pour supprimer un client existant
+// Route pour supprimer un restaurant existant
 router.delete('/:id', restaurantController.deleteRestaurant);
+
+// Route pour se connecter
+router.post('/login', restaurantController.login);
 
 module.exports = router;
