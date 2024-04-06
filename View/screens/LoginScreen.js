@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import Login from "./controller/Login";
 import {
     StyleSheet,
     Text,
@@ -9,6 +10,7 @@ import {
     Button,
     TouchableOpacity,
 } from "react-native";
+import { Navigation } from "react-native-feather";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -37,10 +39,10 @@ export default function LoginPage() {
             <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity onPress={() => Login(email, password)} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
-        </View>
+        </View >
     );
 }
 const styles = StyleSheet.create({
