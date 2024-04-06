@@ -5,6 +5,7 @@ const restaurantsRoutes = require('./routes/restaurantRoutes');
 const secret = require('./secret');
 // const commercialRoutes = require('./routes/commercialRoutes');
 const articleRoutes = require('./routes/articleRoutes');
+const livreurRoutes = require('./routes/livreurRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
 const { generate } = require('fast-glob/out/managers/tasks');
 const { random } = require('nanoid');
@@ -49,6 +50,9 @@ app.use('/api/restaurants', restaurantsRoutes);
 
 // Routes des articles
 app.use('/api/articles', articleRoutes);
+
+// Routes des livreurs
+app.use('/api/livreurs', livreurRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
