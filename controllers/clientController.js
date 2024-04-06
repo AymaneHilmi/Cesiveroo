@@ -54,6 +54,15 @@ exports.createClient = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, password } = req.body;
 
+    // Vérifier si l'email existe déjà
+    const emailCheckQuery = `SELECT email FROM Clients WHERE email = '${email}'`;
+    const emailCheckResult = await executeQuery(emailCheckQuery);
+
+    if (emailCheckResult.length > 0) {
+      // Si l'email existe déjà, envoyer une réponse indiquant que l'email est déjà utilisé
+      return res.status(400).json({ message: "Email already exist" });
+    }
+
     // Générer un identifiant unique pour le client
     const clientId = uuidv4();
 

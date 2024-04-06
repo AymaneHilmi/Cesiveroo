@@ -107,7 +107,7 @@ GO
 IF OBJECT_ID('Menus', 'U') IS NULL
 BEGIN
     CREATE TABLE Menus (
-        MenuID INT PRIMARY KEY,
+        MenuID INT PRIMARY KEY IDENTITY(1,1),
         RestaurantID NVARCHAR(36),
         name NVARCHAR(100),
         price DECIMAL(10, 2),

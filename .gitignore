@@ -3,4 +3,5 @@ db/
 compose.yaml
 package.json
 package-lock.json
-.idea/
+.expo
+.idea

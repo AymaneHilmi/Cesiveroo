@@ -5,6 +5,9 @@ import { StatusBar } from 'expo-status-bar'
 import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 import Categories from '../components/categories';
+import featuredRow from '../components/featuredRow';
+import { featured } from '../constants';
+import FeaturedRow from '../components/featuredRow';
 
 
 export default function HomeScreen() {
@@ -31,6 +34,24 @@ export default function HomeScreen() {
 
                 {/* categories */}
                 <Categories />
+
+                {/* featured */}
+                <View style={{ marginTop: 20 }}>
+                    {
+                        // featuredCategories?.map(category => {
+                        //     return (
+                        //         <FeaturedRow
+                        //             key={category._id}
+                        //             id={category._id}
+                        //             title={category.name}
+                        //             resturants={category?.restaurants}
+                        //             description={category.description}
+                        //             featuredCategory={category._type}
+                        //         />
+                        //     )
+                        // })
+                    }
+                </View>
             </ScrollView>
         </SafeAreaView >
     )
