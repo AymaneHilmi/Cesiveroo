@@ -25,7 +25,7 @@ BEGIN
         streetNumber NVARCHAR(10),
         streetName NVARCHAR(255),
         city NVARCHAR(100),
-        postalCode NVARCHAR(20)
+        postalCode NVARCHAR(20),
         hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Clients a été créée avec succès.';
@@ -44,7 +44,8 @@ BEGIN
         streetName NVARCHAR(255),
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
-        bankInfo NVARCHAR(255)
+        bankInfo NVARCHAR(255),
+        hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Livreurs a été créée avec succès.';
 END
@@ -62,7 +63,8 @@ BEGIN
         streetName NVARCHAR(255),
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
-        bankInfo NVARCHAR(255)
+        bankInfo NVARCHAR(255),
+        hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Restaurants a été créée avec succès.';
 END
@@ -72,16 +74,15 @@ GO
 IF OBJECT_ID('Articles', 'U') IS NULL
 BEGIN
     CREATE TABLE Articles (
-        ArticleID INT PRIMARY KEY IDENTITY(1,1),
+        ArticleID INT PRIMARY KEY IDENTITY(1,1), -- Définit la colonne ArticleID comme auto-increment
         RestaurantID NVARCHAR(36),
-        name NVARCHAR(100),
-        ingredients NVARCHAR(255),
-        price DECIMAL(10, 2),
+        Name NVARCHAR(100),
+        Ingredients NVARCHAR(255),
+        Price DECIMAL(10, 2),
         FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
     );
     PRINT 'La table Articles a été créée avec succès.';
 END
-GO
 
 -- Création de la table Commandes
 IF OBJECT_ID('Commandes', 'U') IS NULL

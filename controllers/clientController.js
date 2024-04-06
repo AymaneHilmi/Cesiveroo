@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Client = require('../models/clientModel');
-
+const secret = require('../secret');
 // Connexion à SQL Server
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -11,7 +11,7 @@ const config = {
   server: 'localhost', // Adresse du serveur SQL
   port: 1433, // Port de la base de données
   database: 'Cesiveroo', // Nom de la base de données
-  encrypt: false, // Désactivation du cryptage, à adapter en fonction de vos besoins de sécurité
+  encrypt: false, // Désactivation du cryptage
 };
 // Fonction pour exécuter les requêtes SQL
 async function executeQuery(query) {
@@ -49,14 +49,23 @@ exports.getClientById = async (req, res) => {
   }
 };
 
-// Créer un nouveau client avec UUID
+// Inscription d'un nouveau client
 exports.createClient = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, password } = req.body;
-    
+
+    // Vérifier si l'email existe déjà
+    const emailCheckQuery = `SELECT email FROM Clients WHERE email = '${email}'`;
+    const emailCheckResult = await executeQuery(emailCheckQuery);
+
+    if (emailCheckResult.length > 0) {
+      // Si l'email existe déjà, envoyer une réponse indiquant que l'email est déjà utilisé
+      return res.status(400).json({ message: "Email already exist" });
+    }
+
     // Générer un identifiant unique pour le client
     const clientId = uuidv4();
-    
+
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -66,7 +75,7 @@ exports.createClient = async (req, res) => {
       VALUES ('${clientId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${hashedPassword}')`;
     await executeQuery(query);
 
-    // Répondre avec les détails du client créé (sans inclure le mot de passe)
+    // Répondre avec les détails du client créé
     res.status(201).json({ id: clientId, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -81,7 +90,7 @@ exports.updateClient = async (req, res) => {
       UPDATE Clients
       SET name = '${name}', email = '${email}', phone = '${phone}', 
           streetNumber = '${streetNumber}', streetName = '${streetName}', city = '${city}', postalCode = '${postalCode}' 
-      WHERE ClientID = ${req.params.id}`;
+      WHERE ClientID = '${req.params.id}'`;
     await executeQuery(query);
     res.status(200).json({ id: req.params.id, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
   } catch (err) {
@@ -92,11 +101,11 @@ exports.updateClient = async (req, res) => {
 // Supprimer un client
 exports.deleteClient = async (req, res) => {
   try {
-    // The ID of the client to delete is passed in the URL but it's an UUID with special characters
-    // So we need to wrap it in single quotes to make it a string
     const query = `DELETE FROM Clients WHERE ClientID = '${req.params.id}'`;
-    await executeQuery(query);
-    if (!client[0]) {
+    // Exécuter la requête SQL pour supprimer le client
+    const result = await executeQuery(query);
+    // Vérifier si un client a été supprimé (result.rowCount > 0)
+    if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ message: 'Client not found' });
     }
     res.status(200).json({ message: 'Client deleted successfully' });
@@ -104,28 +113,31 @@ exports.deleteClient = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
 // Connexion d'un client
 exports.login = async (req, res) => {
   try {
-      const { email, password } = req.body;
-      
-      // Recherchez l'utilisateur dans la base de données en utilisant l'email
-      const client = await Client.getByEmail(email);
-      if (!client) {
-          return res.status(401).json({ message: 'Invalid email or password' });
-      }
-      // Vérifiez si le mot de passe est correct
-      const isPasswordValid = await bcrypt.compare(password, client.hashedPassword);
-      if (!isPasswordValid) {
-          return res.status(401).json({ message: 'Invalid email or password' });
-      }
-      // Générer un token JWT
-      const token = jwt.sign({ email: client.email, id: client
-          .ClientID }, 'secret', { expiresIn: '1h' });
-      res.status(200).json({ token });
+    const { email, password } = req.body;
+    // Rechercher le client dans la base de données en utilisant l'email
+    const client = await Client.getByEmail(email);
+    if (!client) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    // Vérifier si le mot de passe est correct
+    const isPasswordValid = await bcrypt.compare(password, client.hashedPassword);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    // Déterminer le rôle du client
+    let role = 'client';
+    // Générer un token JWT avec le rôle du client
+    const token = jwt.sign({ id: client.ClientID, email: client.email, role }, secret, { expiresIn: '1h' });
+    res.status(200).json({ token });
 
   } catch (err) {
-      res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
+
 // Path: models/clientModel.js

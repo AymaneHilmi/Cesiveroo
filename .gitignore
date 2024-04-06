@@ -1,4 +1,7 @@
 node_modules/
 db/
-compose.yaml/
-package-lock.json/
+compose.yaml
+package.json
+package-lock.json
+.expo
+.idea
