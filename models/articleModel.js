@@ -47,16 +47,5 @@ Article.create = async (articleData) => {
   }
 };
 
-// Fonction pour récupérer un Article par son email depuis la base de données
-Article.getByEmail = async (email) => {
-  try {
-    const pool = await sql.connect(config);
-    const result = await pool.request().query(`SELECT * FROM ${Article.tableName} WHERE email = '${email}'`);
-    return result.recordset[0];
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
-
 // Export du modèle
 module.exports = Article;
