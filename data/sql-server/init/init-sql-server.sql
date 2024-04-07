@@ -13,6 +13,17 @@ GO
 USE Cesiveroo
 GO
 
+-- Création de la table Service Commercial
+IF OBJECT_ID('ServiceCommercial', 'U') IS NULL
+BEGIN
+    CREATE TABLE ServiceCommercial (
+        CommercialID NVARCHAR(36) PRIMARY KEY,
+        name NVARCHAR(100),
+        email NVARCHAR(100),
+        hashedPassword NVARCHAR(255)
+    );
+    PRINT 'La table ServiceCommercial a été créée avec succès.';
+END
 -- Création de la table Clients avec détail d'adresse
 IF OBJECT_ID('Clients', 'U') IS NULL
 BEGIN
@@ -26,7 +37,8 @@ BEGIN
         streetName NVARCHAR(255),
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
-        hashedPassword NVARCHAR(255)
+        hashedPassword NVARCHAR(255), 
+        status NVARCHAR(20)
     );
     PRINT 'La table Clients a été créée avec succès.';
 END
