@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Navigation } from "react-native-feather";
 
-export default function LoginPage() {
+export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const handleLogin = () => {
