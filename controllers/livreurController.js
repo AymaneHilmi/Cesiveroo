@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Livreur = require('../models/livreurModel'); // Assurez-vous d'avoir un modèle livreurModel adapté
-const secret = 'YOUR_SECRET_KEY'; // Utilisez votre propre secret pour JWT
+const secret = require('../secret');
 
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -109,9 +109,7 @@ exports.deleteLivreur = async (req, res) => {
 exports.loginLivreur = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body)
     const livreur = await Livreur.getByEmail(email);
-    console.log(livreur)
     if (!livreur) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -119,7 +117,9 @@ exports.loginLivreur = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    // Déterminer le rôle du livreur
     let role = 'livreur';
+    // Générer un token JWT avec le rôle du livreur
     const token = jwt.sign({ id: livreur.LivreurID, email: livreur.email, role }, secret, { expiresIn: '1h' });
     res.status(200).json({ token });
   } catch (err) {
