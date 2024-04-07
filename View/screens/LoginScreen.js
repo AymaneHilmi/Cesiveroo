@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import Login from "./controller/Login";
+import Login from "../controller/Login";
 import {
     StyleSheet,
     Text,
@@ -15,6 +15,9 @@ import { Navigation } from "react-native-feather";
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const handleLogin = () => {
+        Login(email, password);
+    };
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
@@ -39,7 +42,7 @@ export default function LoginPage() {
             <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => Login(email, password)} style={styles.loginBtn}>
+            <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
         </View >

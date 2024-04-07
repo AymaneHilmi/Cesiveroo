@@ -1,38 +1,33 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { View, Text } from 'react-native'
-import React from 'react'
-import axios from 'axios' // Import axios for making HTTP requests
+import axios from 'axios';
 
-export default function Login(email, password) {
-    const handleLogin = async () => {
-        try {
-            // Make a POST request to your backend API with the login information
-            const response = await axios.post('/api/clients/login', {
-                email: email,
-                password: password
-            })
+const Login = async (email, password) => {
+  try {
+    // Envoyer une requête POST au backend avec les informations de connexion
+    console.log('Logging in...');
+    console.log(email);
+    console.log(password);
 
-            // Check if the login was successful
-            if (response.data.success) {
-                navigation.navigate('Home');
-                // Redirect the user to the homepage
-                // You can use a navigation library like react-navigation for this
-                // Example: navigation.navigate('Home')
-            } else {
-                // Display an error message to the user
-                // You can use a state variable to store the error message and display it in your component
-            }
-        } catch (error) {
-            // Handle any errors that occur during the login process
-            console.error(error)
-        }
+
+    // Connexion à l'API
+    const response = await axios.post("http://192.168.1.209:3000/api/clients/login", {
+      email: email,
+      password: password
+    });
+
+    // Vérifier si la connexion a réussi
+    if (response.data.token) {
+      console.log('Login successful');
+      console.log(response.data.token);
+      //navigation.navigate('Home');
+      // Rediriger l'utilisateur vers la page d'accueil
+    } else {
+      console.log('Login failed');
+      // Gérer l'échec de connexion
     }
+  } catch (error) {
+    console.log('An error occurred:', error);
+    // Gérer les erreurs
+  }
+};
 
-    return (
-        navigation.navigate('Sign In')
-    )
-}
-// si les informations sont correctes, je dois rediriger l'utilisateur vers la page d'accueil
-// sinon, je dois afficher un message d'erreur
-
+export default Login;

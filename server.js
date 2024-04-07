@@ -7,11 +7,12 @@ const menuRoutes = require('./routes/menuRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
+const cors = require('cors');
 // Générer un secret pour les tokens JWT
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const PORT = 3000;
 app.use(express.json());
+app.use(cors()); 
 
 // Configuration de la connexion à SQL Server
 const config = {
