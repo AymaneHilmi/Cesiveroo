@@ -142,4 +142,15 @@ exports.login = async (req, res) => {
   }
 };
 
+// Fonction pour suspendre un compte client
+exports.suspendClient = async (req, res) => {
+  try {
+    const query = `UPDATE Clients SET status = 'inactive' WHERE ClientID = '${req.params.id}'`;
+    await executeQuery(query);
+    res.status(200).json({ message: 'Client suspended successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Path: models/clientModel.js

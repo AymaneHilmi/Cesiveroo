@@ -23,4 +23,7 @@ router.post('/login', clientController.login);
 // Route pour s'inscrire
 router.post('/register', clientController.createClient);
 
+// Route pour suspendre un compte client
+router.put('/suspend/:id', authorizeCommercial, authenticateClient, clientController.suspendClient);
+
 module.exports = router;

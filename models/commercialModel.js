@@ -14,8 +14,8 @@ const config = {
 
 // Modèle SQL pour les comptes commerciaux
 const Commercial = {
-  tableName: 'Commercials',
-  columns: ['CommercialID', 'name', 'email', 'phone', 'companyName', 'hashedPassword'],
+  tableName: 'ServiceCommercial',
+  columns: ['CommercialID', 'name', 'email', 'hashedPassword'],
 };
 
 // Fonction pour insérer un nouveau compte commercial dans la base de données
@@ -31,11 +31,9 @@ Commercial.create = async (commercialData) => {
     await request.input('commercialId', sql.UniqueIdentifier, commercialId);
     await request.input('name', sql.NVarChar, name);
     await request.input('email', sql.NVarChar, email);
-    await request.input('phone', sql.NVarChar, phone);
-    await request.input('companyName', sql.NVarChar, companyName);
     await request.input('hashedPassword', sql.NVarChar, hashedPassword);
-    const query = `INSERT INTO ${Commercial.tableName} (CommercialID, name, email, phone, companyName, hashedPassword) 
-                   VALUES (@commercialId, @name, @email, @phone, @companyName, @hashedPassword)`;
+    const query = `INSERT INTO ${Commercial.tableName} (CommercialID, name, email, hashedPassword) 
+                   VALUES (@commercialId, @name, @email, @hashedPassword)`;
     // Exécuter la requête SQL
     await request.query(query);
   } catch (err) {
