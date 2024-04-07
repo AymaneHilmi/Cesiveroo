@@ -6,6 +6,7 @@ const menuRoutes = require('./routes/menuRoutes');
 // const commercialRoutes = require('./routes/commercialRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
+const commercialRoutes = require('./routes/commercialRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
 const cors = require('cors');
 // Générer un secret pour les tokens JWT
@@ -35,12 +36,16 @@ sql.connect(config, (err) => {
 
 // Middleware d'authentification pour les clients
 app.use('/api/clients', authenticateClient);
+// Middleware d'authentification pour les commerciaux
+app.use('/api/commercial', authenticateClient);
 
 // Middleware d'autorisation pour les commerciaux
 app.use('/api/commercial', authorizeCommercial);
 
 // Routes des clients
 app.use('/api/clients', clientRoutes);
+// Routes des commerciaux
+app.use('/api/commercial', commercialRoutes);
 
 
 // Routes des restaurants

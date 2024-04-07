@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const secret = require('../secret');
+const Commercial = require('../models/commercialModel');
 
 // Connexion à SQL Server
 const config = {
@@ -24,67 +25,36 @@ async function executeQuery(query) {
     throw new Error(err.message);
   }
 }
-
-// Fonction pour récupérer tous les clients
-exports.getAllClients = async (req, res) => {
+// Fonction pour connecter un commercial
+exports.login = async (req, res) => {
   try {
-    const query = 'SELECT * FROM Clients';
-    const clients = await executeQuery(query);
-    res.status(200).json(clients);
-  } catch (err) {
+    const { email, password } = req.body;
+    const query = `SELECT * FROM ServiceCommercial WHERE email = '${email}'`;
+    const commercial = await Commercial.getByEmail(email);
+    if (!commercial) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    const isPasswordValid = await bcrypt.compare(password, commercial.hashedPassword);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    let role = 'commercial';
+    const token = jwt.sign({ id: commercial.CommercialID, email: commercial.email, role }, secret, { expiresIn: '1h' });
+    res.status(200).json({ token });
+  }
+  catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
-// Fonction pour suspendre un compte client
-exports.suspendClient = async (req, res) => {
+// Fonction pour inscrire un commercial
+exports.register = async (req, res) => {
   try {
-    const { id } = req.params;
-    const query = `UPDATE Clients SET status = 'suspended' WHERE ClientID = '${id}'`;
+    const { name, email, password } = req.body;
+    const id = uuidv4();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = `INSERT INTO ServiceCommercial (CommercialID, name, email, hashedPassword) VALUES ('${id}', '${name}', '${email}', '${hashedPassword}')`;
     await executeQuery(query);
-    res.status(200).json({ message: 'Client suspended successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// Fonction pour modifier un compte client
-exports.updateClient = async (req, res) => {
-  try {
-    const { id } = req.params;
-    // Récupérer les données du client à partir du corps de la requête
-    const { name, email, phone, streetNumber, streetName, city, postalCode } = req.body;
-    const query = `
-      UPDATE Clients
-      SET name = '${name}', email = '${email}', phone = '${phone}', 
-          streetNumber = '${streetNumber}', streetName = '${streetName}', city = '${city}', postalCode = '${postalCode}' 
-      WHERE ClientID = '${id}'`;
-    await executeQuery(query);
-    res.status(200).json({ message: 'Client updated successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// Fonction pour supprimer un compte client
-exports.deleteClient = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const query = `DELETE FROM Clients WHERE ClientID = '${id}'`;
-    await executeQuery(query);
-    res.status(200).json({ message: 'Client deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// Fonction pour afficher les tableaux de bord de suivi des processus de commande
-exports.getDashboard = async (req, res) => {
-  try {
-    // Votre logique pour récupérer les données de tableau de bord
-    // ...
-    // Exemple de réponse
-    res.status(200).json({ message: 'Dashboard data retrieved successfully' });
+    res.status(201).json({ message: 'Commercial registered successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
