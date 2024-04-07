@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import Login from "../controller/Login";
+import { useNavigation } from '@react-navigation/native';
 import {
     StyleSheet,
     Text,
@@ -18,6 +19,7 @@ export default function LoginScreen() {
     const handleLogin = () => {
         Login(email, password);
     };
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
@@ -39,8 +41,8 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
+                <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     forgot_button: {
         height: 30,
         marginBottom: 30,
+        color: "black",
     },
     loginBtn: {
         width: "50%",
