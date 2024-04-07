@@ -105,7 +105,7 @@ exports.deleteClient = async (req, res) => {
     // Exécuter la requête SQL pour supprimer le client
     const result = await executeQuery(query);
     // Vérifier si un client a été supprimé (result.rowCount > 0)
-    if (result.rowsAffected[0] === 0) {
+    if (!result) {
       return res.status(404).json({ message: 'Client not found' });
     }
     res.status(200).json({ message: 'Client deleted successfully' });

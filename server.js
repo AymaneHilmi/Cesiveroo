@@ -7,7 +7,6 @@ const menuRoutes = require('./routes/menuRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
-
 // Générer un secret pour les tokens JWT
 const app = express();
 const PORT = process.env.PORT || 3000;
