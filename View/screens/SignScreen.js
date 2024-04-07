@@ -17,16 +17,15 @@ export default function SignScreen() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [streetNumber, setStreetNumber] = useState("");
+    const [streetName, setStreetName] = useState("");
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState("");
-    const [streetName, setStreetName] = useState("");
     const [password, setPassword] = useState("");
     const handleSign = () => {
         Register(name, email, phone, streetNumber, streetName, city, postalCode, password);
     };
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
             <View style={styles.inputView}>
                 <TextInput

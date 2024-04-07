@@ -53,7 +53,7 @@ exports.getClientById = async (req, res) => {
 exports.createClient = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, password } = req.body;
-
+    const status = 'active';
     // Vérifier si l'email existe déjà
     const emailCheckQuery = `SELECT email FROM Clients WHERE email = '${email}'`;
     const emailCheckResult = await executeQuery(emailCheckQuery);
@@ -71,10 +71,9 @@ exports.createClient = async (req, res) => {
 
     // Exécuter la requête SQL pour insérer le nouveau client
     const query = `
-      INSERT INTO Clients (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword) 
-      VALUES ('${clientId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${hashedPassword}')`;
+      INSERT INTO Clients (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword, status) 
+      VALUES ('${clientId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${hashedPassword}', '${status}')`;
     await executeQuery(query);
-
     // Répondre avec les détails du client créé
     res.status(201).json({ id: clientId, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
   } catch (err) {
@@ -128,6 +127,9 @@ exports.login = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, client.hashedPassword);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    if (client.status === 'inactive') {
+      return res.status(403).json({ message: 'Account is inactive' });
     }
     // Déterminer le rôle du client
     let role = 'client';

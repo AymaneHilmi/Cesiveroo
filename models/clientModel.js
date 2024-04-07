@@ -15,7 +15,7 @@ const config = {
 // Définition du modèle SQL
 const Client = {
   tableName: 'Clients',
-  columns: ['ClientID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'hashedPassword'],
+  columns: ['ClientID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'hashedPassword', 'status'],
 };
 
 // Fonction pour insérer un client dans la base de données
@@ -23,7 +23,7 @@ Client.create = async (clientData) => {
   try {
     const hashedPassword = await bcrypt.hash(clientData.password, 10);
     const clientId = uuidv4();
-    const { name, email, phone, address } = clientData;
+    const { name, email, phone, address, status } = clientData;
     const pool = await sql.connect(config);
     const request = pool.request();
     await request.input('ClientId', sql.UniqueIdentifier, clientId);
@@ -35,8 +35,9 @@ Client.create = async (clientData) => {
     await request.input('city', sql.NVarChar, address.city);
     await request.input('postalCode', sql.NVarChar, address.postalCode);
     await request.input('hashedPassword', sql.NVarChar, hashedPassword);
-    const query = `INSERT INTO ${Client.tableName} (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword) 
-                   VALUES (@clientId, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @hashedPassword)`;
+    await request.input('status', sql.NVarChar, status);
+    const query = `INSERT INTO ${Client.tableName} (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword, status) 
+                   VALUES (@clientId, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @hashedPassword, @status)`;
     await request.query(query);
   } catch (err) {
     throw new Error(err.message);
