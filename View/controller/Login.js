@@ -9,7 +9,7 @@ const Login = async (email, password) => {
 
 
     // Connexion à l'API
-    const response = await axios.post("http://192.168.1.209:3000/api/clients/login", {
+    const response = await axios.post("http://localhost:3000/api/clients/login", {
       email: email,
       password: password
     });
@@ -18,7 +18,7 @@ const Login = async (email, password) => {
     if (response.data.token) {
       console.log('Login successful');
       console.log(response.data.token);
-      //navigation.navigate('Home');
+      navigation.navigate('Home');
       // Rediriger l'utilisateur vers la page d'accueil
     } else {
       console.log('Login failed');

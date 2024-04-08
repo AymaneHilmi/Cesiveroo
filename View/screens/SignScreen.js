@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import Register from "../controller/Sign";
+import { useNavigation } from '@react-navigation/native';
 import {
     StyleSheet,
     Text,
@@ -24,6 +25,7 @@ export default function SignScreen() {
     const handleSign = () => {
         Register(name, email, phone, streetNumber, streetName, city, postalCode, password);
     };
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
@@ -93,8 +95,8 @@ export default function SignScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.forgot_button}>Already a Member?</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSign} style={styles.loginBtn}>
                 <Text style={styles.loginText}>Sign In</Text>
@@ -110,16 +112,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     image: {
-        marginBottom: 40,
+        marginBottom: 10,
         width: 200,
         height: 200,
     },
     inputView: {
         backgroundColor: "#20CFBE",
         borderRadius: 10,
-        width: "50%",
+        width: "70%",
         height: 45,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     TextInput: {
         height: 50,
