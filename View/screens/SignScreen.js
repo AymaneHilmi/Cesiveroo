@@ -22,10 +22,12 @@ export default function SignScreen() {
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [password, setPassword] = useState("");
-    const handleSign = () => {
-        Register(name, email, phone, streetNumber, streetName, city, postalCode, password);
-    };
+
     const navigation = useNavigation();
+
+    const handleSign = () => {
+        Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
+    };
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />

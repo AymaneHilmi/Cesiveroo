@@ -16,10 +16,11 @@ import { Navigation } from "react-native-feather";
 export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleLogin = () => {
-        Login(email, password);
-    };
+
     const navigation = useNavigation();
+    const handleLogin = () => {
+        Login(email, password, navigation);
+    };
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
