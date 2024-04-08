@@ -6,12 +6,8 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
     try {
         // Envoyer une requête POST au backend avec les informations de connexion
         console.log('Registering...');
-        console.log(email);
-        console.log(password);
-
-
         // Connexion à l'API
-        const response = await axios.post("http://192.168.1.209:3000/api/clients/register", {
+        const response = await axios.post("http://localhost:3000/api/clients/register", {
             name: name,
             email: email,
             phone: phone,
@@ -21,6 +17,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
             postalCode: postalCode,
             password: password
         });
+        console.log(response.data)
         // Vérifier si la création a réussi et afficher un message
         if (response.data.id) {
             console.log('Registration successful');

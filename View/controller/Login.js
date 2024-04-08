@@ -18,7 +18,6 @@ const Login = async (email, password) => {
     if (response.data.token) {
       console.log('Login successful');
       console.log(response.data.token);
-      navigation.navigate('Home');
       // Rediriger l'utilisateur vers la page d'accueil
     } else {
       console.log('Login failed');
