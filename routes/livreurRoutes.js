@@ -3,19 +3,19 @@ const router = express.Router(); // Assurez-vous que vous avez cette ligne
 
 // Importez les modules et les middlewares nécessaires
 const livreurController = require('../controllers/livreurController');
-const { authenticateLivreur } = require('../middlewares');
+const { authenticate, authorizeLivreur } = require('../middlewares');
 
 // Route pour récupérer tous les livreurs
 router.get('/', livreurController.getAllLivreurs);
 
 // Route pour récupérer un livreur par ID
-router.get('/:id', authenticateLivreur, livreurController.getLivreurById);
+router.get('/:id',  authenticate, authorizeLivreur, livreurController.getLivreurById);
 
 // Route pour mettre à jour un livreur existant
-router.put('/:id', authenticateLivreur, livreurController.updateLivreur);
+router.put('/:id',  authenticate, authorizeLivreur, livreurController.updateLivreur);
 
 // Route pour supprimer un livreur existant
-router.delete('/:id',  authenticateLivreur, livreurController.deleteLivreur);
+router.delete('/:id',   authenticate, authorizeLivreur, livreurController.deleteLivreur);
 
 // Route pour se connecter
 router.post('/login', livreurController.loginLivreur);
