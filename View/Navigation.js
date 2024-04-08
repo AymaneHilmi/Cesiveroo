@@ -9,6 +9,7 @@ import RestaurantScreen from './screens/RestaurantScreen';
 import LoginPage from './screens/LoginScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignScreen from './screens/SignScreen';
+import MapsScreen from './screens/MapsScreen';
 
 export default function Navigation() {
     return (
@@ -20,6 +21,7 @@ export default function Navigation() {
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Sign In" component={SignScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+                <Stack.Screen name="Maps" component={MapsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

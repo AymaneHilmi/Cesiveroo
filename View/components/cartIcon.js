@@ -8,7 +8,8 @@ export default function CartIcon() {
             position: 'absolute',
             bottom: '1.25rem',
             zIndex: 50,
-            width: 430
+            width: 430,
+            justifyContent: 'center'
         }}>
             <TouchableOpacity
                 style={{
@@ -38,7 +39,7 @@ export default function CartIcon() {
                     flex: '1 1 0%', fontSize: '1.125rem', lineHeight: '1.75rem',
                     fontWeight: 800, textAlign: 'center', color: '#ffffff',
                 }}>View Cart</Text>
-                <Text style={{ fontSize: '1.125rem', textAlign: 'center', lineHeight: '1.75rem', fontWeight: 800, color: '#ffffff' }}>$22,99</Text>
+                <Text style={{ fontSize: '1.125rem', lineHeight: '1.75rem', fontWeight: 800, color: 'white' }}>$22,99</Text>
 
             </TouchableOpacity>
 

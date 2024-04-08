@@ -8,10 +8,11 @@ import Categories from '../components/categories';
 import featuredRow from '../components/featuredRow';
 import { featured } from '../constants';
 import FeaturedRow from '../components/featuredRow';
-import Navigation from '../Navigation';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen() {
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f4f4f4' }}>
             <StatusBar barStyle="dark-content" />
@@ -21,7 +22,7 @@ export default function HomeScreen() {
                     <Icon.Search height={25} width={25} stroke="gray" />
                     <TextInput placeholder="Restaurants" style={{ marginLeft: 8, flex: '1 1 0%', color: "#D3D3D3" }} />
                     <View style={{ paddingLeft: "0.5rem", marginLeft: '0.25rem', flexDirection: "row", alignItems: "center", borderWidth: 0, borderLeftWidth: 2, borderColor: 'rgb(209 213 219)' }}>
-                        <TouchableOpacity style={{ flexDirection: "row" }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('Maps') }} style={{ flexDirection: "row" }}>
                             <Icon.MapPin height={20} width={20} stroke="gray" />
                             <Text style={{ color: 'rgb(82 82 91)' }}> New York, NYC</Text>
                         </TouchableOpacity>
