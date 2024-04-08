@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, StatusBar } from 'react-native';
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
@@ -8,14 +8,15 @@ import DishRow from '../components/dishRow';
 import CartIcon from '../components/cartIcon';
 
 export default function RestaurantScreen() {
-    const route = useRoute(); // hook useRoute pour accéder à l'objet route
-    const { name } = route.params;
+    // const route = useRoute(); // hook useRoute pour accéder à l'objet route
+    // const { name } = route.params;
     const navigation = useNavigation();
-    console.log('Restaurant :', name);
+    // console.log('Restaurant :', name);
 
     return (
         <>
             <CartIcon />
+            <StatusBar style="light" />
             <View>
                 <ScrollView>
                     <View style={{ position: 'relative' }}>

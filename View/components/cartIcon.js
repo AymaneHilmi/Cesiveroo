@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CartIcon() {
+    const navigation = useNavigation();
     return (
         <View style={{
             position: 'absolute',
@@ -12,6 +14,7 @@ export default function CartIcon() {
             justifyContent: 'center'
         }}>
             <TouchableOpacity
+                onPressIn={() => navigation.navigate('Cart')}
                 style={{
                     backgroundColor: themeColors.bgColor(1), padding: '1rem',
                     paddingTop: '0.75rem',
@@ -20,7 +23,7 @@ export default function CartIcon() {
                     marginRight: '1.25rem',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignRtems: 'center',
+                    alignItems: 'center',
                     borderRadius: 9999,
                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
                 }}
@@ -36,10 +39,13 @@ export default function CartIcon() {
                 </View>
 
                 <Text style={{
-                    flex: '1 1 0%', fontSize: '1.125rem', lineHeight: '1.75rem',
+                    fontSize: '1.125rem', lineHeight: '1.75rem',
                     fontWeight: 800, textAlign: 'center', color: '#ffffff',
                 }}>View Cart</Text>
+
+
                 <Text style={{ fontSize: '1.125rem', lineHeight: '1.75rem', fontWeight: 800, color: 'white' }}>$22,99</Text>
+
 
             </TouchableOpacity>
 

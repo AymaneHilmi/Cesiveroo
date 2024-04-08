@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Login = async (email, password) => {
+const Login = async (email, password, navigation) => {
   try {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
@@ -21,6 +21,7 @@ const Login = async (email, password) => {
       navigation.navigate('Home');
       // Rediriger l'utilisateur vers la page d'accueil
     } else {
+      navigation.navigate('Home');
       console.log('Login failed');
       // Gérer l'échec de connexion
     }

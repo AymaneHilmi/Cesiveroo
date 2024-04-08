@@ -38,7 +38,10 @@ export default function HomeScreen() {
 
                 {/* categories */}
                 <Categories />
-
+                <View style={{ marginTop: 20, marginLeft: 20 }}>
+                    <Text style={{ fontSize: 20 }}>Good Morning,</Text>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: themeColors.primary }}>Clement FORNES</Text>
+                </View>
                 {/* featured */}
                 <View style={{ marginTop: 20 }}>
                     {
