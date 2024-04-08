@@ -8,7 +8,7 @@ const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const commandesRoutes = require('./routes/commandeRoutes');
 const commercialRoutes = require('./routes/commercialRoutes');
-const { authenticateClient, authorizeCommercial } = require('./middlewares');
+const { authenticate, authorizeCommercial, authorizeLivreur, authorizeClient } = require('./middlewares');
 const cors = require('cors');
 // Générer un secret pour les tokens JWT
 const app = express();
@@ -35,34 +35,41 @@ sql.connect(config, (err) => {
   }
 });
 
+// Routes des clients
+app.use('/api/clients', clientRoutes);
 // Middleware d'authentification pour les clients
-app.use('/api/clients', authenticateClient);
-// Middleware d'authentification pour les commerciaux
-app.use('/api/commercial', authenticateClient);
+app.use('/api/clients', authenticate);
+// Middleware d'autorisation pour les clients
+app.use('/api/clients', authorizeClient);
 
+// Routes des commerciaux
+app.use('/api/commercial', commercialRoutes);
+// Middleware d'authentification pour les commerciaux
+app.use('/api/commercial', authenticate);
 // Middleware d'autorisation pour les commerciaux
 app.use('/api/commercial', authorizeCommercial);
 
-// Routes des clients
-app.use('/api/clients', clientRoutes);
-// Routes des commerciaux
-app.use('/api/commercial', commercialRoutes);
+// Routes des livreurs
+app.use('/api/livreurs', livreurRoutes);
+// Middleware d'authentification pour les livreurs
+app.use('/api/livreurs', authenticate);
+// Middleware d'autorisation pour les livreurs
+app.use('/api/livreurs', authorizeLivreur);
+
+
+
+
 
 
 // Routes des restaurants
 app.use('/api/restaurants', restaurantsRoutes);
-
 // Routes des articles
 app.use('/api/articles', articleRoutes);
 
 // Routes des menus
 app.use('/api/menus', menuRoutes);
-
 // Routes des livreurs
-app.use('/api/livreurs', livreurRoutes);
-
-// Routes des livreurs
-app.use('/api/commandes', commandesRoutes);
+// app.use('/api/commandes', commandesRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {

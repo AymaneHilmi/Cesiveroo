@@ -8,10 +8,10 @@ import DishRow from '../components/dishRow';
 import CartIcon from '../components/cartIcon';
 
 export default function RestaurantScreen() {
-    const route = useRoute(); // hook useRoute pour accéder à l'objet route
-    const { name } = route.params;
+    // const route = useRoute(); // hook useRoute pour accéder à l'objet route
+    // const { name } = route.params;
     const navigation = useNavigation();
-    console.log('Restaurant :', name);
+    // console.log('Restaurant :', name);
 
     return (
         <>

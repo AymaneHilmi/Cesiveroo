@@ -34,13 +34,15 @@ export default function CartIcon() {
                         3
                     </Text>
                 </View>
-
-                <Text style={{
-                    flex: '1 1 0%', fontSize: '1.125rem', lineHeight: '1.75rem',
-                    fontWeight: 800, textAlign: 'center', color: '#ffffff',
-                }}>View Cart</Text>
-                <Text style={{ fontSize: '1.125rem', lineHeight: '1.75rem', fontWeight: 800, color: 'white' }}>$22,99</Text>
-
+                <View style={{
+                    alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between',
+                }}>
+                    <Text style={{
+                        fontSize: '1.125rem', lineHeight: '1.75rem',
+                        fontWeight: 800, textAlign: 'center', color: '#ffffff',
+                    }}>View Cart</Text>
+                    <Text style={{ fontSize: '1.125rem', lineHeight: '1.75rem', fontWeight: 800, color: 'white' }}>$22,99</Text>
+                </View>
             </TouchableOpacity>
 
         </View>
