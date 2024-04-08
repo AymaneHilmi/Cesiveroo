@@ -25,6 +25,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
         if (response.data.id) {
             console.log('Registration successful');
             console.log(response.data.id);
+            navigation.navigate('Home');
         } else {
             console.log('Registration failed');
             // Gérer l'échec de création
