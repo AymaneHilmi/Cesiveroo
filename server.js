@@ -6,6 +6,7 @@ const menuRoutes = require('./routes/menuRoutes');
 // const commercialRoutes = require('./routes/commercialRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
+const commandesRoutes = require('./routes/commandeRoutes');
 const commercialRoutes = require('./routes/commercialRoutes');
 const { authenticateClient, authorizeCommercial } = require('./middlewares');
 const cors = require('cors');
@@ -59,6 +60,9 @@ app.use('/api/menus', menuRoutes);
 
 // Routes des livreurs
 app.use('/api/livreurs', livreurRoutes);
+
+// Routes des livreurs
+app.use('/api/commandes', commandesRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {

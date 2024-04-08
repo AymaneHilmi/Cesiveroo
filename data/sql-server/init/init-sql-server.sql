@@ -100,16 +100,15 @@ END
 IF OBJECT_ID('Commandes', 'U') IS NULL
 BEGIN
     CREATE TABLE Commandes (
-        CommandeID NVARCHAR(36) PRIMARY KEY,
+        CommandeID INT PRIMARY KEY IDENTITY(1,1),
         ClientID NVARCHAR(36),
         LivreurID NVARCHAR(36),
-        ArticleID INT,
+        status NVARCHAR(50),
         orderDate DATETIME,
         deliveryDate DATETIME,
         price DECIMAL(10, 2),
         FOREIGN KEY (ClientID) REFERENCES Clients(ClientID),
-        FOREIGN KEY (LivreurID) REFERENCES Livreurs(LivreurID),
-        FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID)
+        FOREIGN KEY (LivreurID) REFERENCES Livreurs(LivreurID)
     );
     PRINT 'La table Commandes a été créée avec succès.';
 END
@@ -139,5 +138,35 @@ BEGIN
         FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID)
     );
     PRINT 'La table ArticlesMenus a été créée avec succès.';
+END
+GO
+
+-- Création de la table CommandeArticles pour associer les articles aux commandes
+IF OBJECT_ID('CommandeArticles', 'U') IS NULL
+BEGIN
+    CREATE TABLE CommandeArticles (
+        CommandeArticleID INT PRIMARY KEY IDENTITY(1,1),
+        CommandeID NVARCHAR(36),
+        ArticleID INT,
+        Quantity INT,
+        FOREIGN KEY (CommandeID) REFERENCES Commandes(CommandeID),
+        FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID)
+    );
+    PRINT 'La table CommandeArticles a été créée avec succès.';
+END
+GO
+
+-- Création de la table CommandeMenus pour associer les menus aux commandes
+IF OBJECT_ID('CommandeMenus', 'U') IS NULL
+BEGIN
+    CREATE TABLE CommandeMenus (
+        CommandeMenuID INT PRIMARY KEY IDENTITY(1,1),
+        CommandeID NVARCHAR(36),
+        MenuID INT,
+        Quantity INT,
+        FOREIGN KEY (CommandeID) REFERENCES Commandes(CommandeID),
+        FOREIGN KEY (MenuID) REFERENCES Menus(MenuID)
+    );
+    PRINT 'La table CommandeMenus a été créée avec succès.';
 END
 GO

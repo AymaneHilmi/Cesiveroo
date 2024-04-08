@@ -34,3 +34,28 @@ exports.authorizeCommercial = (req, res, next) => {
     return res.status(403).json({ message: 'Unauthorized' });
   }
 };
+
+// Middleware d'authentification pour les livreurs
+exports.authenticateLivreur = (req, res, next) => {
+  // Récupérer le token d'authentification
+  const token = req.headers.authorization;
+  // Vérifier si le token a été fourni et si c'est une requête POST ou d'inscription de client pour ne pas bloquer l'accès
+  if (!token && req.method !== 'POST' && req.path !== '/api/livreurs/register' && req.path !== '/api/livreurs/login') {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+  // Si le token n'est pas fourni, passer à la prochaine fonction middleware
+  if (!token) {
+    return next();
+  }
+  // Extraire le token de la chaîne 'Bearer token'
+  const bearer = token.split(' ')[1];
+
+  // Vérifier et décoder le token
+  jwt.verify(bearer, secret, (err, decoded) => {
+    if (err && req.method !== 'POST' && req.path !== '/api/livreurs/register' && req.path !== '/api/livreurs/login') {
+      return res.status(401).json({ message: 'Invalid token', error: err});
+    }
+    req.livreur = decoded;
+    next();
+  });
+};
