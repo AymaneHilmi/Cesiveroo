@@ -3,12 +3,11 @@ const sql = require('mssql');
 const clientRoutes = require('./routes/clientRoutes');
 const restaurantsRoutes = require('./routes/restaurantRoutes');
 const menuRoutes = require('./routes/menuRoutes');
-// const commercialRoutes = require('./routes/commercialRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const commandesRoutes = require('./routes/commandeRoutes');
 const commercialRoutes = require('./routes/commercialRoutes');
-const { authenticate, authorizeCommercial, authorizeLivreur, authorizeClient } = require('./middlewares');
+const { authenticate, authorizeCommercial, authorizeLivreur, authorizeClient, authorizeRestaurant } = require('./middlewares');
 const cors = require('cors');
 // Générer un secret pour les tokens JWT
 const app = express();
@@ -57,17 +56,23 @@ app.use('/api/livreurs', authenticate);
 app.use('/api/livreurs', authorizeLivreur);
 
 
-
-
-
-
 // Routes des restaurants
 app.use('/api/restaurants', restaurantsRoutes);
-// Routes des articles
-app.use('/api/articles', articleRoutes);
+// Middleware d'authentification pour les restaurants
+app.use('/api/restaurants', authenticate);
+// Middleware d'autorisation pour les restaurants
+app.use('/api/restaurants', authorizeRestaurant);
 
 // Routes des menus
 app.use('/api/menus', menuRoutes);
+// Middleware d'autorisation pour les menu
+app.use('/api/menus', authorizeRestaurant);
+
+// Routes des articles
+app.use('/api/articles', articleRoutes);
+// Middleware d'autorisation pour les articles
+app.use('/api/articles', authorizeRestaurant);
+
 // Routes des livreurs
 // app.use('/api/commandes', commandesRoutes);
 

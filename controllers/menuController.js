@@ -81,6 +81,7 @@ exports.updateMenu = async (req, res) => {
   }
 };
 
+
 // Supprimer un menu
 exports.deleteMenu = async (req, res) => {
   try {

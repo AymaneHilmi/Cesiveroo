@@ -80,3 +80,16 @@ exports.authorizeCommercial = (req, res, next) => {
     return res.status(403).json({ message: 'Unauthorized' });
   }
 };
+
+// Middleware d'autorisation pour les restaurants
+exports.authorizeRestaurant = (req, res, next) => {
+  // Si la route est login ou register, passer à la prochaine fonction middleware
+  if (req.path === '/register' || req.path === '/login') {
+    return next();
+    // Vérifier si le restaurant est le bon et souhaite accéder à ses propres données
+  } else if (req.path === ('/' + req.client.id) && req.role === 'restaurant'){
+    return next(); 
+  } else {
+    return res.status(403).json({ message: 'Unauthorized' });
+  }
+};

@@ -6,7 +6,7 @@ const livreurController = require('../controllers/livreurController');
 const { authenticate, authorizeLivreur } = require('../middlewares');
 
 // Route pour récupérer tous les livreurs
-router.get('/', livreurController.getAllLivreurs);
+router.get('/', authenticate, authorizeLivreur, livreurController.getAllLivreurs);
 
 // Route pour récupérer un livreur par ID
 router.get('/:id',  authenticate, authorizeLivreur, livreurController.getLivreurById);

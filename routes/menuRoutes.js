@@ -11,6 +11,7 @@ router.get('/:id', menuController.getMenuById);
 // Route pour créer un nouveau client
 router.post('/', menuController.createMenu);
 
+
 // Route pour mettre à jour un client existant
 router.put('/:id', menuController.updateMenu);
 
