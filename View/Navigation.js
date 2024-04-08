@@ -10,6 +10,7 @@ import LoginPage from './screens/LoginScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignScreen from './screens/SignScreen';
 import MapsScreen from './screens/MapsScreen';
+import CartScreen from './screens/CartScreen';
 
 export default function Navigation() {
     return (
@@ -17,11 +18,12 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
+                <Stack.Screen name="Restaurant" component={RestaurantScreen} />
                 <Stack.Screen name="Sign In" component={SignScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Restaurant" component={RestaurantScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
+                <Stack.Screen name="Cart" options={{ presentation: 'modal' }} component={CartScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

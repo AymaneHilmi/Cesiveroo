@@ -1,4 +1,4 @@
- import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, StatusBar } from 'react-native';
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
@@ -16,6 +16,7 @@ export default function RestaurantScreen() {
     return (
         <>
             <CartIcon />
+            <StatusBar style="light" />
             <View>
                 <ScrollView>
                     <View style={{ position: 'relative' }}>
