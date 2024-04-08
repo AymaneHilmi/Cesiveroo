@@ -1,52 +1,40 @@
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Rectangle } from 'react-leaflet';
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
-const center = [51.505, -0.09]; // Centre de la carte
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-elements';
 
-function MapScreen() {
-  const [rectangleBounds, setRectangleBounds] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+const MapScreen = () => {
+    const navigation = useNavigation();
+    const [region, setRegion] = useState({
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+    });
 
-  // Fonction pour effectuer une recherche
-  const handleSearch = async (query) => {
-    const provider = new OpenStreetMapProvider();
-    const results = await provider.search({ query });
-    if (results.length > 0) {
-      const { x, y } = results[0];
-      // Définir le rectangle aux coordonnées du résultat de la recherche
-      setRectangleBounds([[y - 0.01, x - 0.01], [y + 0.01, x + 0.01]]);
-    }
-  };
-
-  return (
-    <div style={{ height: '100vh' }}>
-      {/* Barre de recherche */}
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleSearch(searchQuery);
-          }
-        }}
-      />
-
-      {/* Carte */}
-      <MapContainer center={center} zoom={13} style={{ height: '80%', width: '100%' }}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        {/* Rectangle */}
-        {rectangleBounds && <Rectangle bounds={rectangleBounds} color="red" />}
-
-      </MapContainer>
-    </div>
-  );
+    return (
+        <View style={styles.container}>
+            <MapView
+                style={styles.map}
+                region={region}
+                onRegionChangeComplete={region => setRegion(region)}
+            >
+                <Marker
+                    coordinate={{
+                        latitude: region.latitude,
+                        longitude: region.longitude
+                    }}
+                    title="Your Location"
+                    description="You are here"
+                />
+            </MapView>
+            <Button
+                title="Go to Home"
+                onPress={() => navigation.navigate('Home')}
+            />
+        </View>
+    );
 }
-
 export default MapScreen;
