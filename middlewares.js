@@ -52,6 +52,8 @@ exports.authorizeClient = (req, res, next) => {
   console.log(req.path)
   console.log(req.client.id)
   console.log(req.role)
+  console.log('Email :', req.client.email)
+  console.log('Path :', req.path)
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le client est le bon et souhaite accéder à ses propres données
@@ -59,6 +61,8 @@ exports.authorizeClient = (req, res, next) => {
     return next(); 
   } else if (req.role === 'commercial') {
     next();
+  } else if ('/email/' + req.client.email === req.path) {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }
