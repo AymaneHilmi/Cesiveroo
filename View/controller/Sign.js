@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // inscrire un utilisateur
-const Register = async (name, email, phone, streetNumber, streetName, city, postalCode, password) => {
+const Register = async (name, email, phone, streetNumber, streetName, city, postalCode, password, navigation) => {
     try {
         // Envoyer une requête POST au backend avec les informations de connexion
         console.log('Registering...');
