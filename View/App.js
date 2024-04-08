@@ -5,6 +5,6 @@ import { LogIn } from 'react-native-feather';
 
 export default function App() {
   return (
-    <Navigation />
+    <Navigation/>
   )
 }

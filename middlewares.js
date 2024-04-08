@@ -25,6 +25,8 @@ exports.authenticate = (req, res, next) => {
     }
     // Ajouter les informations du client à la requête
     req.client = decoded;
+    req.client.id = decoded.id;
+    console.log(req.client.id)
     // Ajouter le rôle du client à la requête
     req.role = decoded.role;
     next();
