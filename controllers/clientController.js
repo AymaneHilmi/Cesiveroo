@@ -167,4 +167,20 @@ exports.getClientByEmail = async (req, res) => {
   }
 };
 
+// Fonction pour vérifier un token JWT et récupérer les détails du client à partir du token
+exports.verifyToken = async (req, res) => {
+  try {
+    console.log(req.client)
+    // Récuperer le mail à partir du middleware
+    const decoded = req.client;
+    // Récupérer les détails du client à partir de la base de données
+    const client = await Client.getByEmail(decoded.email);
+    // Enlever le mot de passe du client
+    delete client.hashedPassword;
+    res.status(200).json(client);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Path: models/clientModel.js
