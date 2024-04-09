@@ -55,16 +55,12 @@ exports.createLivreur = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password } = req.body;
 
-    // Vérifiez d'abord si un livreur avec le même email existe déjà
-    const emailCheckQuery = `SELECT * FROM Livreurs WHERE email = '${email}'`;
-    const existingEmail = await executeQuery(emailCheckQuery);
-
-    if (existingEmail.length > 0) {
-      // Si un livreur avec cet email existe déjà, retournez un message d'erreur
-      return res.status(400).json({ message: "Email already exists. Please use a different email." });
+    // Vérifier si un livreur avec le même email existe déjà
+    const existingLivreur = await Livreur.getByEmail(email);
+    if (existingLivreur) {
+      return res.status(400).json({ message: 'Livreur already exists' });
     }
-
-    // Si l'email n'est pas déjà pris, procédez à la création du livreur
+    
     const livreurId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = `
@@ -113,7 +109,7 @@ exports.loginLivreur = async (req, res) => {
     if (!livreur) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-    const isPasswordValid = await bcrypt.compare(password, livreur.hashedPassword);
+    const isPasswordValid = await Livreur.checkPassword(email, password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }

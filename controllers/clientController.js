@@ -153,4 +153,18 @@ exports.suspendClient = async (req, res) => {
   }
 };
 
+// Fonction pour récupérer un client par son email depuis la base de données
+exports.getClientByEmail = async (req, res) => {
+  try {
+    const query = `SELECT * FROM Clients WHERE email = '${req.params.email}'`;
+    const client = await executeQuery(query);
+    if (!client[0]) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+    res.status(200).json(client[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Path: models/clientModel.js

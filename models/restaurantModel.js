@@ -1,4 +1,7 @@
 const sql = require('mssql');
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+
 // Connexion à SQL Server
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -8,78 +11,64 @@ const config = {
   database: 'Cesiveroo', // Nom de la base de données
   encrypt: false, // Désactivation du cryptage, à adapter en fonction de vos besoins de sécurité
 };
-
-// Définition du schéma du Restaurant
-const restaurantSchema = {
-  name: {
-    type: sql.NVarChar,
-    required: true
-  },
-  email: {
-    type: sql.NVarChar,
-    required: true
-  },
-  phone: {
-    type: sql.NVarChar,
-    required: true
-  },
-  address: {
-    streetNumber: {
-      type: sql.NVarChar,
-      required: true,
-    },
-    streetName: {
-      type: sql.NVarChar,
-      required: true,
-    },
-    city: {
-      type: sql.NVarChar,
-      required: true,
-    },
-    postalCode: {
-      type: sql.NVarChar,
-      required: true,
-    },
-  },
-    bankInfo: {
-      type: sql.NVarChar,
-      required: true,
-    },
-    password: {
-      type: sql.NVarChar,
-      required: true
-    }
-};
-
 // Définition du modèle SQL
 const Restaurant = {
   tableName: 'Restaurants',
-  columns: Object.keys(restaurantSchema).join(','),
+  columns: ['RestaurantID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'bankInfo', 'hashedPassword'],
 };
 
-// Fonction pour insérer un client dans la base de données
 Restaurant.create = async (restaurantData) => {
   try {
-    const keys = Object.keys(restaurantData).join(',');
-    const values = Object.values(restaurantData).map(val => typeof val === 'string' ? `'${val}'` : val).join(',');
-    const query = `INSERT INTO ${Restaurant.tableName} (${keys}) VALUES (${values})`;
+    const hashedPassword = await bcrypt.hash(restaurantData.password, 10);
+    const restaurantId = uuidv4();
+    const { name, email, phone, address, bankInfo } = restaurantData;
     const pool = await sql.connect(config);
-    await pool.request().query(query);
+    const request = pool.request();
+    await request.input('RestaurantID', sql.UniqueIdentifier, restaurantId);
+    await request.input('name', sql.NVarChar, name);
+    await request.input('email', sql.NVarChar, email);
+    await request.input('phone', sql.NVarChar, phone);
+    await request.input('streetNumber', sql.NVarChar, address.streetNumber);
+    await request.input('streetName', sql.NVarChar, address.streetName);
+    await request.input('city', sql.NVarChar, address.city);
+    await request.input('postalCode', sql.NVarChar, address.postalCode);
+    await request.input('bankInfo', sql.NVarChar, bankInfo);
+    await request.input('hashedPassword', sql.NVarChar, hashedPassword);
+    const query = `INSERT INTO ${Restaurant.tableName} (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, hashedPassword) 
+                   VALUES (@RestaurantID, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @bankInfo, @hashedPassword)`;
+    await request.query(query);
   } catch (err) {
     throw new Error(err.message);
   }
-};
+}
 
 // Fonction pour récupérer un client par son email depuis la base de données
 Restaurant.getByEmail = async (email) => {
   try {
     const pool = await sql.connect(config);
-    const result = await pool.request().query(`SELECT * FROM ${Restaurant.tableName} WHERE email = '${email}'`);
+    const request = pool.request();
+    request.input('email', sql.NVarChar, email);
+    const query = `SELECT * FROM ${Restaurant.tableName} WHERE email = @email`;
+    const result = await request.query(query);
     return result.recordset[0];
   } catch (err) {
     throw new Error(err.message);
   }
-};
+}
+
+// Fonction pour vérifier le mot de passe d'un restaurant
+Restaurant.checkPassword = async (email, password) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    request.input('email', sql.NVarChar, email);
+    const query = `SELECT hashedPassword FROM ${Restaurant.tableName} WHERE email = @email`;
+    const result = await request.query(query);
+    return await bcrypt.compare(password, result.recordset[0].hashedPassword);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
 
 // Export du modèle
 module.exports = Restaurant;

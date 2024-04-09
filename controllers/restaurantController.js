@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Restaurant = require('../models/restaurantModel');
+const secret = require('../secret');
 
 // Connexion à SQL Server
 const config = {
@@ -54,7 +55,11 @@ exports.getRestaurantById = async (req, res) => {
 exports.createRestaurant = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password } = req.body;
-
+    // Vérifier si un restaurant avec le même email existe déjà
+    const existingRestaurant = await Restaurant.getByEmail(email);
+    if (existingRestaurant) {
+      return res.status(400).json({ message: 'Restaurant already exists' });
+    }
     // Générer un identifiant unique pour le restaurant
     const restaurantId = uuidv4();
 
@@ -96,9 +101,10 @@ exports.updateRestaurant = async (req, res) => {
 exports.deleteRestaurant = async (req, res) => {
   try {
     const query = `DELETE FROM Restaurants WHERE RestaurantID = '${req.params.id}'`;
-    const restaurant = await executeQuery(query);
-    res.status(200).json({ message: 'Restaurant deleted successfully' });
-  } catch (err) {
+    await executeQuery(query);
+    res.status(200).json({ message: 'Restaurant deleted successfully, id: ' + req.params.id });
+  }
+  catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
@@ -113,15 +119,15 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     // Vérifiez si le mot de passe est correct
-    const isPasswordValid = await bcrypt.compare(password, restaurant.hashedPassword);
-    if (!isPasswordValid) {
+    const validPassword = await Restaurant.checkPassword(email, password);
+    if (!validPassword) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    let role = 'restaurant';
     // Générer un token JWT
     const token = jwt.sign({ email: restaurant.email, id: restaurant
-          .RestaurantID }, 'secret', { expiresIn: '1h' });
+          .RestaurantID,role: role }, secret, { expiresIn: '1h' });
     res.status(200).json({ token });
-
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

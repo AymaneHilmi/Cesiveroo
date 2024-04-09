@@ -25,6 +25,8 @@ exports.authenticate = (req, res, next) => {
     }
     // Ajouter les informations du client à la requête
     req.client = decoded;
+    req.client.id = decoded.id;
+    console.log(req.client.id)
     // Ajouter le rôle du client à la requête
     req.role = decoded.role;
     next();
@@ -50,6 +52,8 @@ exports.authorizeClient = (req, res, next) => {
   console.log(req.path)
   console.log(req.client.id)
   console.log(req.role)
+  console.log('Email :', req.client.email)
+  console.log('Path :', req.path)
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le client est le bon et souhaite accéder à ses propres données
@@ -57,6 +61,8 @@ exports.authorizeClient = (req, res, next) => {
     return next(); 
   } else if (req.role === 'commercial') {
     next();
+  } else if ('/email/' + req.client.email === req.path) {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }
@@ -69,6 +75,19 @@ exports.authorizeCommercial = (req, res, next) => {
     return next();
     // Vérifier si le commercial est le bon et souhaite accéder à ses propres données
   } else if (req.path === ('/' + req.client.id) && req.role === 'commercial'){
+    return next(); 
+  } else {
+    return res.status(403).json({ message: 'Unauthorized' });
+  }
+};
+
+// Middleware d'autorisation pour les restaurants
+exports.authorizeRestaurant = (req, res, next) => {
+  // Si la route est login ou register, passer à la prochaine fonction middleware
+  if (req.path === '/register' || req.path === '/login') {
+    return next();
+    // Vérifier si le restaurant est le bon et souhaite accéder à ses propres données
+  } else if (req.path === ('/' + req.client.id) && req.role === 'restaurant'){
     return next(); 
   } else {
     return res.status(403).json({ message: 'Unauthorized' });

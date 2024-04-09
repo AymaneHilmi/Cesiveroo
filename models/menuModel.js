@@ -1,4 +1,6 @@
 const sql = require('mssql');
+const { v4: uuidv4 } = require('uuid');
+
 // Connexion à SQL Server
 const config = {
   user: 'SA', // Nom d'utilisateur de la base de données
@@ -8,55 +10,31 @@ const config = {
   database: 'Cesiveroo', // Nom de la base de données
   encrypt: false, // Désactivation du cryptage, à adapter en fonction de vos besoins de sécurité
 };
-// Définition du schéma du Menu
-const menuSchema = {
-  restaurantId: {
-    type: sql.NVarChar,
-    required: true
-  },
-  name: {
-    type: sql.NVarChar,
-    required: true
-  },
-  price: {
-    type: sql.Decimal(10, 2),
-    required: true
-  },
-};
+
 
 // Définition du modèle SQL
 const Menu = {
   tableName: 'Menus',
-  columns: Object.keys(menuSchema).join(','),
+  columns: ['MenuID', 'RestaurantID', 'Name', 'Price'],
 };
 
+
 // Fonction pour insérer un menu dans la base de données
-Menu.create = async ({ restaurantId, name, price }) => {
+Menu.create = async (menuData) => {
   try {
-    // Create a new connection pool
+    const menuId = uuidv4();
+    const { restaurantId, name, price } = menuData;
     const pool = await sql.connect(config);
-
-    // Create a new request
     const request = pool.request();
-
-    // Add input parameters to the request
-    request.input('restaurantId', sql.NVarChar, restaurantId);
-    request.input('name', sql.NVarChar, name);
-    request.input('price', sql.Decimal(10, 2), price);
-
-    // Execute the insert query using template literals
-    const result = await request.query(`
-            INSERT INTO ${Menu.tableName} (RestaurantID, Name, Price)
-            OUTPUT Inserted.MenuID, Inserted.RestaurantID, Inserted.Name, Inserted.Price
-            VALUES (@restaurantId, @name, @price)
-        `);
-
-    // Return the inserted menu with the new MenuID
-    return result.recordset[0];
+    await request.input('MenuID', sql.UniqueIdentifier, menuId);
+    await request.input('RestaurantID', sql.NVarChar, restaurantId);
+    await request.input('Name', sql.NVarChar, name);
+    await request.input('Price', sql.Decimal(10, 2), price);
+    const query = `INSERT INTO ${Menu.tableName} (MenuID, RestaurantID, Name, Price)
+                    VALUES (@MenuID, @RestaurantID, @Name, @Price)`;
+    await request.query(query);
   } catch (err) {
     throw new Error(err.message);
-  } finally {
-    sql.close();
   }
 };
 

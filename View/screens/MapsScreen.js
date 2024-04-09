@@ -39,7 +39,7 @@ export default function MapsScreen() {
                 />
             </MapView>
         </View>
-    )
+    );
 }
 const styles = StyleSheet.create({
     container: {
