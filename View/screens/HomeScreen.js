@@ -18,9 +18,9 @@ export default function HomeScreen() {
             <StatusBar barStyle="dark-content" />
             {/* Barre de recherche (À implémenter la fonctionnalité si on a le temps) */}
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', flex: '1 1 0%', alignItems: 'center', padding: 12, borderRadius: 999, borderWidth: 2, borderColor: 'rgb(209 213 219)' }}>
+                <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', padding: 12, borderRadius: 999, borderWidth: 2, borderColor: 'rgb(209 213 219)' }}>
                     <Icon.Search height={25} width={25} stroke="gray" />
-                    <TextInput placeholder="Restaurants" style={{ marginLeft: 8, flex: '1 1 0%', color: "#D3D3D3" }} />
+                    <TextInput placeholder="Restaurants" style={{ marginLeft: 8, flex: 1, color: "#D3D3D3" }} />
                     <View style={{ paddingLeft: 8, marginLeft: 4, flexDirection: "row", alignItems: "center", borderWidth: 0, borderLeftWidth: 2, borderColor: 'rgb(209 213 219)' }}>
                         <TouchableOpacity onPress={() => { navigation.navigate('Maps') }} style={{ flexDirection: "row" }}>
                             <Icon.MapPin height={20} width={20} stroke="gray" />
