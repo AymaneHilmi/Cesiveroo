@@ -24,7 +24,7 @@ export default function RestaurantScreen() {
                         <TouchableOpacity
                             onPress={() => navigation.goBack()}
                             style={{
-                                position: 'absolute', left: '1rem', top: '3.5rem', padding: '0.5rem',
+                                position: 'absolute', left: 16, top: 56, padding: 8,
                                 borderRadius: 9999, backgroundColor: '#F9FAFB',
                                 boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                             }}>
@@ -32,43 +32,43 @@ export default function RestaurantScreen() {
                         </TouchableOpacity>
                     </View>
                     <View style={{
-                        borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingTop: '1.5rem',
-                        marginTop: '-3rem', backgroundColor: '#ffffff',
+                        borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingTop: 24,
+                        marginTop: -48, backgroundColor: '#ffffff'
                     }}>
-                        <View style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem', }}>
-                            <Text style={{ fontSize: '1.875rem', lineHeight: '2.25rem', fontWeight: 700, }}>Papa Johns</Text>
+                        <View style={{ paddingLeft: 20, paddingRight: 20, }}>
+                            <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: 700, }}>Papa Johns</Text>
                             {/* copy this code from restaurant card */}
                             <View style={{
-                                marginTop: '0.25rem', marginBottom: '0.25rem',
+                                marginTop: 4, marginBottom: 4,
                                 flexDirection: 'row',
                             }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                     <Image source={require('../assets/images/fullStar.png')}
-                                        style={{ width: '1rem', height: '1rem' }} />
-                                    <Text style={{ fontSize: '0.75rem', lineHeight: '1rem' }}>
-                                        <Text className="text-green-700">4</Text>
+                                        style={{ width: 20, height: 20 }} />
+                                    <Text style={{ fontSize: 12, lineHeight: 16, marginLeft: 5 }}>
+                                        <Text style={{ color: '#fbd553', fontWeight: 'bold' }}>4</Text>
                                         <Text className="text-gray-700"> (4.6k review)</Text> · <Text style={{ color: '#047857', }} className="font-semibold">Fast-Food</Text>
                                     </Text>
                                 </View>
-                                <View style={{ marginLeft: '0.25rem', flexDirection: 'row', alignItems: 'center', }}>
-                                    <Icon.MapPin color="gray" style={{ width: '1rem', height: '1rem' }} />
-                                    <Text style={{ marginLeft: 5, fontSize: '0.75rem', lineHeight: '1rem' }}> Nearby · 2 place Martin Luther King</Text>
+                                <View style={{ marginLeft: 4, flexDirection: 'row', alignItems: 'center', }}>
+                                    <Icon.MapPin color="gray" style={{ marginLeft: 5, width: 1000 }} />
+                                    <Text style={{ marginLeft: 5, fontSize: 14, lineHeight: 16 }}> Nearby · 2 second street</Text>
                                 </View>
                             </View>
-                            <Text style={{ marginTop: '0.5rem', color: '#6B7280' }}>Hot and Spicy pizzas</Text>
+                            <Text style={{ marginTop: 8, color: '#6B7280' }}>Hot and Spicy pizzas</Text>
                         </View>
                     </View>
                     <View style={{
-                        paddingBottom: '9rem',
+                        paddingBottom: 144,
                         backgroundColor: '#ffffff',
                     }}>
                         <Text style={{
-                            paddingTop: '1rem',
-                            paddingBottom: '1rem',
-                            paddingLeft: '1rem',
-                            paddingRight: '1rem',
-                            fontSize: '1.5rem',
-                            lineHeight: '2rem',
+                            paddingTop: 16,
+                            paddingBottom: 16,
+                            paddingLeft: 16,
+                            paddingRight: 16,
+                            fontSize: 24,
+                            lineHeight: 32,
                             fontWeight: '700',
                         }}>Menu</Text>
                         {/* dishes */}

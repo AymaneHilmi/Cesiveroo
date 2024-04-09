@@ -1,7 +1,7 @@
 const pallete = [
     {   // orange
         text: '#20CFBE',
-        bgColor: opacity => `rgba(32, 207, 190, 1), ${opacity})`
+        bgColor: opacity => `rgba(32, 207, 190, ${opacity})`
     },
     {   // dark gray
         text: '#334155',
