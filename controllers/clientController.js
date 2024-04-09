@@ -65,7 +65,38 @@ exports.createClient = async (req, res) => {
 
     // Générer un identifiant unique pour le client
     const clientId = uuidv4();
-
+    // Vérifier si c'est un email
+    if (!email.includes('@')) {
+      return res.status(400).json({ message: 'Invalid email' });
+    }
+    // Vérifier si le mot de passe est valide (au moins 6 caractères avec des lettres et des chiffres)
+    if (password.length < 6 || !password.match(/[a-z]/) || !password.match(/[0-9]/)) {
+      return res.status(400).json({ message: 'Invalid password' });
+    }
+    // Vérifier si le numéro de téléphone est valide que des chiffres et 10 caractères
+    if (phone.length !== 10 || isNaN(phone)) {
+      return res.status(400).json({ message: 'Invalid phone number' });
+    }
+    // Vérifier si le code postal est valide (5 caractères et des chiffres)
+    if (postalCode.length !== 5 || isNaN(postalCode)) {
+      return res.status(400).json({ message: 'Invalid postal code' });
+    }
+    // Vérifier si le numéro de rue est valide (au moins 1 caractère et un nombre)
+    if (streetNumber.length === 0 || isNaN(streetNumber)) {
+      return res.status(400).json({ message: 'Invalid street number' });
+    }
+    // Vérifier si le nom de rue est valide (au moins 1 caractère)
+    if (streetName.length === 0) {
+      return res.status(400).json({ message: 'Invalid street name' });
+    }
+    // Vérifier si la ville est valide (au moins 1 caractère)
+    if (city.length === 0) {
+      return res.status(400).json({ message: 'Invalid city' });
+    }
+    // Vérifier si le nom est valide (au moins 1 caractère)
+    if (name.length === 0) {
+      return res.status(400).json({ message: 'Invalid name' });
+    }
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -162,6 +193,22 @@ exports.getClientByEmail = async (req, res) => {
       return res.status(404).json({ message: 'Client not found' });
     }
     res.status(200).json(client[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Fonction pour vérifier un token JWT et récupérer les détails du client à partir du token
+exports.verifyToken = async (req, res) => {
+  try {
+    console.log(req.client)
+    // Récuperer le mail à partir du middleware
+    const decoded = req.client;
+    // Récupérer les détails du client à partir de la base de données
+    const client = await Client.getByEmail(decoded.email);
+    // Enlever le mot de passe du client
+    delete client.hashedPassword;
+    res.status(200).json(client);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

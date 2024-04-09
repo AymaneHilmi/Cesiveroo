@@ -40,7 +40,7 @@ Client.create = async (clientData) => {
                    VALUES (@clientId, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @hashedPassword, @status)`;
     await request.query(query);
   } catch (err) {
-    throw new Error(err.message);
+    throw new Error('Erreur lors de la création du client : ' + err.message);
   }
 };
 
@@ -49,6 +49,17 @@ Client.getByEmail = async (email) => {
   try {
     const pool = await sql.connect(config);
     const result = await pool.request().input('email', sql.NVarChar, email).query(`SELECT * FROM ${Client.tableName} WHERE email = @email`);
+    return result.recordset[0];
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+// fonction pour récupérer un client par son ID depuis la base de données
+Client.getById = async (id) => {
+  try {
+    const pool = await sql.connect(config);
+    const result = await pool.request().input('id', sql.NVarChar, id).query(`SELECT * FROM ${Client.tableName} WHERE ClientID = @id`);
     return result.recordset[0];
   } catch (err) {
     throw new Error(err.message);

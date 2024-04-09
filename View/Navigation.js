@@ -31,7 +31,6 @@ export default function Navigation() {
                 <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
                 <Stack.Screen name="PreparingOrder" component={PreparingOrderScreen} />
                 <Stack.Screen name="Delivery" component={DeliveryScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
                 <Stack.Screen name="Cart" component={CartScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
