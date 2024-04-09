@@ -4,7 +4,7 @@ import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
-import { launchImageLibrary } from 'react-native-image-picker';
+
 
 export default function OrderHistory() {
     const navigation = useNavigation();
@@ -16,7 +16,7 @@ export default function OrderHistory() {
                 backgroundColor: '#ffffff'
             }} >
                 <TouchableOpacity
-                    onPress={navigation.goBack}
+                    onPress={navigation.goBack()}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
                         left: 8, top: 15, zIndex: 10, padding: 4, borderRadius: 9999,

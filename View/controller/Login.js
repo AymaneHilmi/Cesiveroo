@@ -10,7 +10,7 @@ const Login = async (email, password, navigation) => {
 
 
     // Connexion à l'API
-    const response = await axios.post("http://192.168.97.46:3000/api/clients/login", {
+    const response = await axios.post("http://172.20.10.2:3000/api/clients/login", {
       email: email,
       password: password
     });
@@ -23,7 +23,7 @@ const Login = async (email, password, navigation) => {
       // Verifier le token
       const token = await AsyncStorage.getItem('token');
       const verify = await axios.post(
-        "http://192.168.97.46:3000/api/clients/verify",
+        "http://172.20.10.2:3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {}, 
         {
@@ -33,7 +33,7 @@ const Login = async (email, password, navigation) => {
         }
       );
       console.log('Token verified')
-      console.log(verify.data)
+
       // Rediriger l'utilisateur vers la page d'accueil
       navigation.navigate('Home');
     } else {

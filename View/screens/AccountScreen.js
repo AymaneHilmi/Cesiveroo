@@ -5,9 +5,13 @@ import { themeColors } from '../theme';
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { red } from 'color-name';
+import Logout from '../controller/Logout';
 
 export default function AccountScreen() {
     const navigation = useNavigation();
+    const handleLogout = () => {
+        Logout(navigation);
+    };
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}
@@ -81,7 +85,7 @@ export default function AccountScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('Login') }}
+                onPress={handleLogout}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">

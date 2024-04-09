@@ -23,7 +23,6 @@ services:
     volumes:
       - sqlserver-data:/var/opt/sql-server
       - ./data/sql-server/init:/var/opt/sql-server/scripts
-
     networks:
       - backend-network
     command: 

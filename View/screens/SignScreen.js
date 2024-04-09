@@ -22,12 +22,45 @@ export default function SignScreen() {
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [password, setPassword] = useState("");
-
+    const [error, setError] = useState("");
     const navigation = useNavigation();
 
-    const handleSign = () => {
-        Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
-    };
+    const handleSign = async () => {
+        const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
+        const error = setError('');
+        console.log(response);
+        if (response === 'Invalid name') {
+            setError('Invalid name');
+            setName('');
+        } else if (response === 'Invalid email') {
+            setError('Invalid email');
+            setEmail('');
+        } else if (response === 'Invalid phone') {
+            setError('Invalid phone');
+            setPhone('');
+        } else if (response === 'Invalid street number') {
+            setError('Invalid street number');
+            setStreetNumber('');
+        } else if (response === 'Invalid street name') {
+            setError('Invalid street name');
+            setStreetName('');
+        } else if (response === 'Invalid city') {
+            setError('Invalid city');
+            setCity('');
+        } else if (response === 'Invalid postal code') {
+            setError('Invalid postal code');
+            setPostalCode('');
+        } else if (response === 'Invalid password') {
+            setError('Invalid password');
+            setPassword('');
+        } else if (response === 'Success registration') {
+            setError('Success registration');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
+        }
+    }
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
@@ -100,6 +133,7 @@ export default function SignScreen() {
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.forgot_button}>Already a Member?</Text>
             </TouchableOpacity>
+            <Text style={{ color: 'red' }}>{error}</Text>
             <TouchableOpacity onPress={handleSign} style={styles.loginBtn}>
                 <Text style={styles.loginText}>Sign In</Text>
             </TouchableOpacity>

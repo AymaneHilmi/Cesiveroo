@@ -16,10 +16,18 @@ import { Navigation } from "react-native-feather";
 export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [wrongPassword, setWrongPassword] = useState("");
     const navigation = useNavigation();
-    const handleLogin = () => {
-        Login(email, password, navigation);
+    const handleLogin = async () => {
+        const response = await Login(email, password, navigation);
+        if (response === 'Login failed') {
+            setWrongPassword('Wrong email or password');
+        } else {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+        }
     };
     return (
         <View style={styles.container}>
@@ -42,9 +50,10 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Sign')}>
                 <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>
+            <Text style={{ color: 'red' }}>{wrongPassword}</Text>
             <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
