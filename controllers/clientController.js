@@ -115,14 +115,14 @@ exports.createClient = async (req, res) => {
 // Mettre à jour un client
 exports.updateClient = async (req, res) => {
   try {
-    const { name, email, phone, streetNumber, streetName, city, postalCode } = req.body;
+    const { name, email, phone, streetNumber, streetName, city, postalCode, imgPath } = req.body;
     const query = `
       UPDATE Clients
       SET name = '${name}', email = '${email}', phone = '${phone}', 
-          streetNumber = '${streetNumber}', streetName = '${streetName}', city = '${city}', postalCode = '${postalCode}' 
+          streetNumber = '${streetNumber}', streetName = '${streetName}', city = '${city}', postalCode = '${postalCode}', imgPath = '${imgPath}' 
       WHERE ClientID = '${req.params.id}'`;
     await executeQuery(query);
-    res.status(200).json({ id: req.params.id, name, email, phone, address: { streetNumber, streetName, city, postalCode } });
+    res.status(200).json({ id: req.params.id, name, email, phone, address: { streetNumber, streetName, city, postalCode, imgPath } });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

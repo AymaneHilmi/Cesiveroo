@@ -7,24 +7,32 @@ import { themeColors } from '../theme';
 import Categories from '../components/categories';
 import FeaturedRow from '../components/featuredRow';
 import { useNavigation } from '@react-navigation/native';
-import Home from "../controller/Home";
+import { Home, imgProfile } from "../controller/Home";
+import {modifyUserInfos} from "../controller/AccountDetails";
 
 export default function HomeScreen() {
     const navigation = useNavigation();
+
     const [client, setClient] = useState('');
     const [address, setAddress] = useState('');
+    const [imgAccount, setImgAccount] = useState(require('../assets/images/compte.png'));
     useEffect(() => {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
         });
+
+        imgProfile().then((data) => {
+            setImgAccount({ uri: data });
+        });
     }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f4f4f4' }}>
             <StatusBar barStyle="dark-content" />
             {/* Barre de recherche (À implémenter la fonctionnalité si on a le temps) */}
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', flex: '1 1 0%', alignItems: 'center', padding: 12, borderRadius: 999, borderWidth: 2, borderColor: 'rgb(209 213 219)' }}>
+                <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', padding: 12, borderRadius: 999, borderWidth: 2, borderColor: 'rgb(209 213 219)' }}>
                     <Icon.Search height={25} width={25} stroke="gray" />
                     <TextInput placeholder="Restaurants" style={{ marginLeft: 8, flex: 1, color: "#D3D3D3" }} />
                     <View style={{ paddingLeft: 8, marginLeft: 4, flexDirection: "row", alignItems: "center", borderWidth: 0, borderLeftWidth: 2, borderColor: 'rgb(209 213 219)' }}>
@@ -37,7 +45,7 @@ export default function HomeScreen() {
                 <TouchableOpacity
                     onPress={() => { navigation.navigate('Account') }}
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>
-                    <Image source={require('../assets/images/deliveryGuy.png')} style={{ width: 50, height: 50, borderRadius: 999 }} />
+                    <Image source={imgAccount} style={{ width: 50, height: 50, borderRadius: 999 }} />
                 </TouchableOpacity>
             </View>
 
