@@ -42,7 +42,7 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Sign')}>
                 <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>

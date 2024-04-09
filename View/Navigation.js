@@ -15,6 +15,8 @@ import DeliveryScreen from './screens/DeliveryScreen';
 import AccountScreen from './screens/AccountScreen';
 import AccountDetailsScreen from './screens/AccountDetailsScreen';
 import OrderHistory from './screens/OrderHistory';
+import DriverScreen from './screens/DriverScreen';
+
 
 
 export default function Navigation() {
@@ -23,15 +25,16 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
+                <Stack.Screen name="DriverScreen" component={DriverScreen} />
+                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />
                 <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
-                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="PreparingOrder" component={PreparingOrderScreen} />
                 <Stack.Screen name="Delivery" component={DeliveryScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
                 <Stack.Screen name="Cart" component={CartScreen} />
-                <Stack.Screen name="Sign In" component={SignScreen} />
+                <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
             </Stack.Navigator>
