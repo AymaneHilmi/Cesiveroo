@@ -29,4 +29,7 @@ router.put('/suspend/:id',clientController.suspendClient);
 // Route pour récupérer un client par email
 router.get('/email/:email', authenticate, authorizeClient, clientController.getClientByEmail);
 
+// Route pour vérifier et récupérer un client par token
+router.post('/verify', authenticate, authorizeClient, clientController.verifyToken);
+
 module.exports = router;

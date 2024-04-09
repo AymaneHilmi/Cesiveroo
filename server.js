@@ -22,7 +22,7 @@ const config = {
   server: 'localhost', // Remplace avec l'adresse du serveur SQL
   port: 1433,
   database: 'Cesiveroo', // Remplace avec le nom de ta base de données
-  encrypt : false // Désactive le cryptage
+  encrypt : false,   // Désactive le cryptage
 };
 
 // Connexion à SQL Server

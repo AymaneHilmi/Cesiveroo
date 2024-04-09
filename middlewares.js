@@ -26,7 +26,6 @@ exports.authenticate = (req, res, next) => {
     // Ajouter les informations du client à la requête
     req.client = decoded;
     req.client.id = decoded.id;
-    console.log(req.client.id)
     // Ajouter le rôle du client à la requête
     req.role = decoded.role;
     next();
@@ -49,9 +48,6 @@ exports.authorizeLivreur = (req, res, next) => {
 // Middleware d'autorisation pour les clients
 exports.authorizeClient = (req, res, next) => {
   // Si la route est login ou register, passer à la prochaine fonction middleware
-  console.log(req.path)
-  console.log(req.client.id)
-  console.log(req.role)
   console.log('Email :', req.client.email)
   console.log('Path :', req.path)
   if (req.path === '/register' || req.path === '/login') {
@@ -62,6 +58,8 @@ exports.authorizeClient = (req, res, next) => {
   } else if (req.role === 'commercial') {
     next();
   } else if ('/email/' + req.client.email === req.path) {
+    return next();
+  } else if ('/verify' === req.path) {
     return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });

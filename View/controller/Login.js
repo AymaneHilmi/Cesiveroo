@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = async (email, password, navigation) => {
   try {
@@ -9,7 +10,7 @@ const Login = async (email, password, navigation) => {
 
 
     // Connexion à l'API
-    const response = await axios.post("http://localhost:3000/api/clients/login", {
+    const response = await axios.post("http://172.20.10.2:3000/api/clients/login", {
       email: email,
       password: password
     });
@@ -17,9 +18,24 @@ const Login = async (email, password, navigation) => {
     // Vérifier si la connexion a réussi
     if (response.data.token) {
       console.log('Login successful');
-      console.log(response.data.token);
-      navigation.navigate('Home');
+      // Stocker le token dans le stockage local
+      await AsyncStorage.setItem('token', response.data.token);
+      // Verifier le token
+      const token = await AsyncStorage.getItem('token');
+      const verify = await axios.post(
+        "http://172.20.10.2:3000/api/clients/verify",
+        // Body de la requête (s'il y en a un)
+        {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Token verified')
+      console.log(verify.data)
       // Rediriger l'utilisateur vers la page d'accueil
+      navigation.navigate('Home');
     } else {
       navigation.navigate('Home');
       console.log('Login failed');
