@@ -24,6 +24,16 @@ const UserInfos = async () => {
 };
 
 const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, imgPath) => {
+    // vérifier que first name est un string qui contient pas d'expace
+    if (newFirstName.length === 0 || newFirstName.includes(" ")) {
+        return 'Invalid First Name';
+    } else if ({newLastName}.length === 0 || newLastName.includes(" ")) {
+        return 'Invalid Last Name';
+    } else if (newEmail.length === 0 || !newEmail.includes('@') || !newEmail.includes('.') || newEmail.length < 5) {
+        return 'Invalid email';
+    } else if (newPhone.length !== 10 || isNaN(newPhone)) {
+        return 'Invalid phone';
+    }
 
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
@@ -36,11 +46,8 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
             }
         }
     );
-    console.log(verify.data)
     const {ClientID, city, phone, postalCode, streetName, streetNumber} = verify.data
 
-    console.log(ClientID, city, phone, postalCode, streetName, streetNumber)
-    console.log("http://")
     const response = await axios.put(`http://192.168.97.46:3000/api/clients/${ClientID}`, {
             name: newFirstName + ' ' + newLastName,
             email: newEmail,

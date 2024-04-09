@@ -29,4 +29,19 @@ const Home = async () => {
     }
 }
 
-export default Home;
+const imgProfile = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const verify = await axios.post(
+        "http://192.168.97.46:3000/api/clients/verify",
+        // Body de la requête (s'il y en a un)
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    console.log(verify.data.imgPath)
+    return verify.data.imgPath
+}
+export {Home, imgProfile}

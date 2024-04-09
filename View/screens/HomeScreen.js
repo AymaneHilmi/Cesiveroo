@@ -7,18 +7,26 @@ import { themeColors } from '../theme';
 import Categories from '../components/categories';
 import FeaturedRow from '../components/featuredRow';
 import { useNavigation } from '@react-navigation/native';
-import Home from "../controller/Home";
+import { Home, imgProfile } from "../controller/Home";
+import {modifyUserInfos} from "../controller/AccountDetails";
 
 export default function HomeScreen() {
     const navigation = useNavigation();
+
     const [client, setClient] = useState('');
     const [address, setAddress] = useState('');
+    const [imgAccount, setImgAccount] = useState(require('../assets/images/compte.png'));
     useEffect(() => {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
         });
+
+        imgProfile().then((data) => {
+            setImgAccount({ uri: data });
+        });
     }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f4f4f4' }}>
             <StatusBar barStyle="dark-content" />
@@ -37,7 +45,7 @@ export default function HomeScreen() {
                 <TouchableOpacity
                     onPress={() => { navigation.navigate('Account') }}
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>
-                    <Image source={require('../assets/images/deliveryGuy.png')} style={{ width: 50, height: 50, borderRadius: 999 }} />
+                    <Image source={imgAccount} style={{ width: 50, height: 50, borderRadius: 999 }} />
                 </TouchableOpacity>
             </View>
 

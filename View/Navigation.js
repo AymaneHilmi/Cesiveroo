@@ -25,6 +25,8 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="DriverScreen" component={DriverScreen} />
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />
@@ -33,7 +35,6 @@ export default function Navigation() {
                 <Stack.Screen name="Delivery" component={DeliveryScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
                 <Stack.Screen name="Cart" component={CartScreen} />
-                <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
             </Stack.Navigator>
