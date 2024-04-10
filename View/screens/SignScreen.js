@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import Register from "../controller/Sign";
 import { useNavigation } from '@react-navigation/native';
+
 import {
     StyleSheet,
     Text,
@@ -10,6 +11,7 @@ import {
     TextInput,
     Button,
     TouchableOpacity,
+    KeyboardAvoidingView
 } from "react-native";
 
 export default function SignScreen() {
@@ -60,84 +62,96 @@ export default function SignScreen() {
         }
     }
     return (
-        <View style={styles.container}>
-            <Image style={styles.image} source={require("../assets/icon.png")} />
-            <StatusBar style="auto" />
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Name"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(name) => setName(name)}
-                />
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <View style={styles.container}>
+                <Image style={styles.image} source={require("../assets/icon.png")} />
+                <StatusBar style="auto" />
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your full name"
+                        // PlaceholderTextColor to understand that we have to enter the text
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(name) => setName(name)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your email"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(email) => setEmail(email)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your phone number"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(phone) => setPhone(phone)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your street number"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your street name"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(streetName) => setStreetName(streetName)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your city"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(city) => setCity(city)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your postal code"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(postalCode) => setPostalCode(postalCode)}
+                    />
+                </View>
+
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        placeholder="Enter your password"
+                        placeholderTextColor="#003f5c"
+                        secureTextEntry={true}
+                        onChangeText={(password) => setPassword(password)}
+                    />
+                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.login_button}>Already a Member?</Text>
+                </TouchableOpacity>
+                <Text style={{ color: 'red' }}>{error}</Text>
+                <TouchableOpacity onPress={handleSign} style={styles.signup_button}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>   Sign Up   </Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="email"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(email) => setEmail(email)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Phone"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(phone) => setPhone(phone)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="streetNumber."
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="streetName."
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(streetName) => setStreetName(streetName)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="city."
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(city) => setCity(city)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="postalCode."
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(postalCode) => setPostalCode(postalCode)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="password."
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.forgot_button}>Already a Member?</Text>
-            </TouchableOpacity>
-            <Text style={{ color: 'red' }}>{error}</Text>
-            <TouchableOpacity onPress={handleSign} style={styles.loginBtn}>
-                <Text style={styles.loginText}>Sign In</Text>
-            </TouchableOpacity>
-        </View >
+        </KeyboardAvoidingView>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -146,14 +160,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     image: {
-        marginBottom: 10,
+        marginBottom: 0,
         width: 200,
         height: 200,
     },
     inputView: {
         backgroundColor: "#20CFBE",
         borderRadius: 10,
-        width: "70%",
         height: 45,
         marginBottom: 10,
     },
@@ -163,17 +176,18 @@ const styles = StyleSheet.create({
         padding: 10,
         marginLeft: 10,
     },
-    forgot_button: {
+    login_button: {
         height: 30,
-        marginBottom: 30,
     },
-    loginBtn: {
+    signup_button: {
         width: "50%",
         borderRadius: 25,
         height: 50,
+        marginBottom: 20,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 40,
         backgroundColor: "#20CFBE",
+        // Center horizontally the text in the button
+        justifyContent: "center",
     },
 });

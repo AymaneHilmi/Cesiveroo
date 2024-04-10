@@ -14,7 +14,7 @@ const config = {
 // Définition du modèle SQL
 const Restaurant = {
   tableName: 'Restaurants',
-  columns: ['RestaurantID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'bankInfo', 'hashedPassword'],
+  columns: ['RestaurantID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'bankInfo', 'category', 'imgPath', 'hashedPassword'],
 };
 
 Restaurant.create = async (restaurantData) => {
@@ -33,9 +33,11 @@ Restaurant.create = async (restaurantData) => {
     await request.input('city', sql.NVarChar, address.city);
     await request.input('postalCode', sql.NVarChar, address.postalCode);
     await request.input('bankInfo', sql.NVarChar, bankInfo);
+    await request.input('category', sql.NVarChar, restaurantData.category);
+    await request.input('imgPath', sql.NVarChar, restaurantData.imgPath);
     await request.input('hashedPassword', sql.NVarChar, hashedPassword);
-    const query = `INSERT INTO ${Restaurant.tableName} (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, hashedPassword) 
-                   VALUES (@RestaurantID, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @bankInfo, @hashedPassword)`;
+    const query = `INSERT INTO ${Restaurant.tableName} (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, hashedPassword)
+                   VALUES (@RestaurantID, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @bankInfo, @category, @imgPath, @hashedPassword)`;
     await request.query(query);
   } catch (err) {
     throw new Error(err.message);

@@ -52,15 +52,12 @@ exports.getArticleById = async (req, res) => {
 // Créer un nouveau article
 exports.createArticle = async (req, res) => {
   try {
-    const { restaurantId, name, ingredients, price } = req.body;
-
-    // Exécuter la requête SQL pour insérer le nouveau article sans spécifier ArticleID
+    const { RestaurantID, Name, Ingredients, Price } = req.body;
     const query = `
-      INSERT INTO Articles (restaurantId, name, ingredients, price) 
-      VALUES ('${restaurantId}', '${name}', '${ingredients}', '${price}')`;
-    const result = await executeQuery(query);
-
-    res.status(201).json({ id: restaurantId, name, ingredients, price });
+      INSERT INTO Articles (RestaurantID, Name, Ingredients, Price)
+      VALUES ('${RestaurantID}', '${Name}', '${Ingredients}', ${Price})`;
+    await executeQuery(query);
+    res.status(201).json({ RestaurantID, Name, Ingredients, Price });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

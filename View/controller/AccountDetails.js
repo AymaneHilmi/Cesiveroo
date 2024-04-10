@@ -21,7 +21,8 @@ const UserInfos = async () => {
     const nameTemp = name.split(' ')
     const firstName = nameTemp[0]
     const lastName = nameTemp[1]
-    return { firstName, lastName, email, phone, imgPath }
+    const clientId = verify.data.ClientID
+    return { firstName, lastName, email, phone, imgPath, clientId }
 };
 
 const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, imgPath) => {
@@ -96,8 +97,20 @@ async function pickImageAndSave() {
     } catch (e) {
         console.error('Erreur lors de l\'enregistrement de l\'image', e);
     }
-    return newPath;
+    const { clientId } = await UserInfos();
+    const formData = new FormData();
+    formData.append('image', {
+        uri: imageUrl,
+        type: 'image/jpeg', // Remplacez 'jpeg' par le format de votre image
+        name: clientId + '.jpg'
+    });
+    const uploadImage = await axios.post('http://' + IP + ':4000/upload', formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    console.log(uploadImage.data.path);
+    return uploadImage.data.path;
 }
-
-
 export { UserInfos, modifyUserInfos, pickImageAndSave };

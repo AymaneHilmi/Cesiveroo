@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-    networks:
-      - backend-network
-
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -25,7 +15,7 @@ services:
       - ./data/sql-server/init:/var/opt/sql-server/scripts
     networks:
       - backend-network
-    command: 
+    command:
       - /bin/bash
       - -c
       - |
@@ -34,8 +24,6 @@ services:
         wait
 
 volumes:
-  mongodb-data:
-    driver: local
   sqlserver-data:
     driver: local
 
