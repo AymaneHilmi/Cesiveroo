@@ -104,7 +104,7 @@ exports.getAllCommandes = async (req, res) => {
 exports.addArticleToCommande = async (req, res) => {
   const { CommandeID, ArticleID } = req.body;
   // Définir la quantité à 1 par défaut si elle n'est pas spécifiée
-  const Quantity =  1;
+  const Quantity = 1;
 
   try {
     // Vérifier si l'article est déjà dans la commande

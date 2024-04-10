@@ -60,7 +60,7 @@ exports.createLivreur = async (req, res) => {
     if (existingLivreur) {
       return res.status(400).json({ message: 'Livreur already exists' });
     }
-    
+
     const livreurId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = `

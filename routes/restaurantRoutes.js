@@ -7,7 +7,7 @@ const { authenticate, authorizeRestaurant } = require('../middlewares');
 router.get('/', authenticate, authorizeRestaurant, restaurantController.getAllRestaurants);
 
 // Route pour récupérer un restaurant par ID
-router.get('/:id', authenticate, authorizeRestaurant,restaurantController.getRestaurantById);
+router.get('/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantById);
 
 // Route pour mettre à jour un restaurant existant
 router.put('/:id', authenticate, authorizeRestaurant, restaurantController.updateRestaurant);

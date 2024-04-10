@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, Image, TouchableOpacity, StatusBar } from 'react-native';
 import React from 'react';
-import { useRoute } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';

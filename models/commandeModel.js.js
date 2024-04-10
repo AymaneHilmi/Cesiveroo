@@ -31,13 +31,13 @@ Commande.createCommande = async (commandeData) => {
   try {
     const pool = await sql.connect(config);
     const result = await pool.request()
-        .input('ClientID', sql.NVarChar, commandeData.ClientID)
-        .input('LivreurID', sql.NVarChar, commandeData.LivreurID)
-        .input('status', sql.NVarChar, commandeData.status)
-        .input('orderDate', sql.DateTime, commandeData.orderDate)
-        .input('deliveryDate', sql.DateTime, commandeData.deliveryDate)
-        .input('price', sql.Decimal, commandeData.price)
-        .query(`INSERT INTO ${Commande.tableName} (ClientID, LivreurID, status, orderDate, deliveryDate, price) 
+      .input('ClientID', sql.NVarChar, commandeData.ClientID)
+      .input('LivreurID', sql.NVarChar, commandeData.LivreurID)
+      .input('status', sql.NVarChar, commandeData.status)
+      .input('orderDate', sql.DateTime, commandeData.orderDate)
+      .input('deliveryDate', sql.DateTime, commandeData.deliveryDate)
+      .input('price', sql.Decimal, commandeData.price)
+      .query(`INSERT INTO ${Commande.tableName} (ClientID, LivreurID, status, orderDate, deliveryDate, price) 
                     VALUES (@ClientID, @LivreurID, @status, @orderDate, @deliveryDate, @price); 
                     SELECT SCOPE_IDENTITY() as CommandeID;`);
     return { CommandeID: result.recordset[0].CommandeID, ...commandeData };
@@ -65,10 +65,10 @@ Commande.addArticleToCommande = async (CommandeID, ArticleID, Quantity) => {
   try {
     const pool = await sql.connect(config);
     await pool.request()
-        .input('CommandeID', sql.UniqueIdentifier, CommandeID)
-        .input('ArticleID', sql.Int, ArticleID)
-        .input('Quantity', sql.Int, Quantity)
-        .query(`INSERT INTO CommandeArticles (CommandeID, ArticleID, Quantity) VALUES (@CommandeID, @ArticleID, @Quantity)`);
+      .input('CommandeID', sql.UniqueIdentifier, CommandeID)
+      .input('ArticleID', sql.Int, ArticleID)
+      .input('Quantity', sql.Int, Quantity)
+      .query(`INSERT INTO CommandeArticles (CommandeID, ArticleID, Quantity) VALUES (@CommandeID, @ArticleID, @Quantity)`);
     return { success: true };
   } catch (err) {
     console.error(err);
@@ -81,10 +81,10 @@ Commande.addMenuToCommande = async (CommandeID, MenuID, Quantity) => {
   try {
     const pool = await sql.connect(config);
     await pool.request()
-        .input('CommandeID', sql.UniqueIdentifier, CommandeID)
-        .input('MenuID', sql.Int, MenuID)
-        .input('Quantity', sql.Int, Quantity)
-        .query(`INSERT INTO CommandeMenus (CommandeID, MenuID, Quantity) VALUES (@CommandeID, @MenuID, @Quantity)`);
+      .input('CommandeID', sql.UniqueIdentifier, CommandeID)
+      .input('MenuID', sql.Int, MenuID)
+      .input('Quantity', sql.Int, Quantity)
+      .query(`INSERT INTO CommandeMenus (CommandeID, MenuID, Quantity) VALUES (@CommandeID, @MenuID, @Quantity)`);
     return { success: true };
   } catch (err) {
     console.error(err);

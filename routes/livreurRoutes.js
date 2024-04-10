@@ -9,13 +9,13 @@ const { authenticate, authorizeLivreur } = require('../middlewares');
 router.get('/', authenticate, authorizeLivreur, livreurController.getAllLivreurs);
 
 // Route pour récupérer un livreur par ID
-router.get('/:id',  authenticate, authorizeLivreur, livreurController.getLivreurById);
+router.get('/:id', authenticate, authorizeLivreur, livreurController.getLivreurById);
 
 // Route pour mettre à jour un livreur existant
-router.put('/:id',  authenticate, authorizeLivreur, livreurController.updateLivreur);
+router.put('/:id', authenticate, authorizeLivreur, livreurController.updateLivreur);
 
 // Route pour supprimer un livreur existant
-router.delete('/:id',   authenticate, authorizeLivreur, livreurController.deleteLivreur);
+router.delete('/:id', authenticate, authorizeLivreur, livreurController.deleteLivreur);
 
 // Route pour se connecter
 router.post('/login', livreurController.loginLivreur);
