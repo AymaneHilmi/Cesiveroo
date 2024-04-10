@@ -11,7 +11,7 @@ export default function DriverScreen() {
   return (
     <SafeAreaView style={{ height: "100%" }}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Account')}
+        onPress={() => navigation.navigate('AccountDriver')}
         style={{
           backgroundColor: themeColors.bgColor(1), position: 'absolute',
           left: 15, top: 75, zIndex: 10, padding: 9, borderRadius: 9999,

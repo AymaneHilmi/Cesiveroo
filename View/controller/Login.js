@@ -7,7 +7,7 @@ const Login = async (email, password, navigation) => {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
     // Connexion à l'API
-    const response = await axios.post("http://" + IP + ":3000/api/clients/login", {
+    const response = await axios.post("http://" + IP + ":3000/api/livreurs/login", {
       email: email,
       password: password
     });
@@ -31,8 +31,26 @@ const Login = async (email, password, navigation) => {
       );
       console.log('Token verified')
       console.log(verify.data)
-      // Naviguer vers l'écran d'accueil
-      navigation.navigate('Home');
+      const role = verify.data.role;
+      console.log(role)
+      if (role === 'client') {
+        console.log('Navigating to Home')
+        // Naviguer vers l'écran d'accueil
+        navigation.navigate('Home');
+      } else if (role === 'restaurant') {
+        console.log('Navigating to Restaurateur')
+        // Naviguer vers l'écran d'accueil
+        navigation.navigate('Restaurateur');
+      } else if (role === 'commercial') {
+        console.log('Navigating to ServiceCommercial')
+        // Naviguer vers l'écran d'accueil
+        navigation.navigate('ServiceCommercial');
+      } else if (role === 'livreur') {
+        console.log('Navigating to Driver')
+        // Naviguer vers l'écran d'accueil
+        navigation.navigate('Driver');
+      }
+
     }
   } catch (error) {
     console.log('An error occurred:', error);
