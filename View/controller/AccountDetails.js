@@ -8,7 +8,7 @@ import { IP } from '../config';
 const UserInfos = async () => {
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http:// " + IP + ":3000/api/clients/verify",
+        "http://" + IP + ":3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {
@@ -38,7 +38,7 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
 
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http:// " + IP + ":3000/api/clients/verify",
+        "http://" + IP + ":3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {
