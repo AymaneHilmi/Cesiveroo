@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
 import { launchImageLibrary } from 'react-native-image-picker';
-import {UserInfos, modifyUserInfos, pickImageAndSave} from "../controller/AccountDetails";
+import { UserInfos, modifyUserInfos, pickImageAndSave } from "../controller/AccountDetails";
 import Login from "../controller/Login";
 
 export default function AccountDetailsScreen() {
@@ -30,8 +30,8 @@ export default function AccountDetailsScreen() {
                 setPhone(data.phone);
                 const path = data.imgPath;
 
-                if( !(path === "" || path === null || path === undefined) ) {
-                    setImageUri({uri: path});
+                if (!(path === "" || path === null || path === undefined)) {
+                    setImageUri({ uri: path });
                 }
             } catch (error) {
                 // Handle error, e.g., show an alert or set an error message state.
@@ -43,7 +43,7 @@ export default function AccountDetailsScreen() {
 
 
     const handleSave = async () => {
-       const response = await modifyUserInfos(firstName, lastName, email, phone, imageUri.uri);
+        const response = await modifyUserInfos(firstName, lastName, email, phone, imageUri.uri);
 
         if (response === 'Invalid First Name') {
             setError('Invalid First Name');
@@ -60,7 +60,7 @@ export default function AccountDetailsScreen() {
 
     const handlePickImage = async () => {
         const uri = await pickImageAndSave();
-        if (uri) setImageUri({uri}); // Met à jour l'état si une image est choisie
+        if (uri) setImageUri({ uri }); // Met à jour l'état si une image est choisie
     };
 
     return (
@@ -71,10 +71,12 @@ export default function AccountDetailsScreen() {
                 backgroundColor: '#ffffff'
             }} >
                 <TouchableOpacity
-                    onPress={() => {  navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Account' }],
-                    }); }}
+                    onPress={() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Account' }],
+                        });
+                    }}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
                         left: 8, top: 15, zIndex: 10, padding: 4, borderRadius: 9999,
@@ -87,7 +89,7 @@ export default function AccountDetailsScreen() {
                 </View>
             </View >
             <Image source={imageUri}
-                   style={{ width: 150, height: 150, borderRadius: 10, alignSelf: 'center', marginTop: 30 }} />
+                style={{ width: 150, height: 150, borderRadius: 10, alignSelf: 'center', marginTop: 30 }} />
 
             <TouchableOpacity style={{
                 marginTop: 20, backgroundColor: '#20CFBE', padding: 10, borderRadius: 10,

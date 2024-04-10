@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { red } from 'color-name';
 import Logout from '../controller/Logout';
 
-export default function AccountScreen() {
+export default function AccountRestaurateurScreen() {
     const navigation = useNavigation();
     const handleLogout = () => {
         Logout(navigation);
@@ -61,12 +61,38 @@ export default function AccountScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('OrderHistory') }}
+                onPress={() => { navigation.navigate('Menu') }}
+                className="px-3">
+                <View
+                    className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
+                    <Icon.Book className="h-14 w-14" stroke={themeColors.bgColor(1)} />
+                    <Text className="pl-3 flex-1 text-gray-700">Menu</Text>
+                    <View
+                        className="p-1"
+                    >
+                        <Icon.ArrowRight strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
+                    </View>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                className="px-3">
+                <View
+                    className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
+                    <Icon.Paperclip className="h-14 w-14" stroke={themeColors.bgColor(1)} />
+                    <Text className="pl-3 flex-1 text-gray-700">Articles</Text>
+                    <View
+                        className="p-1"
+                    >
+                        <Icon.ArrowRight strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
+                    </View>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
                     <Icon.Archive className="h-14 w-14" stroke={themeColors.bgColor(1)} />
-                    <Text className="pl-3 flex-1 text-gray-700">Order History</Text>
+                    <Text className="pl-3 flex-1 text-gray-700">Orders</Text>
                     <View
                         className="p-1"
                     >
