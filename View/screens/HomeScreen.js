@@ -21,7 +21,6 @@ export default function HomeScreen() {
             setClient(data.client);
             setAddress(data.address);
             setImgAccount({ uri: data.url });
-
         });
     }, [
         client,

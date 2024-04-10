@@ -7,7 +7,7 @@ import * as FileSystem from 'expo-file-system';
 const UserInfos = async () => {
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http://localhost:3000/api/clients/verify",
+        "http://192.168.97.46:3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {
@@ -37,7 +37,7 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
 
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http://localhost:3000/api/clients/verify",
+        "http://192.168.97.46:3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {

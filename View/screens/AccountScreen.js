@@ -12,6 +12,10 @@ export default function AccountScreen() {
     const handleLogout = () => {
         Logout(navigation);
     };
+
+    const deleteAccount = () => {
+        deleteAccount();
+    };
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}
@@ -95,7 +99,7 @@ export default function AccountScreen() {
             </TouchableOpacity>
             <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />
 
-            <TouchableOpacity style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
+            <TouchableOpacity onpress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
                 <Icon.Trash2 strokeWidth={2} height={20} width={20} stroke={'red'} className="p-1 mr-2" />
                 <Text style={{ textAlign: 'center', marginTop: 2, textDecorationLine: 'underline' }}>I want to delete my account</Text>
             </TouchableOpacity>
