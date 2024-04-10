@@ -7,7 +7,7 @@ import { themeColors } from '../theme';
 import Categories from '../components/categories';
 import FeaturedRow from '../components/featuredRow';
 import { useNavigation } from '@react-navigation/native';
-import { Home, imgProfile } from "../controller/Home";
+import Home from "../controller/Home";
 import {modifyUserInfos} from "../controller/AccountDetails";
 
 export default function HomeScreen() {
@@ -20,10 +20,8 @@ export default function HomeScreen() {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
-        });
+            setImgAccount({ uri: data.url });
 
-        imgProfile().then((data) => {
-            setImgAccount({ uri: data });
         });
     }, []);
 
