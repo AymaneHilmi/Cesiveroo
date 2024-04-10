@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import Register from "../controller/Sign";
 import { useNavigation } from '@react-navigation/native';
+import * as Icon from "react-native-feather";
 
 import {
     StyleSheet,
@@ -63,92 +64,102 @@ export default function SignScreen() {
     }
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <View style={styles.container}>
-                <Image style={styles.image} source={require("../assets/icon.png")} />
-                <StatusBar style="auto" />
+            <Image style={styles.image} source={require("../assets/icon.png")} />
+            <StatusBar style="auto" />
 
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your full name"
-                        // PlaceholderTextColor to understand that we have to enter the text
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(name) => setName(name)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your email"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(email) => setEmail(email)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your phone number"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(phone) => setPhone(phone)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your street number"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your street name"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(streetName) => setStreetName(streetName)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your city"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(city) => setCity(city)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your postal code"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(postalCode) => setPostalCode(postalCode)}
-                    />
-                </View>
-
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Enter your password"
-                        placeholderTextColor="#003f5c"
-                        secureTextEntry={true}
-                        onChangeText={(password) => setPassword(password)}
-                    />
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.login_button}>Already a Member?</Text>
-                </TouchableOpacity>
-                <Text style={{ color: 'red' }}>{error}</Text>
-                <TouchableOpacity onPress={handleSign} style={styles.signup_button}>
-                    <Text style={{ color: 'black', fontSize: 20 }}>   Sign Up   </Text>
-                </TouchableOpacity>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your full name"
+                    // PlaceholderTextColor to understand that we have to enter the text
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(name) => setName(name)}
+                />
             </View>
-        </KeyboardAvoidingView>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your email"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(email) => setEmail(email)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your phone number"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(phone) => setPhone(phone)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your street number"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your street name"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(streetName) => setStreetName(streetName)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your city"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(city) => setCity(city)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your postal code"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(postalCode) => setPostalCode(postalCode)}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="Enter your password"
+                    placeholderTextColor="#003f5c"
+                    secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)}
+                />
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.login_button}>Already a Member?</Text>
+            </TouchableOpacity>
+            <Text style={{ color: 'red' }}>{error}</Text>
+            <TouchableOpacity onPress={handleSign} style={{
+                width: "50%",
+                borderRadius: 8,
+                height: 50,
+                marginBottom: 20,
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: "#20CFBE",
+                // Center horizontally the text in the button
+                justifyContent: "center",
+                flexDirection: "row",
+            }}>
+                <Text style={{ color: 'black', fontSize: 20 }}>   Sign Up   </Text>
+                <Icon.Check style={{ color: 'black', fontSize: 20 }} />
+            </TouchableOpacity>
+        </KeyboardAvoidingView >
     );
 }
 
@@ -165,6 +176,7 @@ const styles = StyleSheet.create({
         height: 200,
     },
     inputView: {
+        width: 300,
         backgroundColor: "#20CFBE",
         borderRadius: 10,
         height: 45,
@@ -178,16 +190,5 @@ const styles = StyleSheet.create({
     },
     login_button: {
         height: 30,
-    },
-    signup_button: {
-        width: "50%",
-        borderRadius: 25,
-        height: 50,
-        marginBottom: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#20CFBE",
-        // Center horizontally the text in the button
-        justifyContent: "center",
-    },
+    }
 });
