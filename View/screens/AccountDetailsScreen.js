@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
 import { launchImageLibrary } from 'react-native-image-picker';
 import {UserInfos, modifyUserInfos, pickImageAndSave} from "../controller/AccountDetails";
+import Login from "../controller/Login";
 
 export default function AccountDetailsScreen() {
     const navigation = useNavigation();// Create state to hold user info.
@@ -13,7 +14,8 @@ export default function AccountDetailsScreen() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [imageUri, setImageUri] = useState('');
+    const [imageUri, setImageUri] = useState(require("../assets/images/compte.png"));
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -26,8 +28,11 @@ export default function AccountDetailsScreen() {
                 setLastName(data.lastName);
                 setEmail(data.email);
                 setPhone(data.phone);
+                const path = data.imgPath;
 
-                setImageUri({uri: data.imgPath});
+                if( !(path === "" || path === null || path === undefined) ) {
+                    setImageUri({uri: path});
+                }
             } catch (error) {
                 // Handle error, e.g., show an alert or set an error message state.
                 console.log('Error fetching user info:', error);
@@ -38,13 +43,26 @@ export default function AccountDetailsScreen() {
 
 
     const handleSave = async () => {
-        await modifyUserInfos(firstName, lastName, email, phone, imageUri.uri);
+       const response = await modifyUserInfos(firstName, lastName, email, phone, imageUri.uri);
+
+        if (response === 'Invalid First Name') {
+            setError('Invalid First Name');
+        } else if (response === 'Invalid Last Name') {
+            setError('Invalid Last Name');
+        } else if (response === 'Invalid email') {
+            setError('Invalid email');
+        } else if (response === 'Invalid phone') {
+            setError('Invalid phone');
+        } else if (response === 'Invalid street number') {
+            setError('Invalid street number');
+        }
     };
 
     const handlePickImage = async () => {
         const uri = await pickImageAndSave();
         if (uri) setImageUri({uri}); // Met à jour l'état si une image est choisie
     };
+
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}
@@ -119,8 +137,10 @@ export default function AccountDetailsScreen() {
                     />
                 </View>
             </View>
-            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 20, left: 60, opacity: 0.2 }} />
-
+            <View style={{ display: 'flex', alignItems: 'center' }}>
+                <Text style={{ color: 'red', marginTop: 15 }}>{error}</Text>
+            </View>
+            {/*<Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 20, left: 60, opacity: 0.2 }} />*/}
 
             <TouchableOpacity style={{
                 marginTop: 20, backgroundColor: '#20CFBE', padding: 15, width: '70%', borderRadius: 10,

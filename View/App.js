@@ -1,6 +1,8 @@
 import Navigation from './Navigation';
 import { Provider } from 'react-redux'
 import { store } from './store';
+import { LogIn } from 'react-native-feather';
+
 
 
 

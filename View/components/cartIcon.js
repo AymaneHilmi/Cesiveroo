@@ -2,6 +2,8 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCartItems, selectCartTotal } from '../slices/cartSlice';
 
 export default function CartIcon() {
     const navigation = useNavigation();

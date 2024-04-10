@@ -22,8 +22,7 @@ const Home = async () => {
         console.log('Image path:', verify.data.imgPath)
         const client = verify.data.name;
         const address = verify.data.city;
-        const imgPath = verify.data.imgPath;
-        return {client, address, imgPath};
+        return {client, address};
         // Récupérer le nom du client
     } catch (error) {
         console.log('An error occurred:', error);
@@ -31,4 +30,4 @@ const Home = async () => {
     }
 }
 
-export default Home;
+export default Home
