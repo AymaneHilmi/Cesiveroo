@@ -5,7 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
 
-export default function MenuScreen() {
+
+export default function ArticlesScreen() {
     const navigation = useNavigation();
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
@@ -24,7 +25,7 @@ export default function MenuScreen() {
                     <Icon.ArrowLeft strokeWidth={3} stroke="white" />
                 </TouchableOpacity>
                 <View>
-                    <Text className="text-center font-bold text-xl">Menu</Text>
+                    <Text className="text-center font-bold text-xl">Articles</Text>
                 </View>
             </View >
             <ScrollView
@@ -35,12 +36,12 @@ export default function MenuScreen() {
 
             >
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('MenuDetails')}
+                    onPress={() => navigation.navigate('ArticlesDetails')}
                     className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
                     <View className="flex-row items-center">
                         <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
                         <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza della Mamma</Text>
+                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
                             <Text className="text-gray-500">2 articles - $20</Text>
                             <Text className="text-gray-500">20 Mars 2024</Text>
                         </View>
@@ -51,12 +52,12 @@ export default function MenuScreen() {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('MenuDetails')}
+                    onPress={() => navigation.navigate('ArticlesDetails')}
                     className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
                     <View className="flex-row items-center">
                         <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
                         <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza della Mamma</Text>
+                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
                             <Text className="text-gray-500">2 articles - $20</Text>
                             <Text className="text-gray-500">20 Mars 2024</Text>
                         </View>
@@ -67,12 +68,12 @@ export default function MenuScreen() {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('MenuDetails')}
+                    onPress={() => navigation.navigate('ArticlesDetails')}
                     className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
                     <View className="flex-row items-center">
                         <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
                         <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza della Mamma</Text>
+                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
                             <Text className="text-gray-500">2 articles - $20</Text>
                             <Text className="text-gray-500">20 Mars 2024</Text>
                         </View>

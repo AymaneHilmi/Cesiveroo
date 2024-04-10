@@ -19,6 +19,12 @@ import RestaurateurScreen from './screens/RestaurateurScreen';
 import MenuScreen from './screens/MenuScreen';
 import MenuDetailsScreen from './screens/MenuDetailsScreen';
 import RestaurantScreen from './screens/RestaurantScreen';
+import AccountDetailsRestaurantScreen from './screens/AccountDetailsRestaurantScreen';
+import ArticlesDetailsScreen from './screens/ArticlesDetailsScreen';
+import ArticlesScreen from './screens/ArticlesScreen';
+import OrdersScreen from './screens/OrdersScreen';;
+import OrdersDetailsScreen from './screens/OrdersDetailsScreen';
+import ServiceCommercialScreen from './screens/ServiceCommercialScreen';
 
 
 
@@ -28,12 +34,17 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
+                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="AccountRestaurateur" component={AccountRestaurateurScreen} />
+                <Stack.Screen name="Articles" component={ArticlesScreen} />
+                <Stack.Screen name="ArticlesDetails" options={{ presentation: 'modal', headerShown: false }} component={ArticlesDetailsScreen} />
+                <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
+                <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Driver" component={DriverScreen} />
+                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Restaurateur" component={RestaurateurScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Menu" component={MenuScreen} />
-                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />
                 <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
                 <Stack.Screen name="PreparingOrder" options={{ presentation: 'fullScreenModal', headerShown: false }} component={PreparingOrderScreen} />
@@ -43,7 +54,8 @@ export default function Navigation() {
                 <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
-                <Stack.Screen name="AccountRestaurant" component={AccountRestaurateurScreen} />
+                <Stack.Screen name="Orders" component={OrdersScreen} />
+                <Stack.Screen name="OrdersDetails" options={{ presentation: 'modal', headerShown: false }} component={OrdersDetailsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

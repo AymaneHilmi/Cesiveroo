@@ -7,6 +7,6 @@
 // Compare this snippet from View/controller/Account.js:
 
 // Define the IP address of the server
-const IP = '10.113.128.131'
+const IP = '192.168.1.15'
 
 export { IP }

@@ -7,9 +7,8 @@ import * as Icon from "react-native-feather";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Picker } from '@react-native-picker/picker';
 
-export default function MenuDetailsScreen() {
+export default function ArticlesDetailsScreen() {
     const navigation = useNavigation();
-
     return (
         <View style={{ flex: 1, backgroundColor: "#E8E8E8", height: '100%' }}>
             < View style={{
@@ -17,7 +16,7 @@ export default function MenuDetailsScreen() {
                 position: 'relative', paddingTop: 20, paddingBottom: 20, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
             }} >
                 <View>
-                    <Text className="text-center font-bold text-xl">Pizza</Text>
+                    <Text className="text-center font-bold text-xl">Menu</Text>
                 </View>
             </View >
 
@@ -45,12 +44,12 @@ export default function MenuDetailsScreen() {
             </View>
             <View style={{ marginTop: 5, marginBottom: 10, display: 'flex', }}>
                 <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
+                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Boisson :</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <TextInput
-                        placeholder="Article"
-                        defaultValue="Barbecue"
+                        placeholder="Boisson"
+                        defaultValue="Fanta"
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />
                 </View>
@@ -58,23 +57,23 @@ export default function MenuDetailsScreen() {
 
             <View style={{ marginTop: 5, marginBottom: 10, display: 'flex', }}>
                 <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
+                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Sauce :</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <TextInput
-                        placeholder="Article"
-                        defaultValue="Saumon"
+                        placeholder="Sauce"
+                        defaultValue="Ketchup"
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />
                 </View>
             </View>
             <View style={{ marginTop: 5, display: 'flex', }}>
                 <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
+                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Accompagnement :</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <TextInput
-                        placeholder="Article"
+                        placeholder="Accompagnement"
                         defaultValue="Frites"
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />

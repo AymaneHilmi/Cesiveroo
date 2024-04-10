@@ -27,7 +27,7 @@ export default function AccountRestaurateurScreen() {
                     onPress={() => {
                         navigation.reset({
                             index: 0,
-                            routes: [{ name: 'Home' }],
+                            routes: [{ name: 'Restaurateur' }],
                         });
                     }}
                     style={{
@@ -45,7 +45,7 @@ export default function AccountRestaurateurScreen() {
                 onPress={() => {
                     navigation.reset({
                         index: 0,
-                        routes: [{ name: 'AccountDetails' }],
+                        routes: [{ name: 'AccountRestorateurDetails' }],
                     });
                 }}
                 className="px-3 pt-3">
@@ -75,6 +75,7 @@ export default function AccountRestaurateurScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
+                onPress={() => { navigation.navigate('Articles') }}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
@@ -88,6 +89,7 @@ export default function AccountRestaurateurScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
+                onPress={() => { navigation.navigate('Orders') }}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
@@ -100,6 +102,7 @@ export default function AccountRestaurateurScreen() {
                     </View>
                 </View>
             </TouchableOpacity>
+
             <TouchableOpacity className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
@@ -133,9 +136,9 @@ export default function AccountRestaurateurScreen() {
                     <Text className="pl-3 flex-1 text-gray-700">Logout</Text>
                 </View>
             </TouchableOpacity>
-            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />
+            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', left: 60, opacity: 0.2 }} />
 
-            <TouchableOpacity onpress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
+            <TouchableOpacity style={{ flexDirection: 'row', position: 'relative', left: 110 }}>
                 <Icon.Trash2 strokeWidth={2} height={20} width={20} stroke={'red'} className="p-1 mr-2" />
                 <Text style={{ textAlign: 'center', marginTop: 2, textDecorationLine: 'underline' }}>I want to delete my account</Text>
             </TouchableOpacity>
