@@ -18,7 +18,10 @@ export default function HomeScreen() {
             setClient(data.client);
             setAddress(data.address);
         });
-    }, []);
+    }, [
+        client,
+        address
+    ]);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f4f4f4' }}>
             <StatusBar barStyle="dark-content" />

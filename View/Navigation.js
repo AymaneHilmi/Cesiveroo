@@ -5,7 +5,6 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import HomeScreen from './screens/HomeScreen';
 import RestaurantScreen from './screens/RestaurantScreen';
-import LoginPage from './screens/LoginScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignScreen from './screens/SignScreen';
 import MapsScreen from './screens/MapsScreen';
@@ -25,7 +24,7 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
-                <Stack.Screen name="DriverScreen" component={DriverScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />
                 <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
@@ -36,6 +35,7 @@ export default function Navigation() {
                 <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
+                <Stack.Screen name="DriverScreen" component={DriverScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -45,7 +45,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
             });
             console.log(response.data)
             // Vérifier si la création a réussi et afficher un message
-            if (response.data.id) {
+            if (response.data.id !== null) {
                 console.log('Registration successful');
                 console.log(response.data.id);
                 return 'Success registration';

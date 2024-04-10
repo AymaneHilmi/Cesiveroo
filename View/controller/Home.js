@@ -5,7 +5,7 @@ const Home = async () => {
     try {
         const token = await AsyncStorage.getItem('token');
         const verify = await axios.post(
-            "http://10.113.129.43:3000/api/clients/verify",
+            "http://localhost:3000/api/clients/verify",
             // Body de la requête (s'il y en a un)
             {}, 
             {
@@ -19,9 +19,11 @@ const Home = async () => {
         console.log('Token:', token)
         console.log('Client:', verify.data.name)
         console.log('City:' , verify.data.city)
+        console.log('Image path:', verify.data.imgPath)
         const client = verify.data.name;
         const address = verify.data.city;
-        return {client, address};
+        const imgPath = verify.data.imgPath;
+        return {client, address, imgPath};
         // Récupérer le nom du client
     } catch (error) {
         console.log('An error occurred:', error);

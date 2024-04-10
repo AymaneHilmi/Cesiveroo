@@ -38,6 +38,7 @@ BEGIN
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
         hashedPassword NVARCHAR(255), 
+        imgPath NVARCHAR(255),
         status NVARCHAR(20)
     );
     PRINT 'La table Clients a été créée avec succès.';

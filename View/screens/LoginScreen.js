@@ -22,11 +22,13 @@ export default function LoginScreen() {
         const response = await Login(email, password, navigation);
         if (response === 'Login failed') {
             setWrongPassword('Wrong email or password');
-        } else {
+        } else if (response === 'Login successful'){
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Home' }],
             });
+        } else {
+            console.log('An error occurred:', response);
         }
     };
     return (

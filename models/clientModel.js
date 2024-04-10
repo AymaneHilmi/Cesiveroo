@@ -35,9 +35,10 @@ Client.create = async (clientData) => {
     await request.input('city', sql.NVarChar, address.city);
     await request.input('postalCode', sql.NVarChar, address.postalCode);
     await request.input('hashedPassword', sql.NVarChar, hashedPassword);
+    await request.input('imgPath', sql.NVarChar, status);
     await request.input('status', sql.NVarChar, status);
-    const query = `INSERT INTO ${Client.tableName} (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword, status) 
-                   VALUES (@clientId, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @hashedPassword, @status)`;
+    const query = `INSERT INTO ${Client.tableName} (ClientID, name, email, phone, streetNumber, streetName, city, postalCode, hashedPassword,imgPath, status) 
+                   VALUES (@clientId, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @hashedPassword,@imgPath, @status)`;
     await request.query(query);
   } catch (err) {
     throw new Error('Erreur lors de la création du client : ' + err.message);

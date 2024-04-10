@@ -63,11 +63,8 @@ export default function DriverScreen() {
         shadowRadius: 3.84, // Flou de l'ombre,
       }}>
         <Text style={{ color: 'white', fontSize: 20 }}>Notification de livraison</Text>
-        <Icon.Bell strokeWidth={3} stroke="white" /> </View>
-
-
-
-
+        <Icon.Bell strokeWidth={3} stroke="white" />
+      </View>
       <TouchableOpacity style={{
         position: 'absolute', bottom: 80, left: 160, backgroundColor: themeColors.bgColor(1),
         borderRadius: 9999, padding: 20,

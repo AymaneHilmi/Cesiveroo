@@ -11,7 +11,6 @@ import {
     Button,
     TouchableOpacity,
 } from "react-native";
-import { Navigation } from "react-native-feather";
 
 export default function SignScreen() {
     const [name, setName] = useState("");
@@ -24,10 +23,9 @@ export default function SignScreen() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigation = useNavigation();
-
     const handleSign = async () => {
         const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
-        const error = setError('');
+
         console.log(response);
         if (response === 'Invalid name') {
             setError('Invalid name');
