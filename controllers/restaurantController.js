@@ -125,8 +125,10 @@ exports.login = async (req, res) => {
     }
     let role = 'restaurant';
     // Générer un token JWT
-    const token = jwt.sign({ email: restaurant.email, id: restaurant
-          .RestaurantID,role: role }, secret, { expiresIn: '1h' });
+    const token = jwt.sign({
+      email: restaurant.email, id: restaurant
+        .RestaurantID, role: role
+    }, secret, { expiresIn: '1h' });
     res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -3,11 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from 'expo-file-system';
-
+// Import IP from config file
+import { IP } from '../config';
 const UserInfos = async () => {
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http://192.168.97.46:3000/api/clients/verify",
+        "http:// " + IP + ":3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {
@@ -16,18 +17,18 @@ const UserInfos = async () => {
             }
         }
     );
-    const {name, email, phone, imgPath} = verify.data
+    const { name, email, phone, imgPath } = verify.data
     const nameTemp = name.split(' ')
     const firstName = nameTemp[0]
     const lastName = nameTemp[1]
-    return {firstName, lastName, email, phone, imgPath}
+    return { firstName, lastName, email, phone, imgPath }
 };
 
 const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, imgPath) => {
     // vérifier que first name est un string qui contient pas d'expace
     if (newFirstName.length === 0 || newFirstName.includes(" ")) {
         return 'Invalid First Name';
-    } else if ({newLastName}.length === 0 || newLastName.includes(" ")) {
+    } else if ({ newLastName }.length === 0 || newLastName.includes(" ")) {
         return 'Invalid Last Name';
     } else if (newEmail.length === 0 || !newEmail.includes('@') || !newEmail.includes('.') || newEmail.length < 5) {
         return 'Invalid email';
@@ -37,7 +38,7 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
 
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
-        "http://192.168.97.46:3000/api/clients/verify",
+        "http:// " + IP + ":3000/api/clients/verify",
         // Body de la requête (s'il y en a un)
         {},
         {
@@ -46,18 +47,18 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
             }
         }
     );
-    const {ClientID, city, phone, postalCode, streetName, streetNumber} = verify.data
+    const { ClientID, city, phone, postalCode, streetName, streetNumber } = verify.data
 
-    const response = await axios.put(`http://192.168.97.46:3000/api/clients/${ClientID}`, {
-            name: newFirstName + ' ' + newLastName,
-            email: newEmail,
-            phone: newPhone,
-            streetNumber: streetNumber,
-            streetName: streetName,
-            city: city,
-            postalCode: postalCode,
-            imgPath: imgPath
-        },
+    const response = await axios.put(`http:// ` + IP + `:3000/api/clients/${ClientID}`, {
+        name: newFirstName + ' ' + newLastName,
+        email: newEmail,
+        phone: newPhone,
+        streetNumber: streetNumber,
+        streetName: streetName,
+        city: city,
+        postalCode: postalCode,
+        imgPath: imgPath
+    },
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -99,4 +100,4 @@ async function pickImageAndSave() {
 }
 
 
-export {UserInfos, modifyUserInfos, pickImageAndSave};
+export { UserInfos, modifyUserInfos, pickImageAndSave };

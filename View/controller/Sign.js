@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { IP } from '../config';
 
 // inscrire un utilisateur
 const Register = async (name, email, phone, streetNumber, streetName, city, postalCode, password, navigation) => {
@@ -33,7 +34,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
             // Envoyer une requête POST au backend avec les informations de connexion
             console.log('Registering...');
             // Connexion à l'API
-            const response = await axios.post("http://localhost:3000/api/clients/register", {
+            const response = await axios.post("http://" + IP + ":3000/api/clients/register", {
                 name: name,
                 email: email,
                 phone: phone,

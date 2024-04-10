@@ -4,7 +4,6 @@ const Stack = createNativeStackNavigator();
 import { View, Text } from 'react-native'
 import React from 'react'
 import HomeScreen from './screens/HomeScreen';
-import RestaurantScreen from './screens/RestaurantScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignScreen from './screens/SignScreen';
 import MapsScreen from './screens/MapsScreen';
@@ -15,7 +14,6 @@ import AccountScreen from './screens/AccountScreen';
 import AccountDetailsScreen from './screens/AccountDetailsScreen';
 import OrderHistory from './screens/OrderHistory';
 import DriverScreen from './screens/DriverScreen';
-import RestaurateurScreen from './screens/RestaurateurScreen';
 
 
 

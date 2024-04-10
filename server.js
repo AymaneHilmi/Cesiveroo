@@ -13,7 +13,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 app.use(express.json());
-app.use(cors()); 
+app.use(cors());
 
 // Configuration de la connexion à SQL Server
 const config = {
@@ -22,7 +22,7 @@ const config = {
   server: 'localhost', // Remplace avec l'adresse du serveur SQL
   port: 1433,
   database: 'Cesiveroo', // Remplace avec le nom de ta base de données
-  encrypt : false,   // Désactive le cryptage
+  encrypt: false,   // Désactive le cryptage
 };
 
 // Connexion à SQL Server

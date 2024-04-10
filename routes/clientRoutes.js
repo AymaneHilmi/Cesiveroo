@@ -24,7 +24,7 @@ router.post('/login', clientController.login);
 router.post('/register', clientController.createClient);
 
 // Route pour suspendre un compte client
-router.put('/suspend/:id',clientController.suspendClient);
+router.put('/suspend/:id', clientController.suspendClient);
 
 // Route pour récupérer un client par email
 router.get('/email/:email', authenticate, authorizeClient, clientController.getClientByEmail);

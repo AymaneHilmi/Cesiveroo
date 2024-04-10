@@ -6,7 +6,7 @@ exports.authenticate = (req, res, next) => {
   const token = req.headers.authorization;
   // Si la route est login ou register, passer à la prochaine fonction middleware
   if (req.path === '/register' || req.path === '/login') {
-      return next();
+    return next();
   }
   // Vérifier si le token a été fourni et si c'est une requête POST ou d'inscription de client pour ne pas bloquer l'accès
   if (!token && req.method !== 'POST') {
@@ -21,7 +21,7 @@ exports.authenticate = (req, res, next) => {
   // Vérifier et décoder le token
   jwt.verify(bearer, secret, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: 'Invalid token', error: err});
+      return res.status(401).json({ message: 'Invalid token', error: err });
     }
     // Ajouter les informations du client à la requête
     req.client = decoded;
@@ -38,8 +38,8 @@ exports.authorizeLivreur = (req, res, next) => {
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le livreur est le bon et souhaite accéder à ses propres données
-  } else if (req.path === ('/' + req.client.id) && req.role === 'livreur'){
-    return next(); 
+  } else if (req.path === ('/' + req.client.id) && req.role === 'livreur') {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }
@@ -48,13 +48,11 @@ exports.authorizeLivreur = (req, res, next) => {
 // Middleware d'autorisation pour les clients
 exports.authorizeClient = (req, res, next) => {
   // Si la route est login ou register, passer à la prochaine fonction middleware
-  console.log('Email :', req.client.email)
-  console.log('Path :', req.path)
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le client est le bon et souhaite accéder à ses propres données
-  } else if (req.path === ('/' + req.client.id) && req.role === 'client'){
-    return next(); 
+  } else if (req.path === ('/' + req.client.id) && req.role === 'client') {
+    return next();
   } else if (req.role === 'commercial') {
     next();
   } else if ('/email/' + req.client.email === req.path) {
@@ -72,8 +70,8 @@ exports.authorizeCommercial = (req, res, next) => {
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le commercial est le bon et souhaite accéder à ses propres données
-  } else if (req.path === ('/' + req.client.id) && req.role === 'commercial'){
-    return next(); 
+  } else if (req.path === ('/' + req.client.id) && req.role === 'commercial') {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }
@@ -81,12 +79,15 @@ exports.authorizeCommercial = (req, res, next) => {
 
 // Middleware d'autorisation pour les restaurants
 exports.authorizeRestaurant = (req, res, next) => {
+  console.log(req.path);
+  console.log(req.client.id);
+  console.log(req.role)
   // Si la route est login ou register, passer à la prochaine fonction middleware
   if (req.path === '/register' || req.path === '/login') {
     return next();
     // Vérifier si le restaurant est le bon et souhaite accéder à ses propres données
-  } else if (req.path === ('/' + req.client.id) && req.role === 'restaurant'){
-    return next(); 
+  } else if (req.path === ('/') && req.role === 'restaurant') {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }
