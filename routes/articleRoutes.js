@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const articleController = require('../controllers/articleController');
-const { authorizeRestaurant } = require('../middlewares');
+const { authenticate, authorizeRestaurant } = require('../middlewares');
 
 // Route pour récupérer tous les articles
 router.get('/', articleController.getAllArticles);
@@ -10,12 +10,13 @@ router.get('/', articleController.getAllArticles);
 router.get('/:id', articleController.getArticleById);
 
 // Route pour créer un nouveau article
-router.post('/', authorizeRestaurant, articleController.createArticle);
+
+router.post('/', authenticate, authorizeRestaurant, articleController.createArticle);
 
 // Route pour mettre à jour un article existant
-router.put('/:id', authorizeRestaurant, articleController.updateArticle);
+router.put('/:id', authenticate, authorizeRestaurant, articleController.updateArticle);
 
 // Route pour supprimer un article existant
-router.delete('/:id', authorizeRestaurant, articleController.deleteArticle);
+router.delete('/:id', authenticate, authorizeRestaurant, articleController.deleteArticle);
 
 module.exports = router;

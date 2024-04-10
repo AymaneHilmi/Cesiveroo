@@ -17,9 +17,9 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
+console.log(storage);
 
 const upload = multer({ storage: storage });
-
 app.post('/upload', upload.single('image'), (req, res) => {
     // Envoyer le chemin de l'image vers le client
     res.send
