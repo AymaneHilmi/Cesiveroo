@@ -5,19 +5,16 @@ import { themeColors } from '../theme';
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { red } from 'color-name';
-import deleteMyAccount from "../controller/Account";
 import Logout from '../controller/Logout';
 
-export default function AccountScreen() {
+export default function AccountRestaurateurScreen() {
     const navigation = useNavigation();
     const handleLogout = () => {
         Logout(navigation);
     };
 
-    const deleteAccount = async () => {
-        const response = await deleteMyAccount();
-        console.log(response)
-        navigation.navigate('Login');
+    const deleteAccount = () => {
+        deleteAccount();
     };
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
@@ -64,12 +61,38 @@ export default function AccountScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('OrderHistory') }}
+                onPress={() => { navigation.navigate('Menu') }}
+                className="px-3">
+                <View
+                    className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
+                    <Icon.Book className="h-14 w-14" stroke={themeColors.bgColor(1)} />
+                    <Text className="pl-3 flex-1 text-gray-700">Menu</Text>
+                    <View
+                        className="p-1"
+                    >
+                        <Icon.ArrowRight strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
+                    </View>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                className="px-3">
+                <View
+                    className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
+                    <Icon.Paperclip className="h-14 w-14" stroke={themeColors.bgColor(1)} />
+                    <Text className="pl-3 flex-1 text-gray-700">Articles</Text>
+                    <View
+                        className="p-1"
+                    >
+                        <Icon.ArrowRight strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
+                    </View>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
                     <Icon.Archive className="h-14 w-14" stroke={themeColors.bgColor(1)} />
-                    <Text className="pl-3 flex-1 text-gray-700">Order History</Text>
+                    <Text className="pl-3 flex-1 text-gray-700">Orders</Text>
                     <View
                         className="p-1"
                     >
@@ -110,9 +133,9 @@ export default function AccountScreen() {
                     <Text className="pl-3 flex-1 text-gray-700">Logout</Text>
                 </View>
             </TouchableOpacity>
-            {/*<Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />*/}
+            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />
 
-            <TouchableOpacity onPress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
+            <TouchableOpacity onpress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
                 <Icon.Trash2 strokeWidth={2} height={20} width={20} stroke={'red'} className="p-1 mr-2" />
                 <Text style={{ textAlign: 'center', marginTop: 2, textDecorationLine: 'underline' }}>I want to delete my account</Text>
             </TouchableOpacity>

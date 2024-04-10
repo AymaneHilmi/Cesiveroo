@@ -14,7 +14,7 @@ export default function RestaurateurScreen() {
         <SafeAreaView style={{ height: "100%", backgroundColor: '#E8E8E8' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Account')}
+                    onPress={() => navigation.navigate('AccountRestaurant')}
                     style={{
                         backgroundColor: themeColors.bgColor(1),
                         zIndex: 10, padding: 10, borderRadius: 9999,
@@ -35,7 +35,7 @@ export default function RestaurateurScreen() {
                 <TouchableOpacity
                     onPress={() => { navigation.navigate('Account') }}
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>
-                    <Image source={require('../assets/images/Restaurant/tacosAvenue.png')} style={{ width: 50, height: 50, borderRadius: 999 }} />
+                    <Image source={require('../assets/images/tacosAvenue.png')} style={{ width: 50, height: 50, borderRadius: 999 }} />
                 </TouchableOpacity>
             </View>
             {/* main */}
