@@ -14,12 +14,6 @@ const Home = async () => {
             }
             }
         );
-        console.log('Verifying...')
-        console.log('Token verified')
-        console.log('Token:', token)
-        console.log('Client:', verify.data.name)
-        console.log('City:' , verify.data.city)
-        console.log('Image path:', verify.data.imgPath)
         const client = verify.data.name;
         const address = verify.data.city;
         const url = verify.data.imgPath;

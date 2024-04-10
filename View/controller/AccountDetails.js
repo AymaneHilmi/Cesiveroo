@@ -47,7 +47,8 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
         }
     );
     const {ClientID, city, phone, postalCode, streetName, streetNumber} = verify.data
-
+    console.log(imgPath)
+    console.log('save ...')
     const response = await axios.put(`http://192.168.97.46:3000/api/clients/${ClientID}`, {
             name: newFirstName + ' ' + newLastName,
             email: newEmail,

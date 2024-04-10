@@ -24,7 +24,10 @@ export default function AccountScreen() {
                 backgroundColor: '#ffffff'
             }} >
                 <TouchableOpacity
-                    onPress={navigation.goBack}
+                    onPress={() => {  navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Home' }],
+                    }); }}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
                         left: 8, top: 15, zIndex: 10, padding: 4, borderRadius: 9999,
@@ -37,7 +40,10 @@ export default function AccountScreen() {
                 </View>
             </View >
             <TouchableOpacity
-                onPress={() => { navigation.navigate('AccountDetails') }}
+                onPress={() => {  navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'AccountDetails' }],
+                }); }}
                 className="px-3 pt-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-5">

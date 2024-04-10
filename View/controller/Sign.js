@@ -33,7 +33,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
             // Envoyer une requête POST au backend avec les informations de connexion
             console.log('Registering...');
             // Connexion à l'API
-            const response = await axios.post("http://localhost:3000/api/clients/register", {
+            const response = await axios.post("http://192.168.97.46:3000/api/clients/register", {
                 name: name,
                 email: email,
                 phone: phone,

@@ -71,7 +71,10 @@ export default function AccountDetailsScreen() {
                 backgroundColor: '#ffffff'
             }} >
                 <TouchableOpacity
-                    onPress={navigation.goBack}
+                    onPress={() => {  navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Account' }],
+                    }); }}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
                         left: 8, top: 15, zIndex: 10, padding: 4, borderRadius: 9999,

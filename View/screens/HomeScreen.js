@@ -15,12 +15,17 @@ export default function HomeScreen() {
 
     const [client, setClient] = useState('');
     const [address, setAddress] = useState('');
-    const [imgAccount, setImgAccount] = useState(require('../assets/images/compte.png'));
+    const [imgAccount, setImgAccount] = useState('');
     useEffect(() => {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
-            setImgAccount({ uri: data.url });
+
+            if (data.url !== '' || data.url !== null || data.url !== undefined) {
+                setImgAccount({ uri: data.url });
+            } else {
+                setImgAccount({ uri: '../assets/images/compte.png' });
+            }
         });
     }, [
         client,
