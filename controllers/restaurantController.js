@@ -54,7 +54,7 @@ exports.getRestaurantById = async (req, res) => {
 // Créer un nouveau restaurant avec UUID
 exports.createRestaurant = async (req, res) => {
   try {
-    const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password } = req.body;
+    const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, password } = req.body;
     // Vérifier si un restaurant avec le même email existe déjà
     const existingRestaurant = await Restaurant.getByEmail(email);
     if (existingRestaurant) {
@@ -68,12 +68,12 @@ exports.createRestaurant = async (req, res) => {
 
     // Exécuter la requête SQL pour insérer le nouveau restaurant
     const query = `
-      INSERT INTO Restaurants (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, hashedPassword) 
-      VALUES ('${restaurantId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${bankInfo}', '${hashedPassword}')`;
+      INSERT INTO Restaurants (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, hashedPassword)
+      VALUES ('${restaurantId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${bankInfo}', ${category}, ${imgPath}, '${hashedPassword}')`;
     await executeQuery(query);
 
     // Répondre avec les détails du restaurant créé (sans inclure le mot de passe)
-    res.status(201).json({ id: restaurantId, name, email, phone, address: { streetNumber, streetName, city, postalCode, bankInfo } });
+    res.status(201).json({ id: restaurantId, name, email, phone, address: { streetNumber, streetName, city, postalCode, bankInfo }, category, imgPath });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -134,3 +134,17 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// Récupérer un restaurant par son ID
+exports.getRestaurantInfo = async (req, res) => {
+  try {
+    const query = `SELECT name, phone, streetNumber, streetName, city, postalCode, category, imgPath FROM Restaurants WHERE RestaurantID = '${req.params.id}'`;
+    const restaurant = await executeQuery(query);
+    if (!restaurant[0]) {
+      return res.status(404).json({ message: 'Restaurant not found' });
+    }
+    res.status(200).json(restaurant[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}

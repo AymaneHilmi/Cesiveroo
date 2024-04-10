@@ -6,6 +6,9 @@ const { authenticate, authorizeRestaurant } = require('../middlewares');
 // Route pour récupérer tous les restaurant
 router.get('/', authenticate, authorizeRestaurant, restaurantController.getAllRestaurants);
 
+// Route pour récuperer les informations du restaurant
+router.get('/infos/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantInfo);
+
 // Route pour récupérer un restaurant par ID
 router.get('/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantById);
 

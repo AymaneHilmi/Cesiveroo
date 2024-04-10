@@ -83,6 +83,8 @@ BEGIN
         city NVARCHAR(100),
         postalCode NVARCHAR(20),
         bankInfo NVARCHAR(255),
+        category NVARCHAR(50),
+        imgPath NVARCHAR(255),
         hashedPassword NVARCHAR(255)
     );
     PRINT 'La table Restaurants a été créée avec succès.';
