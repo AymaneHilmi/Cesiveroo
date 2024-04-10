@@ -34,28 +34,36 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
-                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="AccountRestaurateur" component={AccountRestaurateurScreen} />
-                <Stack.Screen name="Articles" component={ArticlesScreen} />
-                <Stack.Screen name="ArticlesDetails" options={{ presentation: 'modal', headerShown: false }} component={ArticlesDetailsScreen} />
-                <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
-                <Stack.Screen name="Menu" component={MenuScreen} />
-                <Stack.Screen name="Driver" component={DriverScreen} />
+                <Stack.Screen name="Sign" component={SignScreen} />
+
+                {/* User Screens */}
                 <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Restaurateur" component={RestaurateurScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+                <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
+                <Stack.Screen name="Maps" component={MapsScreen} />
+                <Stack.Screen name="Delivery" options={{ presentation: 'fullScreenModal', headerShown: false }} component={DeliveryScreen} />
+                <Stack.Screen name="PreparingOrder" options={{ presentation: 'fullScreenModal', headerShown: false }} component={PreparingOrderScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />
                 <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
-                <Stack.Screen name="PreparingOrder" options={{ presentation: 'fullScreenModal', headerShown: false }} component={PreparingOrderScreen} />
-                <Stack.Screen name="Delivery" options={{ presentation: 'fullScreenModal', headerShown: false }} component={DeliveryScreen} />
-                <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
-                <Stack.Screen name="MenuDetails" options={{ presentation: 'modal', headerShown: false }} component={MenuDetailsScreen} />
-                <Stack.Screen name="Sign" component={SignScreen} />
-                <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
+
+                {/* Restaurateur Screens */}
+                <Stack.Screen name="Restaurateur" component={RestaurateurScreen} />
+                <Stack.Screen name="AccountRestaurateur" component={AccountRestaurateurScreen} />
+                <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
+                <Stack.Screen name="Articles" component={ArticlesScreen} />
+                <Stack.Screen name="ArticlesDetails" options={{ presentation: 'modal', headerShown: false }} component={ArticlesDetailsScreen} />
+                <Stack.Screen name="Menu" component={MenuScreen} />
+                <Stack.Screen name="MenuDetails" options={{ presentation: 'modal', headerShown: false }} component={MenuDetailsScreen} />
                 <Stack.Screen name="Orders" component={OrdersScreen} />
                 <Stack.Screen name="OrdersDetails" options={{ presentation: 'modal', headerShown: false }} component={OrdersDetailsScreen} />
+
+                {/* Service Commercial */}
+                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
+
+                {/* Driver */}
+                <Stack.Screen name="Driver" component={DriverScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

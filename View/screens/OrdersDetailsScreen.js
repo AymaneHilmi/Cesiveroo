@@ -64,8 +64,13 @@ export default function OrdersDetailsScreen() {
                     <Text className="font-extrabold">Order Total</Text>
                     <Text className="font-extrabold">$78,99</Text>
                 </View>
-                <View className="p-4">
-
+                <View>
+                    <TouchableOpacity
+                        style={{ backgroundColor: themeColors.bgColor(1) }}
+                        onPress={() => navigation.navigate('PreparingOrder')}
+                        className="p-3 rounded-full">
+                        <Text className="text-white text-center font-bold text-lg">Accept Order</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 

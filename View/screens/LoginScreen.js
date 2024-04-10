@@ -10,6 +10,7 @@ import {
     TextInput,
     Button,
     TouchableOpacity,
+    KeyboardAvoidingView,
 } from "react-native";
 import { Navigation } from "react-native-feather";
 
@@ -22,7 +23,7 @@ export default function LoginScreen() {
         const response = await Login(email, password, navigation);
         if (response === 'Login failed') {
             setWrongPassword('Wrong email or password');
-        } else if (response === 'Login successful'){
+        } else if (response === 'Login successful') {
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Home' }],
@@ -32,7 +33,7 @@ export default function LoginScreen() {
         }
     };
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
             <View style={styles.inputView}>
@@ -59,7 +60,7 @@ export default function LoginScreen() {
             <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
-        </View >
+        </KeyboardAvoidingView >
     );
 }
 const styles = StyleSheet.create({
