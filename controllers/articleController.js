@@ -81,10 +81,16 @@ exports.updateArticle = async (req, res) => {
 // Supprimer un article
 exports.deleteArticle = async (req, res) => {
   try {
-    // The ID of the article to delete is passed in the URL but it's an UUID with special characters
-    // So we need to wrap it in single quotes to make it a string
-    const query = `DELETE FROM Articles WHERE ArticleID = ${req.params.id}`;
+    // Get RestaurantID from Article
+    const query = `SELECT RestaurantID FROM Articles WHERE ArticleID = ${req.params.id}`;
     const article = await executeQuery(query);
+    // Check if the RestaurantID is the same as the RestaurantID in the token
+    if (req.client.id !== article[0].RestaurantID) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+    // Delete the article
+    const deleteQuery = `DELETE FROM Articles WHERE ArticleID = ${req.params.id}`;
+    await executeQuery(deleteQuery);
     res.status(200).json({ message: 'Article deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
