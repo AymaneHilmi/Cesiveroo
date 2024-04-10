@@ -5,6 +5,7 @@ import { themeColors } from '../theme';
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { red } from 'color-name';
+import deleteMyAccount from "../controller/Account";
 import Logout from '../controller/Logout';
 
 export default function AccountScreen() {
@@ -13,8 +14,10 @@ export default function AccountScreen() {
         Logout(navigation);
     };
 
-    const deleteAccount = () => {
-        deleteAccount();
+    const deleteAccount = async () => {
+        const response = await deleteMyAccount();
+        console.log(response)
+        navigation.navigate('Login');
     };
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
@@ -107,9 +110,9 @@ export default function AccountScreen() {
                     <Text className="pl-3 flex-1 text-gray-700">Logout</Text>
                 </View>
             </TouchableOpacity>
-            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />
+            {/*<Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 120, left: 60, opacity: 0.2 }} />*/}
 
-            <TouchableOpacity onpress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
+            <TouchableOpacity onPress={deleteAccount} style={{ flexDirection: 'row', position: 'relative', bottom: -130, left: 110 }}>
                 <Icon.Trash2 strokeWidth={2} height={20} width={20} stroke={'red'} className="p-1 mr-2" />
                 <Text style={{ textAlign: 'center', marginTop: 2, textDecorationLine: 'underline' }}>I want to delete my account</Text>
             </TouchableOpacity>

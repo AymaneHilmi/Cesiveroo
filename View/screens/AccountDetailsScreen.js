@@ -30,7 +30,7 @@ export default function AccountDetailsScreen() {
                 setPhone(data.phone);
                 const path = data.imgPath;
 
-                if (!(path === "" || path === null || path === undefined)) {
+                if (!(path === "")) {
                     setImageUri({ uri: path });
                 }
             } catch (error) {
