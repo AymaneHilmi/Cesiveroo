@@ -53,13 +53,17 @@ exports.getMenuById = async (req, res) => {
 exports.createMenu = async (req, res) => {
   try {
     // Extract menu data from request body
-    const { restaurantId, name, price } = req.body;
+    const { RestaurantID, name, price } = req.body;
 
     // Call the create method of the Menu model to insert the new menu
-    const newMenu = await Menu.create({ restaurantId, name, price });
+    await Menu.create({ RestaurantID, name, price });
 
     // If the menu was successfully created, send the new menu data back
-    res.status(201).json(newMenu);
+    if (success) {
+      res.status(201).json({ RestaurantID, name, price });
+    } else {
+      res.status(400).json({ message: 'Failed to create menu' });
+    }
   } catch (err) {
     // If there's an error, send back a 500 status with the error message
     res.status(500).json({ message: err.message });
@@ -85,8 +89,15 @@ exports.updateMenu = async (req, res) => {
 // Supprimer un menu
 exports.deleteMenu = async (req, res) => {
   try {
-    // The ID of the menu to delete is passed in the URL but it's an UUID with special characters
-    // So we need to wrap it in single quotes to make it a string
+    if (!req.params.id) {
+      return res.status(400).json({ message: 'Menu ID is required' });
+    }
+    // Vérifiez si le restaurantID du menu correspond à celui de l'utilisateur connecté
+    const checkQuery = `SELECT RestaurantID FROM Menus WHERE MenuID = ${req.params.id}`;
+    const checkResult = await executeQuery(checkQuery);
+    if (checkResult[0].RestaurantID !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `DELETE FROM Menus WHERE MenuID = ${req.params.id}`;
     const menu = await executeQuery(query);
     res.status(200).json({ message: 'Menu deleted successfully' });
@@ -116,10 +127,10 @@ exports.addArticleToMenu = async (req, res) => {
   }
 };
 
-exports.getArticlesOfMenu = async (req, res) => {
+exports.getArticlesByMenu = async (req, res) => {
   try {
     const menuId = req.params.menuId; // Assurez-vous que l'ID du menu est correctement récupéré depuis les paramètres de la requête
-    const articles = await Menu.getArticlesOfMenu(menuId);
+    const articles = await Menu.getArticlesByMenu(menuId);
     res.json(articles);
   } catch (err) {
     res.status(500).json({ message: err.message });

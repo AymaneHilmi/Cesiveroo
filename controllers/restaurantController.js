@@ -54,31 +54,19 @@ exports.getRestaurantById = async (req, res) => {
 // Créer un nouveau restaurant avec UUID
 exports.createRestaurant = async (req, res) => {
   try {
-    const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, password } = req.body;
-    // Vérifier si un restaurant avec le même email existe déjà
-    const existingRestaurant = await Restaurant.getByEmail(email);
-    if (existingRestaurant) {
-      return res.status(400).json({ message: 'Restaurant already exists' });
+    const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, password } = req.body;
+    // Vérifier si le restaurant existe déjà
+    const restaurant = await Restaurant.getByEmail(email);
+    if (restaurant) {
+      return res.status(409).json({ message: 'Restaurant already exists' });
     }
-    // Générer un identifiant unique pour le restaurant
-    const restaurantId = uuidv4();
-
-    // Hasher le mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Exécuter la requête SQL pour insérer le nouveau restaurant
-    const query = `
-      INSERT INTO Restaurants (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, hashedPassword)
-      VALUES ('${restaurantId}', '${name}', '${email}', '${phone}', '${streetNumber}', '${streetName}', '${city}', '${postalCode}', '${bankInfo}', ${category}, ${imgPath}, '${hashedPassword}')`;
-    await executeQuery(query);
-
-    // Répondre avec les détails du restaurant créé (sans inclure le mot de passe)
-    res.status(201).json({ id: restaurantId, name, email, phone, address: { streetNumber, streetName, city, postalCode, bankInfo }, category, imgPath });
+    // Créer un nouveau restaurant
+    await Restaurant.create({ name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, password });
+    res.status(201).json({ name, email, phone, address: { streetNumber, streetName, city, postalCode }, category });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
-
 
 
 // Mettre à jour un restaurant

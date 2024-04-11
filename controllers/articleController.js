@@ -66,13 +66,13 @@ exports.createArticle = async (req, res) => {
 // Mettre à jour un article
 exports.updateArticle = async (req, res) => {
   try {
-    const { name, ingredients, price } = req.body;
+    const { Name, Ingredients, Price } = req.body;
     const query = `
       UPDATE Articles
-      SET name = '${name}', ingredients = '${ingredients}', price = ${price}
+      SET Name = '${Name}', Ingredients = '${Ingredients}', Price = ${Price}
       WHERE ArticleID = '${req.params.id}'`;
     await executeQuery(query);
-    res.status(200).json({ name, ingredients, price });
+    res.status(200).json({ Name, Ingredients, Price });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
