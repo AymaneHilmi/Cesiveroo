@@ -1,14 +1,39 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { themeColors } from '../theme';
 import * as Icon from "react-native-feather";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Picker } from '@react-native-picker/picker';
-import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getAllClients } from '../controller/Account';
 
 
 export default function ServiceCommercialScreen() {
-    const [selectedClient, setSelectedLanguage] = useState();
+    // const [selectedClient, setSelectedLanguage] = useState();
+    const [clients, setClients] = useState([]);  // Pour stocker tous les clients
+    const [selectedClient, setSelectedClient] = useState('');  // Pour stocker l'ID du client sélectionné
+    const [clientName, setClientName] = useState('');  // Pour stocker le nom du client sélectionné
+    const [clientAddress, setClientAddress] = useState('');  // Pour stocker l'adresse du client sélectionné
+
+    useEffect(() => {
+        getAllClients().then(data => {
+            setClients(data);  // Stocker tous les clients dans l'état
+            if (data.length > 0) {
+                setSelectedClient(data[0].id);  // Définir l'ID du premier client comme sélectionné par défaut
+                setClientName(data[0].name);  // Définir le nom du premier client
+                setClientAddress(data[0].address);  // Définir l'adresse du premier client
+            }
+        }).catch(error => {
+            console.error('Failed to fetch clients:', error);
+        });
+    }, []);
+
+    // Fonction pour mettre à jour le client sélectionné
+    const onClientChange = (clientId) => {
+        const client = clients.find(c => c.id === clientId);
+        setSelectedClient(clientId);
+        setClientName(client ? client.name : '');
+        setClientAddress(client ? client.address : '');
+    };
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
@@ -39,15 +64,12 @@ export default function ServiceCommercialScreen() {
             <Text>Select the Client to delete :</Text>
             <View style={{ width: '100%', paddingHorizontal: 80 }} >
                 <Picker
-                    itemStyle={{ color: themeColors.bgColor(1), fontSize: 20 }}
                     selectedValue={selectedClient}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setSelectedLanguage(itemValue)
-
-                    }>
-                    <Picker.Item label="Client 1" value="Client 1" />
-                    <Picker.Item label="Client 2" value="Client 2" />
-                    <Picker.Item label="Client 3" value="Client 3" />
+                    onValueChange={onClientChange}
+                    style={{ height: 50, width: '100%' }}>
+                    {clients.map((client, index) => (
+                        <Picker.Item key={index} label={client.name} value={client.id} />
+                    ))}
                 </Picker>
             </View>
             <View className="flex-row p-5">
