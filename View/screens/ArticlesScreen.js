@@ -84,6 +84,16 @@ export default function ArticlesScreen() {
                     </View>
                 </TouchableOpacity>
             </ScrollView>
+            <View style={{ position: 'absolute', bottom: 50, width: '100%' }}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('ArticlesAdd')}
+                    style={{
+                        backgroundColor: themeColors.bgColor(1), padding: 15, width: '50%', borderRadius: 10,
+                        alignSelf: 'center', alignItems: 'center',
+                    }} >
+                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Add Article </Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView >
     )
 }

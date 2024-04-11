@@ -1,10 +1,12 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MapsScreen() {
+    const navigation = useNavigation();
     const [address, setAddress] = useState('');
     const [region, setRegion] = useState({
         latitude: 43.4812549,
@@ -119,30 +121,31 @@ export default function MapsScreen() {
             >
                 {marker && <Marker coordinate={marker} title={marker.title} />}
             </MapView>
-
-            <TouchableOpacity
-                style={{
-                    position: 'absolute',
-                    bottom: 80,
-                    left: "25%",
-                    width: '50%',
-                    height: 60,
-                    backgroundColor: '#20cfbd',
-                    paddingHorizontal: 20,
-                    paddingVertical: 10,
-                    borderRadius: 8,
-                    zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
-                    elevation: 5, // Pour l'ombre sur Android
-                    shadowColor: '#000', // Pour l'ombre sur iOS
-                    shadowOpacity: 0.1,
-                    shadowRadius: 5,
-                    shadowOffset: { height: 0, width: 0 },
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <Text className="font-bold text-xl text-white">Save</Text>
-            </TouchableOpacity>
+            <KeyboardAvoidingView>
+                <TouchableOpacity
+                    style={{
+                        position: 'absolute',
+                        bottom: 80,
+                        left: "25%",
+                        width: '50%',
+                        height: 60,
+                        backgroundColor: '#20cfbd',
+                        paddingHorizontal: 20,
+                        paddingVertical: 10,
+                        borderRadius: 8,
+                        zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
+                        elevation: 5, // Pour l'ombre sur Android
+                        shadowColor: '#000', // Pour l'ombre sur iOS
+                        shadowOpacity: 0.1,
+                        shadowRadius: 5,
+                        shadowOffset: { height: 0, width: 0 },
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Text className="font-bold text-xl text-white">Save</Text>
+                </TouchableOpacity>
+            </KeyboardAvoidingView>
         </View >
     );
 }

@@ -39,16 +39,6 @@ export default function LoginScreen() {
             <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Choose your role</Text>
-            <Picker
-                selectedValue={selectedValue}
-                style={{ height: 200, width: 300 }}
-                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-                <Picker.Item label="Client" value="clients" />
-                <Picker.Item label="Restaurateur" value="restaurants" />
-                <Picker.Item label="Service Commercial" value="commercial" />
-                <Picker.Item label="Livreur" value="livreurs" />
-            </Picker>
             <View style={styles.inputView1}>
                 <TextInput
                     style={styles.TextInput}
@@ -66,6 +56,17 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
+
+            <Picker
+                selectedValue={selectedValue}
+                style={{ width: 240, fontSize: 10 }}
+                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            >
+                <Picker.Item label="Client" value="clients" />
+                <Picker.Item label="Restaurateur" value="restaurants" />
+                <Picker.Item label="Service commercial" value="commercial" />
+                <Picker.Item label="Livreur" value="livreurs" />
+            </Picker>
             <TouchableOpacity onPress={() => navigation.navigate('Sign')}>
                 <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         height: 200,
     },
     inputView1: {
-        backgroundColor: "#20CFBE",
+        backgroundColor: "#E8E8E8",
         borderRadius: 10,
         width: "50%",
         height: 45,
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     inputView2: {
-        backgroundColor: "#20CFBE",
+        backgroundColor: "#E8E8E8",
         borderRadius: 10,
         width: "50%",
         height: 45,

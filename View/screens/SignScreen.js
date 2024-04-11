@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Register from "../controller/Sign";
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
-
+import { Picker } from '@react-native-picker/picker';
+import { SelectList } from 'react-native-dropdown-select-list'
 import {
     StyleSheet,
     Text,
@@ -16,6 +17,8 @@ import {
 } from "react-native";
 
 export default function SignScreen() {
+    const [selectedCategories, setSelectedCategories] = React.useState("");
+    const [selectedValue, setSelectedValue] = useState("clients")
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -28,6 +31,7 @@ export default function SignScreen() {
     const navigation = useNavigation();
     const handleSign = async () => {
         const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
+
 
         console.log(response);
         if (response === 'Invalid name') {
@@ -62,85 +66,285 @@ export default function SignScreen() {
             });
         }
     }
+    const [inputValue, setInputValue] = useState("");
+    const renderConditionalInput = () => {
+        switch (selectedValue) {
+            case 'clients':
+                return (
+                    <View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your full name"
+                                // PlaceholderTextColor to understand that we have to enter the text
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(name) => setName(name)}
+                            />
+                        </View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your email"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(email) => setEmail(email)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your phone number"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(phone) => setPhone(phone)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your street number"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your street name"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(streetName) => setStreetName(streetName)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your city"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(city) => setCity(city)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your postal code"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(postalCode) => setPostalCode(postalCode)}
+                            />
+                        </View>
+
+                        <View style={{
+                            width: 300,
+                            backgroundColor: "#E8E8E8",
+                            borderRadius: 10,
+                            height: 45
+                        }}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your password"
+                                placeholderTextColor="#003f5c"
+                                secureTextEntry={true}
+                                onChangeText={(password) => setPassword(password)}
+                            />
+                        </View>
+                    </View>
+                );
+            case 'restaurants':
+                const Data = [
+                    { key: '1', value: 'Italien', disabled: true },
+                    { key: '2', value: 'Mexicain' },
+                    { key: '3', value: 'Japonais' },
+                    { key: '4', value: 'Indien' },
+                    { key: '5', value: 'Chinois' },
+                    { key: '6', value: 'Fast-food' },
+                    { key: '7', value: 'Divers' },
+                ]
+                return (
+                    <View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter restaurant name"
+                                // PlaceholderTextColor to understand that we have to enter the text
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(name) => setName(name)}
+                            />
+                        </View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter restaurant email"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(email) => setEmail(email)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter the restaurant phone number"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(phone) => setPhone(phone)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your restaurant street number"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your restaurant street name"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(streetName) => setStreetName(streetName)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your restaurant city"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(city) => setCity(city)}
+                            />
+                        </View>
+
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your restaurant postal code"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(postalCode) => setPostalCode(postalCode)}
+                            />
+                        </View>
+                        <SelectList
+                            setSelectedCategories={(val) => setSelectedCategories(val)}
+                            data={Data}
+                            save="value"
+                            style={{ backgroundColor: "#E8E8E8" }}
+                        />
+
+                        <View style={{
+                            width: 300,
+                            backgroundColor: "#E8E8E8",
+                            borderRadius: 10,
+                            height: 45
+                        }}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your password"
+                                placeholderTextColor="#003f5c"
+                                secureTextEntry={true}
+                                onChangeText={(password) => setPassword(password)}
+                            />
+                        </View>
+                    </View>
+                );
+            case 'commercial':
+                return (
+                    <View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your Commercial name"
+                                // PlaceholderTextColor to understand that we have to enter the text
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(name) => setName(name)}
+                            />
+                        </View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your Commercial email"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(email) => setEmail(email)}
+                            />
+                        </View>
+
+                        <View style={{
+                            width: 300,
+                            backgroundColor: "#E8E8E8",
+                            borderRadius: 10,
+                            height: 45
+                        }}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your password"
+                                placeholderTextColor="#003f5c"
+                                secureTextEntry={true}
+                                onChangeText={(password) => setPassword(password)}
+                            />
+                        </View>
+                    </View>
+                );
+            case 'livreurs':
+                return (
+                    <View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your Driver name"
+                                // PlaceholderTextColor to understand that we have to enter the text
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(name) => setName(name)}
+                            />
+                        </View>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your Driver email"
+                                placeholderTextColor="#003f5c"
+                                onChangeText={(email) => setEmail(email)}
+                            />
+                        </View>
+
+                        <View style={{
+                            width: 300,
+                            backgroundColor: "#E8E8E8",
+                            borderRadius: 10,
+                            height: 45
+                        }}>
+                            <TextInput
+                                style={styles.TextInput}
+                                placeholder="Enter your password"
+                                placeholderTextColor="#003f5c"
+                                secureTextEntry={true}
+                                onChangeText={(password) => setPassword(password)}
+                            />
+                        </View>
+                    </View>
+                );
+            default:
+                return null;
+        }
+    };
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
+            <Picker
+                selectedValue={selectedValue}
+                style={{ width: 240, marginTop: -70 }}
+                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            >
+                <Picker.Item label="Client" value="clients" />
+                <Picker.Item label="Restaurateur" value="restaurants" />
+                <Picker.Item label="Service commercial" value="commercial" />
+                <Picker.Item label="Livreur" value="livreurs" />
+            </Picker>
+            {renderConditionalInput()}
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your full name"
-                    // PlaceholderTextColor to understand that we have to enter the text
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(name) => setName(name)}
-                />
-            </View>
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(email) => setEmail(email)}
-                />
-            </View>
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your phone number"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(phone) => setPhone(phone)}
-                />
-            </View>
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your street number"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
-                />
-            </View>
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your street name"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(streetName) => setStreetName(streetName)}
-                />
-            </View>
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your city"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(city) => setCity(city)}
-                />
-            </View>
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your postal code"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(postalCode) => setPostalCode(postalCode)}
-                />
-            </View>
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Enter your password"
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity className="mt-5" onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.login_button}>Already a Member?</Text>
             </TouchableOpacity>
             <Text style={{ color: 'red' }}>{error}</Text>
@@ -165,22 +369,23 @@ export default function SignScreen() {
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 100,
         flex: 1,
         backgroundColor: "#fff",
         alignItems: "center",
-        justifyContent: "center",
+
     },
     image: {
         marginBottom: 0,
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
     },
     inputView: {
         width: 300,
-        backgroundColor: "#20CFBE",
+        backgroundColor: "#E8E8E8",
         borderRadius: 10,
         height: 45,
-        marginBottom: 10,
+        marginBottom: 10
     },
     TextInput: {
         height: 50,
