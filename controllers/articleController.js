@@ -53,6 +53,10 @@ exports.getArticleById = async (req, res) => {
 exports.createArticle = async (req, res) => {
   try {
     const { RestaurantID, Name, Ingredients, Price } = req.body;
+    // Vérifiez si le RestaurantID de l'article correspond à celui de l'utilisateur connecté
+    if (RestaurantID !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `
       INSERT INTO Articles (RestaurantID, Name, Ingredients, Price)
       VALUES ('${RestaurantID}', '${Name}', '${Ingredients}', ${Price})`;
@@ -67,6 +71,12 @@ exports.createArticle = async (req, res) => {
 exports.updateArticle = async (req, res) => {
   try {
     const { Name, Ingredients, Price } = req.body;
+    // Vérifiez si le RestaurantID de l'article correspond à celui de l'utilisateur connecté
+    const checkQuery = `SELECT RestaurantID FROM Articles WHERE ArticleID = ${req.params.id}`;
+    const article = await executeQuery(checkQuery);
+    if (req.client.id !== article[0].RestaurantID) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `
       UPDATE Articles
       SET Name = '${Name}', Ingredients = '${Ingredients}', Price = ${Price}

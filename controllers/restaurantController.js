@@ -29,7 +29,8 @@ async function executeQuery(query) {
 // Récupérer tous les restaurants
 exports.getAllRestaurants = async (req, res) => {
   try {
-    const query = 'SELECT * FROM Restaurants';
+    // Enlever le mot de passe de la requête
+    const query = 'SELECT RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, category FROM Restaurants';
     const restaurants = await executeQuery(query);
     res.status(200).json(restaurants);
   } catch (err) {
@@ -41,6 +42,10 @@ exports.getAllRestaurants = async (req, res) => {
 exports.getRestaurantById = async (req, res) => {
   try {
     const query = `SELECT * FROM Restaurants WHERE RestaurantID = '${req.params.id}'`;
+    // Vérifier si le RestaurantID du restaurant correspond à celui de l'utilisateur connecté
+    if (req.params.id !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const restaurant = await executeQuery(query);
     if (!restaurant[0]) {
       return res.status(404).json({ message: 'Restaurant not found' });
@@ -73,6 +78,10 @@ exports.createRestaurant = async (req, res) => {
 exports.updateRestaurant = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo } = req.body;
+    // Vérifier si le RestaurantID du restaurant correspond à celui de l'utilisateur connecté
+    if (req.params.id !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `
       UPDATE Restaurants
       SET name = '${name}', email = '${email}', phone = '${phone}',
@@ -88,6 +97,10 @@ exports.updateRestaurant = async (req, res) => {
 // Supprimer un restaurant
 exports.deleteRestaurant = async (req, res) => {
   try {
+    // Vérifier si le RestaurantID du restaurant correspond à celui de l'utilisateur connecté
+    if (req.params.id !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `DELETE FROM Restaurants WHERE RestaurantID = '${req.params.id}'`;
     await executeQuery(query);
     res.status(200).json({ message: 'Restaurant deleted successfully, id: ' + req.params.id });
@@ -149,3 +162,26 @@ exports.getAllRestaurantsInfos = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 }
+
+// Récupérer tous les menus d'un restaurant
+exports.getAllMenus = async (req, res) => {
+  try {
+    console.log(req.params.id + "id");
+    const query = `SELECT * FROM Menus WHERE RestaurantID = '${req.params.id}'`;
+    const menus = await executeQuery(query);
+    res.status(200).json(menus);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Récupérer tous les articles d'un restaurant
+exports.getAllArticles = async (req, res) => {
+  try {
+    const query = `SELECT * FROM Articles WHERE RestaurantID = '${req.params.id}'`;
+    const articles = await executeQuery(query);
+    res.status(200).json(articles);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

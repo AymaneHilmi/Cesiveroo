@@ -54,9 +54,12 @@ exports.createMenu = async (req, res) => {
   try {
     // Extract menu data from request body
     const { RestaurantID, name, price } = req.body;
-
+    // Vérifiez si le restaurantID du menu correspond à celui de l'utilisateur connecté
+    if (RestaurantID !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     // Call the create method of the Menu model to insert the new menu
-    await Menu.create({ RestaurantID, name, price });
+    const success = await Menu.create({ RestaurantID, name, price });
 
     // If the menu was successfully created, send the new menu data back
     if (success) {
@@ -74,6 +77,12 @@ exports.createMenu = async (req, res) => {
 exports.updateMenu = async (req, res) => {
   try {
     const { name, ingredients, price } = req.body;
+    // Vérifiez si le restaurantID du menu correspond à celui de l'utilisateur connecté
+    const checkQuery = `SELECT RestaurantID FROM Menus WHERE MenuID = ${req.params.id}`;
+    const checkResult = await executeQuery(checkQuery);
+    if (checkResult[0].RestaurantID !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `
       UPDATE Menus
       SET name = '${name}', ingredients = '${ingredients}', price = ${price}
@@ -110,7 +119,12 @@ exports.addArticleToMenu = async (req, res) => {
   try {
     // L'ID du menu et de l'article sont passés dans le corps de la requête
     const { menuId, articleId } = req.body;
-
+    // Vérifiez si le restaurantID du menu correspond à celui de l'utilisateur connecté
+    const checkQuery = `SELECT RestaurantID FROM Menus WHERE MenuID = ${menuId}`;
+    const checkResult = await executeQuery(checkQuery);
+    if (checkResult[0].RestaurantID !== req.client.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     // Appelez la méthode du modèle pour ajouter l'article au menu
     const success = await Menu.addArticleToMenu(menuId, articleId);
 

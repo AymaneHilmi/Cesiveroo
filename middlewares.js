@@ -83,7 +83,7 @@ exports.authorizeRestaurant = (req, res, next) => {
   console.log(req.role);
   console.log(req.client.id);
   // Si la route est login ou register, passer à la prochaine fonction middleware
-  if (req.path === '/register' || req.path === '/login' || req.path.includes('/infos')) {
+  if (req.path === '/register' || req.path === '/login' || req.path.includes('/infos') || req.path.includes('/menus') || req.path.includes('/articles')) {
     return next();
     // Vérifier si le restaurant est le bon et souhaite accéder à ses propres données
   } else if (req.path === ('/') && req.role === 'restaurant') {

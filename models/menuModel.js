@@ -22,11 +22,10 @@ const Menu = {
 // Fonction pour insérer un menu dans la base de données
 Menu.create = async (menuData) => {
   try {
-    const { restaurantId, name, price } = menuData;
+    const { RestaurantID, name, price } = menuData;
     const pool = await sql.connect(config);
     const request = pool.request();
-    // MenuID est généré automatiquement
-    await request.input('RestaurantID', sql.NVarChar, restaurantId);
+    await request.input('RestaurantID', sql.NVarChar, RestaurantID);
     await request.input('name', sql.NVarChar, name);
     await request.input('price', sql.Decimal(10, 2), price);
     const query = `INSERT INTO ${Menu.tableName} (RestaurantID, name, price)
