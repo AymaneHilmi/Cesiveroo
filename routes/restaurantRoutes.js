@@ -9,6 +9,9 @@ router.get('/', authenticate, authorizeRestaurant, restaurantController.getAllRe
 // Route pour récuperer les informations du restaurant
 router.get('/infos/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantInfo);
 
+// Route pour récuperer les informations du restaurant
+router.get('/infos', authenticate, authorizeRestaurant, restaurantController.getAllRestaurantsInfos);
+
 // Route pour récupérer un restaurant par ID
 router.get('/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantById);
 

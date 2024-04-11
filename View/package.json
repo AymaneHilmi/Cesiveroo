@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@reduxjs/toolkit": "^2.2.3",
+    "@segment/loosely-validate-event": "^2.0.0",
     "axios": "^1.6.8",
     "expo": "^50.0.15",
     "expo-cli": "^6.3.10",

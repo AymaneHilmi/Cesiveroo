@@ -3,6 +3,8 @@ db/
 compose.yaml
 package.json
 package-lock.json
+View/package.json
+View/package-lock.json
 .expo
 .idea
 config/
