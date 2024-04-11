@@ -73,7 +73,7 @@ export default function MapsScreen() {
                 <Icon.Search color={"white"} />
             </TouchableOpacity>
             <MapView style={{ zIndex: -1, width: '100%', height: '100%' }} mapType="standard"
-                onMarker={onRegionChange}
+                onMarker={true}
             >
 
             </MapView>

@@ -72,6 +72,8 @@ exports.authorizeCommercial = (req, res, next) => {
     // Vérifier si le commercial est le bon et souhaite accéder à ses propres données
   } else if (req.path === ('/' + req.client.id) && req.role === 'commercial') {
     return next();
+  } else if (req.role === 'commercial') {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }

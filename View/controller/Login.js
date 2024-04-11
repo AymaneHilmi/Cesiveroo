@@ -2,13 +2,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IP } from '../config';
 
-const Login = async (email, password, navigation) => {
+const Login = async (email, password, navigation, selectedValue) => {
   console.log("http://" + IP + ":3000/api/clients/login")
   try {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
     // Connexion à l'API
-    const response = await axios.post("http://" + IP + ":3000/api/clients/login", {
+    const response = await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/login", {
       email: email,
       password: password
     });
@@ -21,7 +21,7 @@ const Login = async (email, password, navigation) => {
       // Verifier le token
       const token = await AsyncStorage.getItem('token');
       const verify = await axios.post(
-        "http://" + IP + ":3000/api/clients/verify",
+        "http://" + IP + ":3000/api/" + selectedValue + "/verify",
         // Body de la requête (s'il y en a un)
         {},
         {

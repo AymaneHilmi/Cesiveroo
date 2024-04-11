@@ -21,7 +21,7 @@ export default function LoginScreen() {
     const [wrongPassword, setWrongPassword] = useState("");
     const navigation = useNavigation();
     const handleLogin = async () => {
-        const response = await Login(email, password, navigation);
+        const response = await Login(email, password, navigation, selectedValue);
         if (response === 'Login failed') {
             setWrongPassword('Wrong email or password');
         } else if (response === 'Login successful') {
@@ -45,7 +45,7 @@ export default function LoginScreen() {
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
                 <Picker.Item label="Client" value="clients" />
-                <Picker.Item label="Restaurateur" value="restaurant" />
+                <Picker.Item label="Restaurateur" value="restaurants" />
                 <Picker.Item label="Service Commercial" value="commercial" />
                 <Picker.Item label="Livreur" value="livreurs" />
             </Picker>
