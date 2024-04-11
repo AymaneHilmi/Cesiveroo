@@ -116,12 +116,40 @@ async function getMenuDetails(menuId) {
                 }
             }
         );
+        const articles = await axios.get("http://" + IP + ":3000/api/articles-menus/menus/" + menuId,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        console.log('Articles:', articles.data)
+        response.data.articles = articles.data;
+        // Extraire les articles de la réponse et récuperer les détails de chaque article
+        for (let i = 0; i < response.data.articles.length; i++) {
+            const articleId = response.data.articles[i].ArticleID;
+            console.log('ArticleId:', articleId)
+            const article = await axios.get("http://" + IP + ":3000/api/articles/" + articleId,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            console.log('Article:', article.data)
+            // Remove the ArticleID from the article object
+            delete article.data.ArticleID;
+            delete article.data.RestaurantID;
+            response.data.articles[i].details = article.data;
+            console.log('Article details:', response.data.articles[i].details)
+        }
         return response.data;
     } catch (error) {
         console.log('An error occurred:', error);
         // Gérer les erreurs
     }
 }
+
 // Supprimer un menu
 async function deleteMenu(menuId) {
     try {
