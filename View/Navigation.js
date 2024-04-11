@@ -35,9 +35,7 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
-                <Stack.Screen name="Driver" component={DriverScreen} />
 
-                <Stack.Screen name="Restaurateur" component={RestaurateurScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
@@ -53,6 +51,7 @@ export default function Navigation() {
                 <Stack.Screen name="OrderHistory" component={OrderHistory} />
 
                 {/* Restaurateur Screens */}
+                <Stack.Screen name="Restaurateur" component={RestaurateurScreen} />
                 <Stack.Screen name="AccountRestaurateur" component={AccountRestaurateurScreen} />
                 <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
                 <Stack.Screen name="Articles" component={ArticlesScreen} />
@@ -66,6 +65,7 @@ export default function Navigation() {
                 <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
 
                 {/* Driver */}
+                <Stack.Screen name="Driver" component={DriverScreen} />
                 <Stack.Screen name="AccountDriver" component={AccountDriverScreen} />
                 <Stack.Screen name="AccountDriverDetails" component={AccountDetailsDriverScreen} />
             </Stack.Navigator>

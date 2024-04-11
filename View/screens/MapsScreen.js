@@ -1,8 +1,8 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
 import MapView, { Marker } from 'react-native-maps';
 import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
+import React, { useState } from 'react';
 
 export default function MapsScreen() {
     const [address, setAddress] = useState('');
@@ -82,9 +82,13 @@ export default function MapsScreen() {
                     shadowOpacity: 0.1,
                     shadowRadius: 5,
                     shadowOffset: { height: 0, width: 0 },
+
                 }}
+                onChangeText={handleAddressChange}
+                value={address}
             />
             <TouchableOpacity
+                onPress={handleSearch}
                 style={{
                     position: 'absolute',
                     right: 30,
@@ -104,18 +108,16 @@ export default function MapsScreen() {
                     shadowOffset: { height: 0, width: 0 },
                     alignItems: 'center',
                 }}
+
             >
                 <Icon.Search color={"white"} />
             </TouchableOpacity>
-            <MapView style={{ zIndex: -1, width: '100%', height: '100%' }} mapType="standard"
-                initialRegion={{
-                    latitude: 43.4812549,
-                    longitude: 5.3864446,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
-                }}
+            <MapView
+                style={{ flex: 1, zIndex: -1 }}
+                mapType="standard"
+                region={region}
             >
-
+                {marker && <Marker coordinate={marker} title={marker.title} />}
             </MapView>
 
             <TouchableOpacity
