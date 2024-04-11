@@ -5,64 +5,102 @@ import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 
 export default function MapsScreen() {
-    const TokyoRegion = {
-        latitude: -85.5324269,
-        longitude: 38.2145602,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-    }
+    //const TokyoRegion = {
+    //   latitude: -85.5324269,
+    // longitude: 38.2145602,
+    // latitudeDelta: 0.01,
+    // longitudeDelta: 0.01,
+    // }
     return (
-        <View style={styles.container}>
+        <View style={{ flex: 1 }}>
             <View style={{ position: 'relative' }}>
-                {/* <Image source={require('../assets/images/pizza.png')} style={{ width: '100%', height: 300 }} /> */}
                 <TouchableOpacity
-                    onPress={() => navigation.goBack()}
+                    onPress={() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Home' }],
+                        });
+                    }}
                     style={{
-                        position: 'absolute', left: 16, top: 56, padding: 8,
+                        position: 'absolute', left: 22, top: 72, padding: 8,
                         borderRadius: 9999, backgroundColor: '#F9FAFB',
                         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                     }}>
-                    <Icon.ArrowLeft height={20} width={20} strokeWidth={3} stroke={themeColors.bgColor(1)} />
+                    <Icon.ArrowLeft height={30} width={30} strokeWidth={3} stroke={themeColors.bgColor(1)} />
                 </TouchableOpacity>
             </View>
             <TextInput
                 placeholder="Rechercher ici..."
-                style={styles.searchBox}
+                style={{
+                    position: 'absolute',
+                    marginTop: 70, // Ajuste cette valeur en fonction de la hauteur de la barre de statut/naviguation
+                    marginLeft: 80,
+                    width: '58%',
+                    height: 50,
+                    backgroundColor: '#fff',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
+                    elevation: 5, // Pour l'ombre sur Android
+                    shadowColor: '#000', // Pour l'ombre sur iOS
+                    shadowOpacity: 0.1,
+                    shadowRadius: 5,
+                    shadowOffset: { height: 0, width: 0 },
+                }}
             />
-            <MapView
-                initialRegion={TokyoRegion}
-                style={styles.map}
-                mapType="standard"
+            <TouchableOpacity
+                style={{
+                    position: 'absolute',
+                    right: 30,
+                    marginTop: 70, // Ajuste cette valeur en fonction de la hauteur de la barre de statut/naviguation
+                    marginLeft: 30,
+                    width: '15%',
+                    height: 50,
+                    backgroundColor: '#20cfbd',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
+                    elevation: 5, // Pour l'ombre sur Android
+                    shadowColor: '#000', // Pour l'ombre sur iOS
+                    shadowOpacity: 0.1,
+                    shadowRadius: 5,
+                    shadowOffset: { height: 0, width: 0 },
+                    alignItems: 'center',
+                }}
             >
-                <Marker
-                    coordinate={TokyoRegion}
-                />
+                <Icon.Search color={"white"} />
+            </TouchableOpacity>
+            <MapView style={{ zIndex: -1, width: '100%', height: '100%' }} mapType="standard"
+                onMarker={onRegionChange}
+            >
+
             </MapView>
-        </View>
+
+            <TouchableOpacity
+                style={{
+                    position: 'absolute',
+                    bottom: 80,
+                    left: "25%",
+                    width: '50%',
+                    height: 60,
+                    backgroundColor: '#20cfbd',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
+                    elevation: 5, // Pour l'ombre sur Android
+                    shadowColor: '#000', // Pour l'ombre sur iOS
+                    shadowOpacity: 0.1,
+                    shadowRadius: 5,
+                    shadowOffset: { height: 0, width: 0 },
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <Text className="font-bold text-xl text-white">Save</Text>
+            </TouchableOpacity>
+        </View >
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    searchBox: {
-        position: 'absolute',
-        marginTop: 70, // Ajuste cette valeur en fonction de la hauteur de la barre de statut/naviguation
-        alignSelf: 'center',
-        width: '80%',
-        height: 50,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 8,
-        zIndex: 1, // S'assure que le TextInput reste au-dessus de la carte
-        elevation: 5, // Pour l'ombre sur Android
-        shadowColor: '#000', // Pour l'ombre sur iOS
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: { height: 0, width: 0 },
-    },
-    map: {
-        flex: 1,
-    },
-});

@@ -7,7 +7,7 @@ const Login = async (email, password, navigation) => {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
     // Connexion à l'API
-    const response = await axios.post("http://" + IP + ":3000/api/livreurs/login", {
+    const response = await axios.post("http://" + IP + ":3000/api/Clients/login", {
       email: email,
       password: password
     });
@@ -36,7 +36,7 @@ const Login = async (email, password, navigation) => {
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('Home');
+        navigation.navigate('Maps');
       } else if (role === 'restaurant') {
         console.log('Navigating to Restaurateur')
         // Naviguer vers l'écran d'accueil
