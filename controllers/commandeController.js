@@ -2,7 +2,7 @@ const sql = require('mssql');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Commande = require('../models/commandeModel.js');
+const Commande = require('../models/commandeModel');
 
 // Connexion à SQL Server
 const config = {

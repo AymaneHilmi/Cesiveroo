@@ -38,11 +38,10 @@ export default function Navigation() {
                 headerShown: false
             }} >
 
-                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
 
                 {/* User Screens */}
                 <Stack.Screen name="Home" component={HomeScreen} />
@@ -67,6 +66,7 @@ export default function Navigation() {
                 <Stack.Screen name="OrdersDetails" options={{ presentation: 'modal', headerShown: false }} component={OrdersDetailsScreen} />
 
                 {/* Service Commercial */}
+                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
 
                 {/* Driver */}
                 <Stack.Screen name="Driver" component={DriverScreen} />

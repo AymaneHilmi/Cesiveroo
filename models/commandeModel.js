@@ -15,9 +15,11 @@ const commandeSchema = {
   CommandeID: sql.UniqueIdentifier,
   ClientID: sql.NVarChar(36),
   LivreurID: sql.NVarChar(36),
+  RestaurantID: sql.NVarChar(36),
   status: sql.NVarChar(50),
   orderDate: sql.DateTime,
   deliveryDate: sql.DateTime,
+  adressDelivery: sql.NVarChar(50),
   price: sql.Decimal(10, 2)
 };
 
@@ -32,13 +34,14 @@ Commande.createCommande = async (commandeData) => {
     const pool = await sql.connect(config);
     const result = await pool.request()
       .input('ClientID', sql.NVarChar, commandeData.ClientID)
-      .input('LivreurID', sql.NVarChar, commandeData.LivreurID)
-      .input('status', sql.NVarChar, commandeData.status)
-      .input('orderDate', sql.DateTime, commandeData.orderDate)
-      .input('deliveryDate', sql.DateTime, commandeData.deliveryDate)
+      .input('RestaurantID', sql.NVarChar, commandeData.RestaurantID)
+      .input('status', sql.NVarChar, "Waiting for validation")
+      .input('orderDate', sql.DateTime, new Date())
+      .input('deliveryDate', sql.DateTime, null)
+      .input('adressDelivery', sql.NVarChar, commandeData.adressDelivery)
       .input('price', sql.Decimal, commandeData.price)
-      .query(`INSERT INTO ${Commande.tableName} (ClientID, LivreurID, status, orderDate, deliveryDate, price) 
-                    VALUES (@ClientID, @LivreurID, @status, @orderDate, @deliveryDate, @price); 
+      .query(`INSERT INTO ${Commande.tableName} (ClientID, RestaurantID, status, orderDate, deliveryDate, adressDelivery, price) 
+                    VALUES (@ClientID, @RestaurantID, @status, @orderDate, @deliveryDate, @adressDelivery, @price); 
                     SELECT SCOPE_IDENTITY() as CommandeID;`);
     return { CommandeID: result.recordset[0].CommandeID, ...commandeData };
   } catch (err) {

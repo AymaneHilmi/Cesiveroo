@@ -3,6 +3,7 @@ import React from 'react'
 import { themeColors } from '../theme';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import * as Icon from "react-native-feather";
+import Command from "../controller/Command";
 
 export default function CartScreen() {
     const navigation = useNavigation();
@@ -10,7 +11,10 @@ export default function CartScreen() {
     const { articles, menus, quantityByMenu, priceByMenu, quantityByArticle, priceByArticle, totalPrice } = route.params;
     console.log(articles, menus, quantityByMenu, priceByMenu, quantityByArticle, priceByArticle, totalPrice)
 
-
+    const passCommand = async (RestaurantID, price) => {
+        const response = await Command(RestaurantID, price);
+        navigation.navigate('PreparingOrder')
+    };
     return (
 
         <View style={{ flex: 1, backgroundColor: '#ffffff', marginTop: 50 }}>
@@ -92,7 +96,7 @@ export default function CartScreen() {
                 <View>
                     <TouchableOpacity
                         style={{ backgroundColor: themeColors.bgColor(1) }}
-                        onPress={() => navigation.navigate('PreparingOrder')}
+                        onPress={() => passCommand(articles[0].RestaurantID, totalPrice)}
                         className="p-3 rounded-full">
                         <Text className="text-white text-center font-bold text-lg">Place Order</Text>
                     </TouchableOpacity>

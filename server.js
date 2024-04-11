@@ -78,8 +78,9 @@ app.use('/api/articles', authorizeRestaurant);
 app.use('/api/articles-menus', articlesMenusRoutes);
 // Middleware d'autorisation pour les liens entre articles et menus
 app.use('/api/articles-menus', authorizeRestaurant);
+
 // Routes des livreurs
-// app.use('/api/commandes', commandesRoutes);
+app.use('/api/commandes', commandesRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
