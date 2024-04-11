@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IP } from '../config';
 
 const Login = async (email, password, navigation) => {
+  console.log("http://" + IP + ":3000/api/clients/login")
   try {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
@@ -36,7 +37,7 @@ const Login = async (email, password, navigation) => {
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('Home');
+        navigation.navigate('Maps');
       } else if (role === 'restaurant') {
         console.log('Navigating to Restaurateur')
         // Naviguer vers l'écran d'accueil

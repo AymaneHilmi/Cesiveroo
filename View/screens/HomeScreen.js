@@ -7,8 +7,7 @@ import { themeColors } from '../theme';
 import Categories from '../components/categories';
 import FeaturedRow from '../components/featuredRow';
 import { useNavigation } from '@react-navigation/native';
-import Home from "../controller/Home";
-import {modifyUserInfos} from "../controller/AccountDetails";
+import { Home } from "../controller/Home";
 
 export default function HomeScreen() {
     const navigation = useNavigation();

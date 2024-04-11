@@ -126,12 +126,25 @@ exports.login = async (req, res) => {
 // Récupérer un restaurant par son ID
 exports.getRestaurantInfo = async (req, res) => {
   try {
-    const query = `SELECT name, phone, streetNumber, streetName, city, postalCode, category, imgPath FROM Restaurants WHERE RestaurantID = '${req.params.id}'`;
+    const query = `SELECT name, email, phone, streetNumber, streetName, city, postalCode, category, imgPath FROM Restaurants`;
     const restaurant = await executeQuery(query);
     if (!restaurant[0]) {
       return res.status(404).json({ message: 'Restaurant not found' });
     }
     res.status(200).json(restaurant[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.getAllRestaurantsInfos = async (req, res) => {
+  try {
+    const query = `SELECT RestaurantID, name, phone, email, streetNumber, streetName, city, postalCode, category, imgPath FROM Restaurants`;
+    const restaurants = await executeQuery(query);
+    if (!restaurants[0]) {
+      return res.status(404).json({ message: 'No restaurant found' });
+    }
+    res.status(200).json(restaurants);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -145,7 +145,6 @@ export default function AccountDetailsScreen() {
             <View style={{ display: 'flex', alignItems: 'center' }}>
                 <Text style={{ color: 'red', marginTop: 15 }}>{error}</Text>
             </View>
-            <Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 20, left: 60, opacity: 0.2 }} />
 
             <TouchableOpacity style={{
                 marginTop: 20, backgroundColor: '#20CFBE', padding: 15, width: '70%', borderRadius: 10,
@@ -154,6 +153,7 @@ export default function AccountDetailsScreen() {
             }>
                 <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
             </TouchableOpacity>
+
         </SafeAreaView >
     )
 }
