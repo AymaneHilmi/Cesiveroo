@@ -23,6 +23,8 @@ import ArticlesScreen from './screens/ArticlesScreen';
 import OrdersScreen from './screens/OrdersScreen';;
 import OrdersDetailsScreen from './screens/OrdersDetailsScreen';
 import ServiceCommercialScreen from './screens/ServiceCommercialScreen';
+import AccountDriverScreen from './screens/AccountDriverScreen';
+import AccountDetailsDriverScreen from './screens/AccountDetailsDriverScreen';
 const Stack = createNativeStackNavigator();
 
 
@@ -33,6 +35,7 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
+
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
                 {/* User Screens */}
@@ -62,6 +65,8 @@ export default function Navigation() {
 
                 {/* Driver */}
                 <Stack.Screen name="Driver" component={DriverScreen} />
+                <Stack.Screen name="AccountDriver" component={AccountDriverScreen} />
+                <Stack.Screen name="AccountDriverDetails" component={AccountDetailsDriverScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )
