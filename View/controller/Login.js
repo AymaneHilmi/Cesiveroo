@@ -37,7 +37,7 @@ const Login = async (email, password, navigation, selectedValue) => {
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('Maps');
+        navigation.navigate('Home');
       } else if (role === 'restaurant') {
         console.log('Navigating to Restaurateur')
         // Naviguer vers l'écran d'accueil
