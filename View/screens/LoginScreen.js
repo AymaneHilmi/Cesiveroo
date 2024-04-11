@@ -13,14 +13,15 @@ import {
     KeyboardAvoidingView,
 } from "react-native";
 import { Navigation } from "react-native-feather";
-
+import { Picker } from '@react-native-picker/picker';
 export default function LoginScreen() {
+    const [selectedValue, setSelectedValue] = useState("clients");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [wrongPassword, setWrongPassword] = useState("");
     const navigation = useNavigation();
     const handleLogin = async () => {
-        const response = await Login(email, password, navigation);
+        const response = await Login(email, password, navigation, selectedValue);
         if (response === 'Login failed') {
             setWrongPassword('Wrong email or password');
         } else if (response === 'Login successful') {
@@ -33,21 +34,33 @@ export default function LoginScreen() {
         }
     };
     return (
-        <KeyboardAvoidingView style={styles.container}>
+        // Menu déroulant avec choix : client, restaurateur, service commercial, livreur
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
-            <View style={styles.inputView}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Choose your role</Text>
+            <Picker
+                selectedValue={selectedValue}
+                style={{ height: 200, width: 300 }}
+                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            >
+                <Picker.Item label="Client" value="clients" />
+                <Picker.Item label="Restaurateur" value="restaurants" />
+                <Picker.Item label="Service Commercial" value="commercial" />
+                <Picker.Item label="Livreur" value="livreurs" />
+            </Picker>
+            <View style={styles.inputView1}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Email."
+                    placeholder="Enter your email"
                     placeholderTextColor="#003f5c"
                     onChangeText={(email) => setEmail(email)}
                 />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.inputView2}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Password."
+                    placeholder="Enter your password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
@@ -62,7 +75,9 @@ export default function LoginScreen() {
             </TouchableOpacity>
         </KeyboardAvoidingView >
     );
+
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -71,16 +86,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     image: {
-        marginBottom: 40,
+        marginBottom: 10,
         width: 200,
         height: 200,
     },
-    inputView: {
+    inputView1: {
         backgroundColor: "#20CFBE",
         borderRadius: 10,
         width: "50%",
         height: 45,
         marginBottom: 20,
+        marginTop: 30,
+    },
+    inputView2: {
+        backgroundColor: "#20CFBE",
+        borderRadius: 10,
+        width: "50%",
+        height: 45,
     },
     TextInput: {
         height: 50,
@@ -90,8 +112,9 @@ const styles = StyleSheet.create({
     },
     forgot_button: {
         height: 30,
-        marginBottom: 30,
+        marginBottom: 10,
         color: "black",
+        marginTop: 10,
     },
     loginBtn: {
         width: "50%",
@@ -99,7 +122,6 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 40,
         backgroundColor: "#20CFBE",
     },
 });

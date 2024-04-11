@@ -16,30 +16,37 @@ const Restaurant = {
   tableName: 'Restaurants',
   columns: ['RestaurantID', 'name', 'email', 'phone', 'streetNumber', 'streetName', 'city', 'postalCode', 'bankInfo', 'category', 'imgPath', 'hashedPassword'],
 };
+// Fonction pour exécuter les requêtes SQL
+async function executeQuery(query) {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool.request().query(query);
+    return result.recordset;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
 
 Restaurant.create = async (restaurantData) => {
   try {
     const hashedPassword = await bcrypt.hash(restaurantData.password, 10);
-    const restaurantId = uuidv4();
-    const { name, email, phone, address, bankInfo } = restaurantData;
     const pool = await sql.connect(config);
     const request = pool.request();
-    await request.input('RestaurantID', sql.UniqueIdentifier, restaurantId);
-    await request.input('name', sql.NVarChar, name);
-    await request.input('email', sql.NVarChar, email);
-    await request.input('phone', sql.NVarChar, phone);
-    await request.input('streetNumber', sql.NVarChar, address.streetNumber);
-    await request.input('streetName', sql.NVarChar, address.streetName);
-    await request.input('city', sql.NVarChar, address.city);
-    await request.input('postalCode', sql.NVarChar, address.postalCode);
-    await request.input('bankInfo', sql.NVarChar, bankInfo);
-    await request.input('category', sql.NVarChar, restaurantData.category);
-    await request.input('imgPath', sql.NVarChar, restaurantData.imgPath);
-    await request.input('hashedPassword', sql.NVarChar, hashedPassword);
-    const query = `INSERT INTO ${Restaurant.tableName} (RestaurantID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath, hashedPassword)
-                   VALUES (@RestaurantID, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @bankInfo, @category, @imgPath, @hashedPassword)`;
+    request.input('RestaurantID', sql.UniqueIdentifier, uuidv4());
+    request.input('name', sql.NVarChar, restaurantData.name);
+    request.input('email', sql.NVarChar, restaurantData.email);
+    request.input('phone', sql.NVarChar, restaurantData.phone);
+    request.input('streetNumber', sql.NVarChar, restaurantData.streetNumber);
+    request.input('streetName', sql.NVarChar, restaurantData.streetName);
+    request.input('city', sql.NVarChar, restaurantData.city);
+    request.input('postalCode', sql.NVarChar, restaurantData.postalCode);
+    request.input('bankInfo', sql.NVarChar, restaurantData.bankInfo);
+    request.input('category', sql.NVarChar, restaurantData.category);
+    request.input('hashedPassword', sql.NVarChar, hashedPassword);
+    const query = `INSERT INTO ${Restaurant.tableName} VALUES (@RestaurantID, @name, @email, @phone, @streetNumber, @streetName, @city, @postalCode, @bankInfo, @category, '', @hashedPassword)`;
     await request.query(query);
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error(err.message);
   }
 }

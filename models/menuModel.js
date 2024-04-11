@@ -15,24 +15,23 @@ const config = {
 // Définition du modèle SQL
 const Menu = {
   tableName: 'Menus',
-  columns: ['MenuID', 'RestaurantID', 'Name', 'Price'],
+  columns: ['RestaurantID', 'name', 'price'],
 };
 
 
 // Fonction pour insérer un menu dans la base de données
 Menu.create = async (menuData) => {
   try {
-    const menuId = uuidv4();
-    const { restaurantId, name, price } = menuData;
+    const { RestaurantID, name, price } = menuData;
     const pool = await sql.connect(config);
     const request = pool.request();
-    await request.input('MenuID', sql.UniqueIdentifier, menuId);
-    await request.input('RestaurantID', sql.NVarChar, restaurantId);
-    await request.input('Name', sql.NVarChar, name);
-    await request.input('Price', sql.Decimal(10, 2), price);
-    const query = `INSERT INTO ${Menu.tableName} (MenuID, RestaurantID, Name, Price)
-                    VALUES (@MenuID, @RestaurantID, @Name, @Price)`;
+    await request.input('RestaurantID', sql.NVarChar, RestaurantID);
+    await request.input('name', sql.NVarChar, name);
+    await request.input('price', sql.Decimal(10, 2), price);
+    const query = `INSERT INTO ${Menu.tableName} (RestaurantID, name, price)
+                    VALUES (@RestaurantID, @name, @price)`;
     await request.query(query);
+    return true;
   } catch (err) {
     throw new Error(err.message);
   }
@@ -52,8 +51,8 @@ Menu.addArticleToMenu = async (menuId, articleId) => {
     `;
 
     // Ajoutez les paramètres d'entrée pour la vérification
-    request.input('menuId', sql.Int, menuId);
-    request.input('articleId', sql.Int, articleId);
+    await request.input('menuId', sql.Int, menuId);
+    await request.input('articleId', sql.Int, articleId);
 
     // Exécutez la vérification
     const checkResult = await request.query(checkQuery);
@@ -81,7 +80,7 @@ Menu.addArticleToMenu = async (menuId, articleId) => {
 };
 
 
-Menu.getArticlesOfMenu = async (menuId) => {
+Menu.getArticlesByMenu = async (menuId) => {
   try {
     await sql.connect(config);
     const result = await sql.query`SELECT a.* FROM Articles a INNER JOIN ArticlesMenus am ON a.ArticleID = am.ArticleID WHERE am.MenuID = ${menuId}`;

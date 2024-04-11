@@ -23,4 +23,6 @@ router.post('/login', livreurController.loginLivreur);
 // Route pour s'inscrire
 router.post('/register', livreurController.createLivreur);
 
+// Route pour vérifier le token
+router.post('/verify', authenticate, authorizeLivreur, livreurController.verifyToken);
 module.exports = router;
