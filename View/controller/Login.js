@@ -30,10 +30,8 @@ const Login = async (email, password, navigation, selectedValue) => {
           }
         }
       );
-      console.log('Token verified')
-      console.log(verify.data)
+      console.log('Token verified' + verify.data);
       const role = verify.data.role;
-      console.log(role)
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
@@ -42,6 +40,7 @@ const Login = async (email, password, navigation, selectedValue) => {
         console.log('Navigating to Restaurateur')
         // Naviguer vers l'écran d'accueil
         navigation.navigate('Restaurateur');
+        console.log('Navigated to Homdqz')
       } else if (role === 'commercial') {
         console.log('Navigating to ServiceCommercial')
         // Naviguer vers l'écran d'accueil
