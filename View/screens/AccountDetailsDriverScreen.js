@@ -21,7 +21,7 @@ export default function AccountDetailsDriverScreen() {
                     onPress={() => {
                         navigation.reset({
                             index: 0,
-                            routes: [{ name: 'Account' }],
+                            routes: [{ name: 'AccountDriver' }],
                         });
                     }}
                     style={{

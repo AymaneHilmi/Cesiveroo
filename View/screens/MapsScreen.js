@@ -5,12 +5,47 @@ import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 
 export default function MapsScreen() {
-    //const TokyoRegion = {
-    //   latitude: -85.5324269,
-    // longitude: 38.2145602,
-    // latitudeDelta: 0.01,
-    // longitudeDelta: 0.01,
-    // }
+    const [address, setAddress] = useState('');
+    const [region, setRegion] = useState({
+        latitude: 43.4812549,
+        longitude: 5.3864446,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    });
+    const [marker, setMarker] = useState(null);
+
+    const handleAddressChange = (text) => {
+        setAddress(text);
+    };
+
+    const handleSearch = async () => {
+        // Utilisation de la clé API pour géocoder l'adresse
+        const apiKey = "AIzaSyBXEhTjJmsMtivxb-RVEKq7Q-tigvWKVQc";
+        const geoUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+        try {
+            const response = await fetch(geoUrl);
+            const json = await response.json();
+            if (json.status === "OK") {
+                const location = json.results[0].geometry.location;
+                setMarker({
+                    latitude: location.lat,
+                    longitude: location.lng,
+                    title: address,
+                });
+                setRegion({
+                    latitude: location.lat,
+                    longitude: location.lng,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
+                });
+            } else {
+                console.error("Géocodage non réussi: " + json.status);
+            }
+        } catch (error) {
+            console.error('Erreur lors du géocodage de l\'adresse: ', error);
+        }
+    };
     return (
         <View style={{ flex: 1 }}>
             <View style={{ position: 'relative' }}>
@@ -73,7 +108,12 @@ export default function MapsScreen() {
                 <Icon.Search color={"white"} />
             </TouchableOpacity>
             <MapView style={{ zIndex: -1, width: '100%', height: '100%' }} mapType="standard"
-                onMarker={onRegionChange}
+                initialRegion={{
+                    latitude: 43.4812549,
+                    longitude: 5.3864446,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                }}
             >
 
             </MapView>
