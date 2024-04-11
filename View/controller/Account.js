@@ -28,6 +28,36 @@ export const getAllClients = async () => {
     }
 };
 
+//deleteaccountbyId
+export const deleteAccountById = async (ClientID) => {
+    const token = await AsyncStorage.getItem('token'); // Obtention du token stocké localement
+    const url = `http://` + IP + `:3000/api/clients/${ClientID}`; // Construction de l'URL avec le ClientID
+
+    try {
+        console.log("Deleting client with ID:", ClientID); // Log pour le débogage
+        const response = await axios.delete(url,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}` // Envoi du token d'authentification dans les headers
+                }
+            }
+        );
+        console.log("2:", ClientID); // Log pour le débogage
+
+        if (response.status === 200) {
+            console.log("Client deleted successfully"); // Log pour le succès
+        } else {
+            console.log("Failed to delete client", response.data.message); // Log pour les erreurs potentielles
+        }
+
+        return response.data; // Retourner la réponse du serveur
+    } catch (error) {
+        console.error("Error during client deletion:", error.response ? error.response.data : error.message);
+        return error.response ? error.response.data : { message: error.message }; // Gestion des erreurs
+    }
+};
+
+
 const deleteMyAccount = async (navigation) => {
     const token = await AsyncStorage.getItem('token');
     const verify = await axios.post(
