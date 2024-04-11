@@ -15,7 +15,7 @@ import {
 import { Navigation } from "react-native-feather";
 import { Picker } from '@react-native-picker/picker';
 export default function LoginScreen() {
-    const [selectedValue, setSelectedValue] = useState("Client");
+    const [selectedValue, setSelectedValue] = useState("clients");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [wrongPassword, setWrongPassword] = useState("");

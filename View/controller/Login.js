@@ -8,6 +8,7 @@ const Login = async (email, password, navigation, selectedValue) => {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
     // Connexion à l'API
+    console.log('selectedValue:', selectedValue)
     const response = await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/login", {
       email: email,
       password: password
