@@ -17,7 +17,7 @@ export default function DishRow() {
                 }}>
                     <Image style={{ height: 100, width: 100, borderRadius: 24 }}
                         source={require('../assets/images/pizzaDish.png')} />
-                    <View style={{ display: 'flex', marginTop: 12, marginTop: 14, flex: '1 1 0%', }}>
+                    <View style={{ display: 'flex', marginTop: 14, flex: 1 }}>
                         <View className="pl-3">
                             <Text className="text-xl">Garlic Pizza</Text>
                             <Text className="text-gray-700">Cheezy garlic pizza</Text>
@@ -54,7 +54,7 @@ export default function DishRow() {
                 }}>
                     <Image style={{ height: 100, width: 100, borderRadius: 24 }}
                         source={require('../assets/images/pizzaMargherita.jpeg')} />
-                    <View style={{ display: 'flex', marginTop: 12, marginTop: 14, flex: '1 1 0%', }}>
+                    <View style={{ display: 'flex', marginTop: 14, flex: 1, }}>
                         <View className="pl-3">
                             <Text className="text-xl">Pizza Margherita</Text>
                             <Text className="text-gray-700">Cheezy Margherita pizza</Text>
@@ -91,7 +91,7 @@ export default function DishRow() {
                 }}>
                     <Image style={{ height: 100, width: 100, borderRadius: 24 }}
                         source={require('../assets/images/pizzaKebab.png')} />
-                    <View style={{ display: 'flex', marginTop: 12, marginTop: 14, flex: '1 1 0%', }}>
+                    <View style={{ display: 'flex', marginTop: 14, flex: 1, }}>
                         <View className="pl-3">
                             <Text className="text-xl">Pizza Kebab</Text>
                             <Text className="text-gray-700">Cheezy Kebab pizza</Text>
@@ -128,7 +128,7 @@ export default function DishRow() {
                 }}>
                     <Image style={{ height: 100, width: 100, borderRadius: 24 }}
                         source={require('../assets/images/pizzaOrientale.jpg')} />
-                    <View style={{ display: 'flex', marginTop: 12, marginTop: 14, flex: '1 1 0%', }}>
+                    <View style={{ display: 'flex', marginTop: 14, flex: 1, }}>
                         <View className="pl-3">
                             <Text className="text-xl">Pizza Orientale</Text>
                             <Text className="text-gray-700">Cheezy Orientale pizza</Text>
@@ -165,7 +165,7 @@ export default function DishRow() {
                 }}>
                     <Image style={{ height: 100, width: 100, borderRadius: 24 }}
                         source={require('../assets/images/pizzaDish.png')} />
-                    <View style={{ display: 'flex', marginTop: 12, marginTop: 14, flex: '1 1 0%', }}>
+                    <View style={{ display: 'flex', marginTop: 14, flex: 1, }}>
                         <View className="pl-3">
                             <Text className="text-xl">Pizza</Text>
                             <Text className="text-gray-700">Cheezy garlic pizza</Text>
