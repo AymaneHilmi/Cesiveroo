@@ -6,9 +6,14 @@ import * as Icon from "react-native-feather";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { red } from 'color-name';
 import Logout from '../controller/Logout';
+import { useRoute } from '@react-navigation/native';
 
+// Récupérer les informations du restaurant
 export default function AccountRestaurateurScreen() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const restaurantInfos = route.params.restaurantInfos;
+    console.log('Restaurant Infos:', restaurantInfos);
     const handleLogout = () => {
         Logout(navigation);
     };
@@ -43,10 +48,7 @@ export default function AccountRestaurateurScreen() {
             </View >
             <TouchableOpacity
                 onPress={() => {
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'AccountRestorateurDetails' }],
-                    });
+                    navigation.navigate('AccountRestorateurDetails', { restaurantInfos });
                 }}
                 className="px-3 pt-3">
                 <View
@@ -61,7 +63,7 @@ export default function AccountRestaurateurScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('Menu') }}
+                onPress={() => { navigation.navigate('Menu', { restaurantInfos }) }}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
@@ -75,7 +77,7 @@ export default function AccountRestaurateurScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('Articles') }}
+                onPress={() => { navigation.navigate('Articles', { restaurantInfos }) }}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">
@@ -89,7 +91,7 @@ export default function AccountRestaurateurScreen() {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => { navigation.navigate('Orders') }}
+                onPress={() => { navigation.navigate('Orders', { restaurantInfos }) }}
                 className="px-3">
                 <View
                     className="flex-row items-center space-x-3 py-2 px-4 bg-white  mx-2 shadow-md mt-2">

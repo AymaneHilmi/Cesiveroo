@@ -1,22 +1,38 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
-import React from 'react'
-import { themeColors } from '../theme';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
-
+import { themeColors } from '../theme';
+import { useRoute } from '@react-navigation/native';
+import { getRestaurantArticles } from '../controller/Restaurateur';
 
 export default function ArticlesScreen() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const restaurantInfos = route.params.restaurantInfos;
+    const restaurantId = restaurantInfos.restaurantId;
+    const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await getRestaurantArticles(restaurantId);
+                console.log('Articles:', response);
+                setArticles(response);
+            } catch (error) {
+                console.error('Error fetching articles:', error);
+            }
+        };
+        fetchArticles();
+    }, []);
+
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}
-            < View style={{
-                position: 'relative', paddingTop: 16, paddingBottom: 16, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                backgroundColor: '#ffffff'
-            }} >
+            <View style={{ position: 'relative', paddingTop: 16, paddingBottom: 16, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', backgroundColor: '#ffffff' }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('AccountRestaurateur')}
+                    onPress={() => navigation.navigate('AccountRestaurateur', { restaurantInfos })}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
                         left: 8, top: 15, zIndex: 10, padding: 4, borderRadius: 9999,
@@ -27,63 +43,23 @@ export default function ArticlesScreen() {
                 <View>
                     <Text className="text-center font-bold text-xl">Articles</Text>
                 </View>
-            </View >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                className="mt- pt-5"
-                contentContainerStyle={{
-                }}
-
-            >
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('ArticlesDetails')}
-                    className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
-                    <View className="flex-row items-center">
-                        <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
-                        <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
-                            <Text className="text-gray-500">2 articles - $20</Text>
-                            <Text className="text-gray-500">20 Mars 2024</Text>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false} className="mt- pt-5" contentContainerStyle={{}}>
+                {articles.map((article, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        onPress={() => navigation.navigate('ArticleDetails', { article })}
+                        style={{ paddingHorizontal: 10, marginTop: 10, marginHorizontal: 10, backgroundColor: 'white', borderRadius: 10, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{ marginLeft: 10 }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{article.Name}</Text>
+                                <Text>Ingredients: {article.Ingredients}</Text>
+                                <Text>Price: ${article.Price}</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View className="  mt-12 flex-row">
-                        <Icon.Check className="mr-1 mt-1" strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
-                        <Text className="font-semibold text-base" style={{ color: themeColors.bgColor(1) }}>Active</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('ArticlesDetails')}
-                    className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
-                    <View className="flex-row items-center">
-                        <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
-                        <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
-                            <Text className="text-gray-500">2 articles - $20</Text>
-                            <Text className="text-gray-500">20 Mars 2024</Text>
-                        </View>
-                    </View>
-                    <View className="  mt-12 flex-row">
-                        <Icon.Check className="mr-1 mt-1" strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
-                        <Text className="font-semibold text-base" style={{ color: themeColors.bgColor(1) }}>Active</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('ArticlesDetails')}
-                    className="flex-row items-center justify-between py-3 px-4 bg-white rounded-lg mx-2 mb-3 shadow-md">
-                    <View className="flex-row items-center">
-                        <Image className="h-20 w-20 rounded-lg" source={require('../assets/images/pizzaDish.png')} />
-                        <View className="ml-5">
-                            <Text className="font-bold text-gray-700 mb-2 text-lg">Pizza</Text>
-                            <Text className="text-gray-500">2 articles - $20</Text>
-                            <Text className="text-gray-500">20 Mars 2024</Text>
-                        </View>
-                    </View>
-                    <View className="  mt-12 flex-row">
-                        <Icon.Check className="mr-1 mt-1" strokeWidth={2} height={20} width={20} stroke={themeColors.bgColor(1)} />
-                        <Text className="font-semibold text-base" style={{ color: themeColors.bgColor(1) }}>Active</Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                ))}
             </ScrollView>
-        </SafeAreaView >
-    )
+        </SafeAreaView>
+    );
 }

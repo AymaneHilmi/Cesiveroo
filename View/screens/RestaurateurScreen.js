@@ -6,15 +6,48 @@ import { useNavigation } from '@react-navigation/native';
 import FeaturedRow from '../components/featuredRow';
 import * as Icon from "react-native-feather";
 import LinearGradient from 'react-native-linear-gradient';
+import { useRoute } from '@react-navigation/native';
+import { Restaurateur, getRestaurantMenu, getRestaurantArticles } from '../controller/Restaurateur';
+import { useEffect, useState } from 'react';
 
-
+// Récupérer les informations du restaurant
 export default function RestaurateurScreen() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const [name, setName] = useState('');
+    const [restaurantId, setRestaurantId] = useState('');
+    const [restaurantInfos, setRestaurantInfos] = useState({});
+    // Récuperer le nombre d'articles
+    const [articles, setArticles] = useState([]);
+    // Récuperer le nombre de commandes
+    const [orders, setOrders] = useState([]);
+    const handleArticlesNumber = async () => {
+        try {
+            console.log('RestaurantId:', restaurantInfos.restaurantId)
+            const response = await getRestaurantArticles(restaurantInfos.restaurantId);
+            console.log('Articles:', response);
+            setArticles(response);
+        } catch (error) {
+            console.error('Error getting articles:', error);
+        }
+    }
+    useEffect(() => {
+        Restaurateur().then((response) => {
+            console.log('Restaurant Infos:', response);
+            setName(response.name);
+            // Récuperer le nombre d'articles
+            setRestaurantInfos(response);
+            handleArticlesNumber();
+        }
+        );
+    }
+        , []);
+
     return (
         <SafeAreaView style={{ height: "100%", backgroundColor: '#E8E8E8' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('AccountRestaurateur')}
+                    onPress={() => navigation.navigate('AccountRestaurateur', { restaurantInfos })}
                     style={{
                         backgroundColor: themeColors.bgColor(1),
                         zIndex: 10, padding: 10, borderRadius: 9999,
@@ -30,7 +63,7 @@ export default function RestaurateurScreen() {
                 </TouchableOpacity>
                 <View className="justify-center">
                     <Text style={{ fontSize: 20 }}>Good Morning,</Text>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: themeColors.primary }}>Tacos Avenue</Text>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: themeColors.primary }}>{name}</Text>
                 </View>
                 <TouchableOpacity
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>

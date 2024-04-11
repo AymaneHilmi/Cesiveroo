@@ -19,8 +19,7 @@ const Home = async () => {
         );
         const client = verify.data.name;
         const address = verify.data.city;
-        const url = verify.data.imgPath;
-        return { client, address, url };
+        return { client, address };
         // Récupérer le nom du client
     } catch (error) {
         console.log('An error occurred:', error);

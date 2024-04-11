@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Logout = async (navigation) => {
     try {
-        
+
         // Supprimer le token du stockage local
         // Rediriger l'utilisateur vers la page de connexion
         console.log('Logging out...');

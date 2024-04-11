@@ -8,23 +8,17 @@ import Categories from '../components/categories';
 import FeaturedRow from '../components/featuredRow';
 import { useNavigation } from '@react-navigation/native';
 import { Home } from "../controller/Home";
-
+// Import the image
+const img = require('../assets/images/compte.png');
 export default function HomeScreen() {
     const navigation = useNavigation();
 
     const [client, setClient] = useState('');
     const [address, setAddress] = useState('');
-    const [imgAccount, setImgAccount] = useState('');
     useEffect(() => {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
-
-            if (data.url !== '' || data.url !== null || data.url !== undefined) {
-                setImgAccount({ uri: data.url });
-            } else {
-                setImgAccount({ uri: '../assets/images/compte.png' });
-            }
         });
     }, [
         client,
@@ -48,7 +42,7 @@ export default function HomeScreen() {
                 <TouchableOpacity
                     onPress={() => { navigation.navigate('Account') }}
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>
-                    <Image source={imgAccount} style={{ width: 50, height: 50, borderRadius: 999 }} />
+                    <Image source={img} style={{ width: 40, height: 40, borderRadius: 999 }} />
                 </TouchableOpacity>
             </View>
 

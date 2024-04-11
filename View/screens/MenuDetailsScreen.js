@@ -1,104 +1,87 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
-import React from 'react'
-import { themeColors } from '../theme';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import * as Icon from "react-native-feather";
-import { Dropdown } from 'react-native-element-dropdown';
-import { Picker } from '@react-native-picker/picker';
-
+import { useRoute } from '@react-navigation/native';
+import { deleteMenu, getRestaurantMenu, getMenuDetails } from '../controller/Restaurateur';
+import { useState } from 'react';
 export default function MenuDetailsScreen() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const restaurantInfos = route.params.restaurantInfos
+    const restaurantId = restaurantInfos.restaurantId;
+    const menu = route.params.menu
+    const name = menu.name
+    const price = menu.price
+    const [response, setResponse] = useState([]);
+    // Supprimer un menu
+    const handleDeleteMenu = async () => {
+        try {
+            const response = await deleteMenu(menu.MenuID);
+            console.log('Menu deleted:', response);
+            // Reset the MenuScreen
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Menu', params: { restaurantInfos } }]
+            });
+            // Navigate to MenuScreen
+            navigation.navigate('Menu', { restaurantInfos });
 
+
+        } catch (error) {
+            console.error('Error deleting menu:', error);
+        }
+    }
+    const handleGetMenuDetails = async () => {
+        try {
+            const response = await getMenuDetails(menu.MenuID);
+            console.log('Menu details:', response);
+            setResponse(response);
+
+        } catch (error) {
+            console.error('Error getting menu details:', error);
+        }
+    }
+    useEffect(() => {
+        handleGetMenuDetails();
+    }
+        , [])
     return (
-        <View style={{ flex: 1, backgroundColor: "#E8E8E8", height: '100%' }}>
-            < View style={{
-                backgroundColor: '#ffffff',
-                position: 'relative', paddingTop: 20, paddingBottom: 20, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
-            }} >
-                <View>
-                    <Text className="text-center font-bold text-xl">Pizza</Text>
-                </View>
-            </View >
-
-            <Image source={require('../assets/images/pizza.png')}
-                style={{ width: 220, height: 220, borderRadius: 10, alignSelf: 'center', marginTop: 30 }} />
-
-            <TouchableOpacity style={{
-                marginTop: 20, backgroundColor: '#20CFBE', padding: 10, borderRadius: 10,
-                alignSelf: 'center'
-            }}>
-                <Text className="">Change Image</Text>
-            </TouchableOpacity>
-
-            <View style={{ marginTop: 10, marginBottom: 10, display: 'flex', }}>
-                <View className="ml-24 mb-1">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <TextInput
-                        placeholder="Name Menu"
-                        defaultValue="Pizza"
-                        style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
-                    />
-                </View>
-            </View>
-            <View style={{ marginTop: 5, marginBottom: 10, display: 'flex', }}>
-                <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <TextInput
-                        placeholder="Article"
-                        defaultValue="Barbecue"
-                        style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
-                    />
-                </View>
-            </View>
-
-            <View style={{ marginTop: 5, marginBottom: 10, display: 'flex', }}>
-                <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <TextInput
-                        placeholder="Article"
-                        defaultValue="Saumon"
-                        style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
-                    />
-                </View>
-            </View>
-            <View style={{ marginTop: 5, display: 'flex', }}>
-                <View className="ml-24 mb-3">
-                    <Text className="font-bold" style={{ color: themeColors.bgColor(1) }} >Article :</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <TextInput
-                        placeholder="Article"
-                        defaultValue="Frites"
-                        style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
-                    />
-                </View>
-            </View>
-            <View style={{ display: 'flex', alignItems: 'center' }}>
-                <Text style={{ color: 'red', marginTop: 15 }}></Text>
-            </View>
-            {/*<Image source={require('../assets/icon.png')} style={{ width: 300, height: 300, position: 'relative', top: 20, left: 60, opacity: 0.2 }} />*/}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
-                <TouchableOpacity style={{
-                    backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
+        <ScrollView>
+            <View style={{ flex: 1, backgroundColor: "#E8E8E8", height: '100%' }}>
+                < View style={{
+                    backgroundColor: '#ffffff',
+                    position: 'relative', paddingTop: 20, paddingBottom: 20, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
                 }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>delete </Text>
-                </TouchableOpacity>
+                    <View>
+                        <Text className="text-center font-bold text-xl">{name}</Text>
+                    </View>
+                </View >
+                <View style={{ padding: 10 }}>
+                    <Text className="font-bold text-xl">Price: ${price}</Text>
+                </View>
+                <Image source={require('../assets/images/pizza.png')}
+                    style={{ width: 220, height: 220, borderRadius: 10, alignSelf: 'center', marginTop: 30 }} />
+
                 <TouchableOpacity style={{
-                    backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
-                }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
+                    marginTop: 20, backgroundColor: '#20CFBE', padding: 10, borderRadius: 10,
+                    alignSelf: 'center'
+                }}>
+                    <Text className="">Change Image</Text>
                 </TouchableOpacity>
 
+                {/* Ajouter ici l'affichage des détails du menu */}
+
+                <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Articles:</Text>
+                    {response.articles && response.articles.map((article, index) => (
+                        <View key={index} style={{ marginTop: 10, padding: 10, backgroundColor: '#fff', borderRadius: 10 }}>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{response.articles[index].details.Name}</Text>
+                            <Text style={{ fontSize: 14 }}>{response.articles[index].details.Ingredients}</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 5 }}>Price: ${response.articles[index].details.Price}</Text>
+                        </View>
+                    ))}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }

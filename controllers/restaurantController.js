@@ -60,6 +60,10 @@ exports.getRestaurantById = async (req, res) => {
 exports.createRestaurant = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, password } = req.body;
+    // Vérifier la catégorie
+    if (!['Italien', 'Mexicain', 'Japonais', 'Indien', 'Chinois', 'Fast-food', 'Divers'].includes(category)) {
+      return res.status(400).json({ message: 'Invalid category' });
+    }
     // Vérifier si le restaurant existe déjà
     const restaurant = await Restaurant.getByEmail(email);
     if (restaurant) {

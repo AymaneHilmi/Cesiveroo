@@ -7,9 +7,45 @@ import * as Icon from "react-native-feather";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { UserInfos, modifyUserInfos, pickImageAndSave } from "../controller/AccountDetails";
 import Login from "../controller/Login";
+import { useRoute } from '@react-navigation/native';
+import { updateRestaurantInfos } from '../controller/Restaurateur';
 
 export default function AccountDetailsRestaurantScreen() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const restaurantInfos = route.params.restaurantInfos;
+    const [name, setName] = useState(restaurantInfos.name);
+    const [email, setEmail] = useState(restaurantInfos.email);
+    const [streetNumber, setStreetNumber] = useState(restaurantInfos.streetNumber);
+    const [streetName, setStreetName] = useState(restaurantInfos.streetName);
+    const [phone, setPhone] = useState(restaurantInfos.phone);
+    const [city, setCity] = useState(restaurantInfos.city);
+    const [postalCode, setPostalCode] = useState(restaurantInfos.postalCode);
+    const [bankInfo, setBankInfo] = useState(restaurantInfos.bankInfo);
+    const [category, setCategory] = useState(restaurantInfos.category);
+    const [imgPath, setImgPath] = useState(restaurantInfos.imgPath);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        console.log('Restaurant Infos:', restaurantInfos);
+    }
+
+        , [])
+    const handleSave = async () => {
+        try {
+            console.log('Name:', name);
+            console.log('Email:', email);
+            console.log('Street Number:', streetNumber);
+            console.log('Street Name:', streetName);
+            console.log('Image:', imgPath);
+            const response = await updateRestaurantInfos(restaurantInfos.restaurantId, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath);
+            console.log('Response:', response);
+            navigation.navigate('Restaurateur', { restaurantInfos: response });
+        } catch (error) {
+            console.error('Error updating restaurant infos:', error);
+            setError('Error updating restaurant infos');
+        }
+    }
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}
@@ -19,10 +55,7 @@ export default function AccountDetailsRestaurantScreen() {
             }} >
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'AccountRestaurateur' }],
-                        });
+                        navigation.navigate('Restaurateur', { restaurantInfos });
                     }}
                     style={{
                         backgroundColor: themeColors.bgColor(1), position: 'absolute',
@@ -50,7 +83,8 @@ export default function AccountDetailsRestaurantScreen() {
                     <Icon.User className="h-20 w-20 mt-2 mr-2" stroke={themeColors.bgColor(1)} />
                     <TextInput
                         placeholder="Restaurant Name"
-                        defaultValue="Tacos Avenue"
+                        defaultValue={restaurantInfos.name}
+                        onChangeText={(name) => setName(name)}
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />
                 </View>
@@ -60,8 +94,8 @@ export default function AccountDetailsRestaurantScreen() {
                     <Icon.MapPin className="h-20 w-20 mt-2 mr-2" stroke={themeColors.bgColor(1)} />
                     <TextInput
                         placeholder="Adress"
-                        defaultValue="2 rue des Tacos"
-                        // onChangeText={(lastName) => setLastName(lastName)}
+                        defaultValue={restaurantInfos.streetNumber + ' ' + restaurantInfos.streetName}
+                        onChangeText={(streetNumber) => setStreetNumber(streetNumber)}
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />
                 </View>
@@ -71,8 +105,8 @@ export default function AccountDetailsRestaurantScreen() {
                     <Icon.Mail className="h-20 w-20 mt-2 mr-2" stroke={themeColors.bgColor(1)} />
                     <TextInput
                         placeholder="Email"
-                        defaultValue="TacosAvenue@gmail.com"
-                        // onChangeText={(email) => setEmail(email)}
+                        defaultValue={restaurantInfos.email}
+                        onChangeText={(email) => setEmail(email)}
                         style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, width: '60%' }}
                     />
                 </View>
@@ -87,7 +121,7 @@ export default function AccountDetailsRestaurantScreen() {
                 marginTop: 20, backgroundColor: '#20CFBE', padding: 15, width: '70%', borderRadius: 10,
                 alignSelf: 'center', alignItems: 'center',
             }}
-            //  onPress={handleSave}
+                onPress={handleSave}
             >
                 <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
             </TouchableOpacity>
