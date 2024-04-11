@@ -115,12 +115,15 @@ BEGIN
         CommandeID NVARCHAR(36) PRIMARY KEY,
         ClientID NVARCHAR(36),
         LivreurID NVARCHAR(36),
+        RestaurantID NVARCHAR(36),
         status NVARCHAR(50),
         orderDate DATETIME,
         deliveryDate DATETIME,
+        adressDelivery NVARCHAR(255),
         price DECIMAL(10, 2),
         FOREIGN KEY (ClientID) REFERENCES Clients(ClientID),
-        FOREIGN KEY (LivreurID) REFERENCES Livreurs(LivreurID)
+        FOREIGN KEY (LivreurID) REFERENCES Livreurs(LivreurID),
+        FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
     );
     PRINT 'La table Commandes a été créée avec succès.';
 END

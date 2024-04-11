@@ -36,8 +36,8 @@ export default function Navigation() {
                 headerShown: false
             }} >
 
-                <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
 
                 {/* User Screens */}

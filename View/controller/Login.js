@@ -8,6 +8,9 @@ const Login = async (email, password, navigation, selectedValue) => {
     console.log('Logging in...');
     // Connexion à l'API
     console.log('selectedValue:', selectedValue)
+    console.log("http://" + IP + ":3000/api/" + selectedValue + "/login")
+    console.log('email:', email)
+    console.log('password:', password)
     const response = await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/login", {
       email: email,
       password: password
