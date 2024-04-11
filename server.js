@@ -7,6 +7,7 @@ const articleRoutes = require('./routes/articleRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const commandesRoutes = require('./routes/commandeRoutes');
 const commercialRoutes = require('./routes/commercialRoutes');
+const articlesMenusRoutes = require('./routes/articlesMenusRoutes');
 const { authenticate, authorizeCommercial, authorizeLivreur, authorizeClient, authorizeRestaurant } = require('./middlewares');
 const cors = require('cors');
 // Générer un secret pour les tokens JWT
@@ -73,6 +74,10 @@ app.use('/api/articles', articleRoutes);
 // Middleware d'autorisation pour les articles
 app.use('/api/articles', authorizeRestaurant);
 
+// Routes des liens entre articles et menus
+app.use('/api/articles-menus', articlesMenusRoutes);
+// Middleware d'autorisation pour les liens entre articles et menus
+app.use('/api/articles-menus', authorizeRestaurant);
 // Routes des livreurs
 // app.use('/api/commandes', commandesRoutes);
 

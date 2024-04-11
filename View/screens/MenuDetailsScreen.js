@@ -57,10 +57,11 @@ export default function MenuDetailsScreen() {
             {/* Ajouter ici l'affichage des détails du menu */}
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
-                <TouchableOpacity style={{
+                <TouchableOpacity onPress={() => navigation.navigate('EditMenu', { restaurantInfos, menu })} style={{
                     backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
                     alignSelf: 'center', alignItems: 'center',
                 }} >
+
                     <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleDeleteMenu} style={{
@@ -68,12 +69,6 @@ export default function MenuDetailsScreen() {
                     alignSelf: 'center', alignItems: 'center',
                 }} >
                     <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Delete</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
-                }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
                 </TouchableOpacity>
             </View>
         </View>
