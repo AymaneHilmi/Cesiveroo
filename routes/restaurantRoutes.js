@@ -35,4 +35,7 @@ router.post('/login', restaurantController.login);
 // Route pour s'inscrire
 router.post('/register', restaurantController.createRestaurant);
 
+// Route pour vérifier et récupérer un restaurant par token
+router.post('/verify', authenticate, authorizeRestaurant, restaurantController.verifyToken);
+
 module.exports = router;

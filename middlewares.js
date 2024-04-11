@@ -40,6 +40,8 @@ exports.authorizeLivreur = (req, res, next) => {
     // Vérifier si le livreur est le bon et souhaite accéder à ses propres données
   } else if (req.path === ('/' + req.client.id) && req.role === 'livreur') {
     return next();
+  } else if (req.role === 'livreur') {
+    return next();
   } else {
     return res.status(403).json({ message: 'Unauthorized' });
   }

@@ -28,7 +28,8 @@ async function executeQuery(query) {
 // Récupérer tous les livreurs
 exports.getAllLivreurs = async (req, res) => {
   try {
-    const query = 'SELECT * FROM Livreurs';
+    // Exclure le mot de passe de la requête
+    const query = 'SELECT LivreurID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo FROM Livreurs';
     const livreurs = await executeQuery(query);
     res.status(200).json(livreurs);
   } catch (err) {
@@ -39,7 +40,8 @@ exports.getAllLivreurs = async (req, res) => {
 // Récupérer un livreur par son ID
 exports.getLivreurById = async (req, res) => {
   try {
-    const query = `SELECT * FROM Livreurs WHERE LivreurID = '${req.params.id}'`;
+    // Exclure le mot de passe de la requête
+    const query = `SELECT LivreurID, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo FROM Livreurs WHERE LivreurID = '${req.params.id}'`;
     const livreur = await executeQuery(query);
     if (!livreur[0]) {
       return res.status(404).json({ message: 'Livreur not found' });
@@ -78,6 +80,10 @@ exports.createLivreur = async (req, res) => {
 exports.updateLivreur = async (req, res) => {
   try {
     const { name, email, phone, streetNumber, streetName, city, postalCode, bankInfo } = req.body;
+    // Vérifier si le LivreurID est le même que celui du token
+    if (req.client.id !== req.params.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `
       UPDATE Livreurs
       SET name = '${name}', email = '${email}', phone = '${phone}', 
@@ -93,6 +99,10 @@ exports.updateLivreur = async (req, res) => {
 // Supprimer un livreur
 exports.deleteLivreur = async (req, res) => {
   try {
+    // Vérifier si le LivreurID est le même que celui du token
+    if (req.client.id !== req.params.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
     const query = `DELETE FROM Livreurs WHERE LivreurID = '${req.params.id}'`;
     const result = await executeQuery(query);
     res.status(200).json({ message: 'Livreur deleted successfully' });
@@ -118,6 +128,23 @@ exports.loginLivreur = async (req, res) => {
     // Générer un token JWT avec le rôle du livreur
     const token = jwt.sign({ id: livreur.LivreurID, email: livreur.email, role }, secret, { expiresIn: '1h' });
     res.status(200).json({ token });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Fonction pour vérifier un token JWT et récupérer les détails du client à partir du token
+exports.verifyToken = async (req, res) => {
+  try {
+    const role = req.role;
+    console.log(req.client)
+    // Récuperer le mail à partir du middleware
+    const decoded = req.client;
+    // Récupérer les détails du client à partir de la base de données
+    const client = await Livreur.getByEmail(decoded.email);
+    // Enlever le mot de passe du client
+    delete client.hashedPassword;
+    res.status(200).json({ ...client, role });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

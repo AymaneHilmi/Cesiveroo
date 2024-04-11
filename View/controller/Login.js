@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IP } from '../config';
 
 const Login = async (email, password, navigation, selectedValue) => {
-  console.log("http://" + IP + ":3000/api/clients/login")
   try {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
