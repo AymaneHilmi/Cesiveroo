@@ -3,10 +3,8 @@ import axios from 'axios';
 import { IP } from '../config';
 
 // inscrire un utilisateur
-const Register = async (name, email, phone, streetNumber, streetName, city, postalCode, password, navigation, selectedValue, selectedCategory) => {
+const Register = async (name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password, navigation, selectedValue, selectedCategory) => {
     try {
-        console.log(selectedValue, selectedCategory)
-        console.log(name, email, phone, streetNumber, streetName, city, postalCode, password)
         if (selectedValue === 'clients') {
             await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/register", {
                 name: name,
@@ -19,7 +17,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
                 password: password
             }
             );
-        } else if (selectedValue === 'restaurateurs') {
+        } else if (selectedValue === 'restaurants') {
             await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/register", {
                 name: name,
                 email: email,
@@ -28,6 +26,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
                 streetName: streetName,
                 city: city,
                 postalCode: postalCode,
+                bankInfo: bankInfo,
                 category: selectedCategory,
                 password: password
             }

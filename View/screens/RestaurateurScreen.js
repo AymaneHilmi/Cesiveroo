@@ -7,53 +7,37 @@ import FeaturedRow from '../components/featuredRow';
 import * as Icon from "react-native-feather";
 import LinearGradient from 'react-native-linear-gradient';
 import { useRoute } from '@react-navigation/native';
-import { Restaurateur, getRestaurantMenu } from '../controller/Restaurateur';
+import { Restaurateur, getRestaurantMenu, getRestaurantArticles } from '../controller/Restaurateur';
 import { useEffect, useState } from 'react';
 
 // Récupérer les informations du restaurant
 export default function RestaurateurScreen() {
     const navigation = useNavigation();
-    const [restaurantId, setRestaurantId] = useState('');
+    const route = useRoute();
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [streetNumber, setStreetNumber] = useState('');
-    const [streetName, setStreetName] = useState('');
-    const [city, setCity] = useState('');
-    const [postalCode, setPostalCode] = useState('');
-    const [bankInfo, setBankInfo] = useState('');
-    const [category, setCategory] = useState('');
-    const [imgPath, setImgPath] = useState('');
-    const [menus, setMenus] = useState([]);
+    const [restaurantId, setRestaurantId] = useState('');
     const [restaurantInfos, setRestaurantInfos] = useState({});
-
+    // Récuperer le nombre d'articles
+    const [articles, setArticles] = useState([]);
+    // Récuperer le nombre de commandes
+    const [orders, setOrders] = useState([]);
+    const handleArticlesNumber = async () => {
+        try {
+            console.log('RestaurantId:', restaurantInfos.restaurantId)
+            const response = await getRestaurantArticles(restaurantInfos.restaurantId);
+            console.log('Articles:', response);
+            setArticles(response);
+        } catch (error) {
+            console.error('Error getting articles:', error);
+        }
+    }
     useEffect(() => {
         Restaurateur().then((response) => {
             console.log('Restaurant Infos:', response);
-            const restaurandId = response.restaurantId;
-            const name = response.name;
-            const email = response.email;
-            const phone = response.phone;
-            const streetNumber = response.streetNumber;
-            const streetName = response.streetName;
-            const city = response.city;
-            const postalCode = response.postalCode;
-            const bankInfo = response.bankInfo;
-            const category = response.category;
-            const imgPath = response.imgPath;
-            setRestaurantId(restaurandId);
-            setName(name);
-            setEmail(email);
-            setPhone(phone);
-            setStreetNumber(streetNumber);
-            setStreetName(streetName);
-            setCity(city);
-            setPostalCode(postalCode);
-            setBankInfo(bankInfo);
-            setCategory(category);
-            setImgPath(imgPath);
-            // Tout mettre dans restaurantInfos
+            setName(response.name);
+            // Récuperer le nombre d'articles
             setRestaurantInfos(response);
+            handleArticlesNumber();
         }
         );
     }
