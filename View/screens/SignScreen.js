@@ -17,7 +17,7 @@ import {
 } from "react-native";
 
 export default function SignScreen() {
-    const [selectedCategories, setSelectedCategories] = React.useState("");
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedValue, setSelectedValue] = useState("clients");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -30,43 +30,17 @@ export default function SignScreen() {
     const [error, setError] = useState("");
     const navigation = useNavigation();
     const handleSign = async () => {
-        const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation);
-
-
+        console.log(name, email, phone, streetNumber, streetName, city, postalCode, password, selectedValue, selectedCategories)
+        const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, password, navigation, selectedValue, selectedCategories);
         console.log(response);
-        if (response === 'Invalid name') {
-            setError('Invalid name');
-            setName('');
-        } else if (response === 'Invalid email') {
-            setError('Invalid email');
-            setEmail('');
-        } else if (response === 'Invalid phone') {
-            setError('Invalid phone');
-            setPhone('');
-        } else if (response === 'Invalid street number') {
-            setError('Invalid street number');
-            setStreetNumber('');
-        } else if (response === 'Invalid street name') {
-            setError('Invalid street name');
-            setStreetName('');
-        } else if (response === 'Invalid city') {
-            setError('Invalid city');
-            setCity('');
-        } else if (response === 'Invalid postal code') {
-            setError('Invalid postal code');
-            setPostalCode('');
-        } else if (response === 'Invalid password') {
-            setError('Invalid password');
-            setPassword('');
-        } else if (response === 'Success registration') {
-            setError('Success registration');
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
-            });
+        if (response === 'Success registration') {
+            navigation.navigate('Login');
+        } else {
+            setError('Registration failed');
         }
     }
     const [inputValue, setInputValue] = useState("");
+
     const renderConditionalInput = () => {
         switch (selectedValue) {
             case 'clients':
@@ -160,7 +134,7 @@ export default function SignScreen() {
                     { key: '5', value: 'Chinois' },
                     { key: '6', value: 'Fast-food' },
                     { key: '7', value: 'Divers' },
-                ]
+                ];
                 return (
                     <View>
                         <View style={styles.inputView}>

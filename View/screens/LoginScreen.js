@@ -65,7 +65,7 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            {/* <Picker
+            <Picker
                 selectedValue={selectedValue}
                 style={{ width: 240, fontSize: 10 }}
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
@@ -74,17 +74,9 @@ export default function LoginScreen() {
                 <Picker.Item label="Restaurateur" value="restaurants" />
                 <Picker.Item label="Service commercial" value="commercial" />
                 <Picker.Item label="Livreur" value="livreurs" />
-            </Picker> */}
+            </Picker>
 
-            <View className="mb-2 mt-5 w-56">
-                <SelectList
-                    placeholder="Select your role"
-                    setSelectedCategories={(val) => setSelectedCategories(val)}
-                    data={Data}
-                    save="value"
-                    style={{ backgroundColor: "#E8E8E8", marginBottom: 10 }}
-                />
-            </View>
+
             <TouchableOpacity onPress={() => navigation.navigate('Sign')}>
                 <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>

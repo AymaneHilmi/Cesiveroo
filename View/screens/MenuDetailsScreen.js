@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
-import { deleteMenu, getRestaurantMenu } from '../controller/Restaurateur';
+import { deleteMenu, getRestaurantMenu, getMenuDetails } from '../controller/Restaurateur';
 
 export default function MenuDetailsScreen() {
     const navigation = useNavigation();
@@ -30,7 +30,22 @@ export default function MenuDetailsScreen() {
             console.error('Error deleting menu:', error);
         }
     }
-    // Par la suite mettre menuarticles ici
+    const handleGetMenuDetails = async () => {
+        try {
+            const response = await getMenuDetails(menu.MenuID);
+            console.log('Menu details:', response);
+            // Set the menu details
+            console.log(response.data.articles[0].details)
+
+
+        } catch (error) {
+            console.error('Error getting menu details:', error);
+        }
+    }
+    useEffect(() => {
+        handleGetMenuDetails();
+    }
+        , [])
     return (
         <View style={{ flex: 1, backgroundColor: "#E8E8E8", height: '100%' }}>
             < View style={{
@@ -56,25 +71,15 @@ export default function MenuDetailsScreen() {
 
             {/* Ajouter ici l'affichage des détails du menu */}
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
-                <TouchableOpacity style={{
-                    backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
-                }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Edit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleDeleteMenu} style={{
-                    backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
-                }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Delete</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                    alignSelf: 'center', alignItems: 'center',
-                }} >
-                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
-                </TouchableOpacity>
+            <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Articles:</Text>
+                {menu.articles && menu.articles.map((article, index) => (
+                    <View key={index} style={{ marginTop: 10, padding: 10, backgroundColor: '#fff', borderRadius: 10 }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{article.details.Name}</Text>
+                        <Text style={{ fontSize: 14 }}>{article.details.Ingredients}</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 5 }}>Price: ${article.details.Price}</Text>
+                    </View>
+                ))}
             </View>
         </View>
     )
