@@ -6,15 +6,64 @@ import { useNavigation } from '@react-navigation/native';
 import FeaturedRow from '../components/featuredRow';
 import * as Icon from "react-native-feather";
 import LinearGradient from 'react-native-linear-gradient';
+import { useRoute } from '@react-navigation/native';
+import { Restaurateur, getRestaurantMenu } from '../controller/Restaurateur';
+import { useEffect, useState } from 'react';
 
-
+// Récupérer les informations du restaurant
 export default function RestaurateurScreen() {
     const navigation = useNavigation();
+    const [restaurantId, setRestaurantId] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [streetNumber, setStreetNumber] = useState('');
+    const [streetName, setStreetName] = useState('');
+    const [city, setCity] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [bankInfo, setBankInfo] = useState('');
+    const [category, setCategory] = useState('');
+    const [imgPath, setImgPath] = useState('');
+    const [menus, setMenus] = useState([]);
+    const [restaurantInfos, setRestaurantInfos] = useState({});
+
+    useEffect(() => {
+        Restaurateur().then((response) => {
+            console.log('Restaurant Infos:', response);
+            const restaurandId = response.restaurantId;
+            const name = response.name;
+            const email = response.email;
+            const phone = response.phone;
+            const streetNumber = response.streetNumber;
+            const streetName = response.streetName;
+            const city = response.city;
+            const postalCode = response.postalCode;
+            const bankInfo = response.bankInfo;
+            const category = response.category;
+            const imgPath = response.imgPath;
+            setRestaurantId(restaurandId);
+            setName(name);
+            setEmail(email);
+            setPhone(phone);
+            setStreetNumber(streetNumber);
+            setStreetName(streetName);
+            setCity(city);
+            setPostalCode(postalCode);
+            setBankInfo(bankInfo);
+            setCategory(category);
+            setImgPath(imgPath);
+            // Tout mettre dans restaurantInfos
+            setRestaurantInfos(response);
+        }
+        );
+    }
+        , []);
+
     return (
         <SafeAreaView style={{ height: "100%", backgroundColor: '#E8E8E8' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('AccountRestaurateur')}
+                    onPress={() => navigation.navigate('AccountRestaurateur', { restaurantInfos })}
                     style={{
                         backgroundColor: themeColors.bgColor(1),
                         zIndex: 10, padding: 10, borderRadius: 9999,
@@ -30,7 +79,7 @@ export default function RestaurateurScreen() {
                 </TouchableOpacity>
                 <View className="justify-center">
                     <Text style={{ fontSize: 20 }}>Good Morning,</Text>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: themeColors.primary }}>Tacos Avenue</Text>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: themeColors.primary }}>{name}</Text>
                 </View>
                 <TouchableOpacity
                     style={{ marginLeft: 6, padding: 10, borderRadius: 999 }}>

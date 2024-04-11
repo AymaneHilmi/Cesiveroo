@@ -38,14 +38,14 @@ export default function Navigation() {
                 headerShown: false
             }} >
 
-                <Stack.Screen name="Maps" component={MapsScreen} />
+                <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Maps" component={MapsScreen} />
 
                 {/* User Screens */}
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Restaurant" component={RestaurantScreen} />
-                <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
                 <Stack.Screen name="Delivery" options={{ presentation: 'fullScreenModal', headerShown: false }} component={DeliveryScreen} />
                 <Stack.Screen name="PreparingOrder" options={{ presentation: 'fullScreenModal', headerShown: false }} component={PreparingOrderScreen} />
                 <Stack.Screen name="Account" component={AccountScreen} />

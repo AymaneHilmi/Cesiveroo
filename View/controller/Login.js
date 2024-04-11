@@ -30,16 +30,32 @@ const Login = async (email, password, navigation, selectedValue) => {
           }
         }
       );
-      console.log('Token verified' + verify.data);
+      console.log('Token verified');
+      /* {
+    "RestaurantID": "FEF38770-23F0-4D91-A421-4EC0B253BC19",
+    "name": "Nom du client",
+    "email": "restaurttant",
+    "phone": "0123456789",
+    "streetNumber": "123",
+    "streetName": "Nom de la rue",
+    "city": "Ville",
+    "postalCode": "12345",
+    "bankInfo": "zeub",
+    "category": "oi",
+    "imgPath": "",
+    "role": "restaurant"
+} */
+      console.log('Role:', verify.data.role);
       const role = verify.data.role;
+
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
         navigation.navigate('Home');
       } else if (role === 'restaurant') {
         console.log('Navigating to Restaurateur')
-        // Naviguer vers l'écran d'accueil
-        navigation.navigate('Restaurateur');
+        // Naviguer vers l'écran d'accueil et passer les informations du restaurant
+        navigation.navigate('Restaurateur', { restaurantInfos: verify.data });
         console.log('Navigated to Homdqz')
       } else if (role === 'commercial') {
         console.log('Navigating to ServiceCommercial')
@@ -53,7 +69,7 @@ const Login = async (email, password, navigation, selectedValue) => {
 
     }
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.log('An error occurred:', error.message);
     return 'Login failed';
     // Gérer les erreurs
   }

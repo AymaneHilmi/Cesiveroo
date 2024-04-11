@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, Image, TouchableOpacity, StatusBar } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Icon from "react-native-feather";
 import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';
 import DishRow from '../components/dishRow';
 import CartIcon from '../components/cartIcon';
 import { useRoute } from '@react-navigation/native';
-import {getAllRestaurantInfos} from "../controller/Home";
+import { getAllRestaurantInfos } from "../controller/Home";
 
 export default function RestaurantScreen() {
     const route = useRoute(); // hook useRoute pour accéder à l'objet route
@@ -43,7 +43,7 @@ export default function RestaurantScreen() {
                             }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                     <Image source={require('../assets/images/fullStar.png')}
-                                           style={{ width: 20, height: 20 }} />
+                                        style={{ width: 20, height: 20 }} />
                                     <Text style={{ fontSize: 12, lineHeight: 16, marginLeft: 5 }}>
                                         <Text style={{ color: '#fbd553', fontWeight: 'bold' }}>4</Text>
                                         <Text className="text-gray-700"> (4.6k review)</Text> · <Text style={{ color: '#047857', }} className="font-semibold">{restaurantInfos.category}</Text>

@@ -18,7 +18,7 @@ import {
 
 export default function SignScreen() {
     const [selectedCategories, setSelectedCategories] = React.useState("");
-    const [selectedValue, setSelectedValue] = useState("clients")
+    const [selectedValue, setSelectedValue] = useState("clients");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -225,12 +225,14 @@ export default function SignScreen() {
                                 onChangeText={(postalCode) => setPostalCode(postalCode)}
                             />
                         </View>
-                        <SelectList
-                            setSelectedCategories={(val) => setSelectedCategories(val)}
-                            data={Data}
-                            save="value"
-                            style={{ backgroundColor: "#E8E8E8" }}
-                        />
+                        <View className="mb-2">
+                            <SelectList
+                                setSelectedCategories={(val) => setSelectedCategories(val)}
+                                data={Data}
+                                save="value"
+                                style={{ backgroundColor: "#E8E8E8", marginBottom: 10 }}
+                            />
+                        </View>
 
                         <View style={{
                             width: 300,

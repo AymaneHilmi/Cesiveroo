@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import Login from "../controller/Login";
 import { useNavigation } from '@react-navigation/native';
+import { SelectList } from 'react-native-dropdown-select-list';
 import {
     StyleSheet,
     Text,
@@ -15,6 +16,7 @@ import {
 import { Navigation } from "react-native-feather";
 import { Picker } from '@react-native-picker/picker';
 export default function LoginScreen() {
+    const [selectedCategories, setSelectedCategories] = React.useState("");
     const [selectedValue, setSelectedValue] = useState("clients");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,12 +35,19 @@ export default function LoginScreen() {
             console.log('An error occurred:', response);
         }
     };
+
+    const Data = [
+        { key: '1', value: 'clients' },
+        { key: '2', value: 'restaurants' },
+        { key: '3', value: 'commercial' },
+        { key: '4', value: 'livreurs' },
+    ];
     return (
         // Menu déroulant avec choix : client, restaurateur, service commercial, livreur
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <KeyboardAvoidingView style={styles.container} behavior="padding" className="mb-1">
             <Image style={styles.image} source={require("../assets/icon.png")} />
             <StatusBar style="auto" />
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Choose your role</Text>
+
             <View style={styles.inputView1}>
                 <TextInput
                     style={styles.TextInput}
@@ -56,8 +65,7 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-
-            <Picker
+            {/* <Picker
                 selectedValue={selectedValue}
                 style={{ width: 240, fontSize: 10 }}
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
@@ -66,7 +74,17 @@ export default function LoginScreen() {
                 <Picker.Item label="Restaurateur" value="restaurants" />
                 <Picker.Item label="Service commercial" value="commercial" />
                 <Picker.Item label="Livreur" value="livreurs" />
-            </Picker>
+            </Picker> */}
+
+            <View className="mb-2 mt-5 w-56">
+                <SelectList
+                    placeholder="Select your role"
+                    setSelectedCategories={(val) => setSelectedCategories(val)}
+                    data={Data}
+                    save="value"
+                    style={{ backgroundColor: "#E8E8E8", marginBottom: 10 }}
+                />
+            </View>
             <TouchableOpacity onPress={() => navigation.navigate('Sign')}>
                 <Text style={styles.forgot_button}>New? Sign Up</Text>
             </TouchableOpacity>
