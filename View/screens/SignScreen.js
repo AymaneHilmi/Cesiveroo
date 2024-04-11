@@ -153,7 +153,7 @@ export default function SignScreen() {
                 );
             case 'restaurants':
                 const Data = [
-                    { key: '1', value: 'Italien', disabled: true },
+                    { key: '1', value: 'Italien' },
                     { key: '2', value: 'Mexicain' },
                     { key: '3', value: 'Japonais' },
                     { key: '4', value: 'Indien' },
@@ -227,6 +227,7 @@ export default function SignScreen() {
                         </View>
                         <View className="mb-2">
                             <SelectList
+                                setSelected={setSelectedCategories}
                                 setSelectedCategories={(val) => setSelectedCategories(val)}
                                 data={Data}
                                 save="value"
