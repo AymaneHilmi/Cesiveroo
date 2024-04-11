@@ -67,6 +67,7 @@ export default function Navigation() {
                 <Stack.Screen name="OrdersDetails" options={{ presentation: 'modal', headerShown: false }} component={OrdersDetailsScreen} />
 
                 {/* Service Commercial */}
+                <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
 
                 {/* Driver */}
                 <Stack.Screen name="Driver" component={DriverScreen} />

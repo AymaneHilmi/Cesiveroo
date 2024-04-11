@@ -7,7 +7,6 @@ const Login = async (email, password, navigation, selectedValue) => {
     // Envoyer une requête POST au backend avec les informations de connexion
     console.log('Logging in...');
     // Connexion à l'API
-    console.log('selectedValue:', selectedValue)
     const response = await axios.post("http://" + IP + ":3000/api/" + selectedValue + "/login", {
       email: email,
       password: password
@@ -31,21 +30,6 @@ const Login = async (email, password, navigation, selectedValue) => {
         }
       );
       console.log('Token verified');
-      /* {
-    "RestaurantID": "FEF38770-23F0-4D91-A421-4EC0B253BC19",
-    "name": "Nom du client",
-    "email": "restaurttant",
-    "phone": "0123456789",
-    "streetNumber": "123",
-    "streetName": "Nom de la rue",
-    "city": "Ville",
-    "postalCode": "12345",
-    "bankInfo": "zeub",
-    "category": "oi",
-    "imgPath": "",
-    "role": "restaurant"
-} */
-      console.log('Role:', verify.data.role);
       const role = verify.data.role;
 
       if (role === 'client') {
