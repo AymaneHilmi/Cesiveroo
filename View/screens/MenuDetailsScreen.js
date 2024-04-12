@@ -17,7 +17,6 @@ export default function MenuDetailsScreen() {
     const handleDeleteMenu = async () => {
         try {
             const response = await deleteMenu(menu.MenuID);
-            console.log('Menu deleted:', response);
             // Reset the MenuScreen
             navigation.reset({
                 index: 0,
@@ -34,7 +33,6 @@ export default function MenuDetailsScreen() {
     const handleGetMenuDetails = async () => {
         try {
             const response = await getMenuDetails(menu.MenuID);
-            console.log('Menu details:', response);
             setResponse(response);
 
         } catch (error) {

@@ -23,7 +23,6 @@ export default function ArticlesAddScreen() {
     const handleCreateArticle = async () => {
         try {
             const response = await createArticle(restaurantId, name, price, ingredients);
-            console.log('Article created:', response);
             // Reset the MenuScreen
             navigation.reset({
                 index: 0,

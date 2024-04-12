@@ -11,7 +11,6 @@ export default function OrdersScreen() {
 
     useEffect(() => {
             ordersList().then((response) => {
-                // console.log('Orders:', response);
             });
         }
         , []);

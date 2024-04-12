@@ -22,7 +22,6 @@ export const Command = async (RestaurantID, price) => {
                 }
             }
         );
-        console.log(verify.data);
         const client = verify.data;
 
         const response = await axios.post(`http://` + IP + `:3000/api/commandes`,

@@ -202,7 +202,6 @@ exports.getClientByEmail = async (req, res) => {
 exports.verifyToken = async (req, res) => {
   try {
     const role = req.role;
-    console.log(req.client)
     // Récuperer le mail à partir du middleware
     const decoded = req.client;
     // Récupérer les détails du client à partir de la base de données

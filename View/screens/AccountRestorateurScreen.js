@@ -13,7 +13,6 @@ export default function AccountRestaurateurScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const restaurantInfos = route.params.restaurantInfos;
-    console.log('Restaurant Infos:', restaurantInfos);
     const handleLogout = () => {
         Logout(navigation);
     };

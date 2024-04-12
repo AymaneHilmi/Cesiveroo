@@ -12,16 +12,13 @@ export default function MenuScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const restaurantInfos = route.params.restaurantInfos
-    console.log('Restaurant Infos:', restaurantInfos);
     // Récuperer le restaurantId
     const restaurantId = restaurantInfos.restaurantId;
-    console.log('RestaurantId:', restaurantId);
     const [menus, setMenus] = useState([]);
     useEffect(() => {
         const fetchMenus = async () => {
             try {
                 const response = await getRestaurantMenu(restaurantId);
-                console.log('Menus:', response);
                 setMenus(response);
             } catch (error) {
                 console.error('Error fetching menus:', error);

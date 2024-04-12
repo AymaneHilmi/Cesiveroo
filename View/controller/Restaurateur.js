@@ -62,8 +62,6 @@ const nbOrders = async () => {
 async function getRestaurantMenu(restaurantId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('RestaurantId:', restaurantId)
         const response = await axios.get("http://" + IP + ":3000/api/restaurants/" + restaurantId + "/menus",
             {
                 headers: {
@@ -83,8 +81,6 @@ async function getRestaurantMenu(restaurantId) {
 async function updateRestaurantInfos(restaurantId, name, email, streetNumber, streetName, imgPath) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('RestaurantId:', restaurantId)
         const response = await axios.put("http://" + IP + ":3000/api/restaurants/" + restaurantId,
             {
                 name,
@@ -111,8 +107,6 @@ async function updateRestaurantInfos(restaurantId, name, email, streetNumber, st
 async function getRestaurantArticles(restaurantId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('RestaurantId:', restaurantId)
         const response = await axios.get("http://" + IP + ":3000/api/restaurants/" + restaurantId + "/articles",
             {
                 headers: {
@@ -131,8 +125,6 @@ async function getRestaurantArticles(restaurantId) {
 async function getMenuDetails(menuId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('MenuId:', menuId)
         const response = await axios.get("http://" + IP + ":3000/api/menus/" + menuId,
             {
                 headers: {
@@ -147,12 +139,10 @@ async function getMenuDetails(menuId) {
                 }
             }
         );
-        console.log('Articles:', articles.data)
         response.data.articles = articles.data;
         // Extraire les articles de la réponse et récuperer les détails de chaque article
         for (let i = 0; i < response.data.articles.length; i++) {
             const articleId = response.data.articles[i].ArticleID;
-            console.log('ArticleId:', articleId)
             const article = await axios.get("http://" + IP + ":3000/api/articles/" + articleId,
                 {
                     headers: {
@@ -160,12 +150,10 @@ async function getMenuDetails(menuId) {
                     }
                 }
             );
-            console.log('Article:', article.data)
             // Remove the ArticleID from the article object
             delete article.data.ArticleID;
             delete article.data.RestaurantID;
             response.data.articles[i].details = article.data;
-            console.log('Article details:', response.data.articles[i].details)
         }
         return response.data;
     } catch (error) {
@@ -178,8 +166,6 @@ async function getMenuDetails(menuId) {
 async function deleteMenu(menuId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('MenuId:', menuId)
         const response = await axios.delete("http://" + IP + ":3000/api/menus/" + menuId,
             {
                 headers: {
@@ -198,8 +184,6 @@ async function deleteMenu(menuId) {
 async function createMenu(restaurantId, name, price) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('RestaurantId:', restaurantId)
         const response = await axios.post("http://" + IP + ":3000/api/menus",
             {
                 RestaurantID: restaurantId,
@@ -223,8 +207,6 @@ async function createMenu(restaurantId, name, price) {
 async function updateMenu(menuId, name, price) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('MenuId:', menuId)
         const response = await axios.put("http://" + IP + ":3000/api/menus/" + menuId,
             {
                 name: name,
@@ -247,8 +229,6 @@ async function updateMenu(menuId, name, price) {
 async function createArticle(restaurantId, name, ingredients, price) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('RestaurantID:', restaurantId)
         const response = await axios.post("http://" + IP + ":3000/api/articles",
             {
                 RestaurantID: restaurantId,
@@ -273,11 +253,6 @@ async function createArticle(restaurantId, name, ingredients, price) {
 async function updateArticle(articleId, name, price, ingredients) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('ArticleId:', articleId)
-        console.log('Name:', name)
-        console.log('Ingredients:', ingredients)
-        console.log('Price:', price)
         const response = await axios.put("http://" + IP + ":3000/api/articles/" + articleId,
             {
                 Name: name,
@@ -302,8 +277,6 @@ async function updateArticle(articleId, name, price, ingredients) {
 async function deleteArticle(articleId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('ArticleId:', articleId)
         const response = await axios.delete("http://" + IP + ":3000/api/articles/" + articleId,
             {
                 headers: {
@@ -321,9 +294,6 @@ async function deleteArticle(articleId) {
 async function addArticleToMenu(menuId, articleId) {
     try {
         const token = await AsyncStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('MenuId:', menuId)
-        console.log('ArticleId:', articleId)
         const response = await axios.post("http://" + IP + ":3000/api/articles-menus",
             {
                 MenuID: menuId,

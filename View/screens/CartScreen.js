@@ -9,7 +9,6 @@ export default function CartScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const { articles, menus, quantityByMenu, priceByMenu, quantityByArticle, priceByArticle, totalPrice } = route.params;
-    console.log(articles, menus, quantityByMenu, priceByMenu, quantityByArticle, priceByArticle, totalPrice)
 
     const passCommand = async (RestaurantID, price) => {
         const response = await Command(RestaurantID, price);
