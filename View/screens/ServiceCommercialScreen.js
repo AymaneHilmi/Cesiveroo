@@ -56,7 +56,7 @@ export default function ServiceCommercialScreen() {
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8, marginTop: 20 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('')}
+
                     style={{
                         backgroundColor: themeColors.bgColor(1),
                         zIndex: 10, padding: 10, borderRadius: 9999,
