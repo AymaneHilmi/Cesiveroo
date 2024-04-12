@@ -48,7 +48,7 @@ const Register = async (name, email, phone, streetNumber, streetName, city, post
         } else {
             console.log('Error');
         }
-        navigation.navigate('Login');
+
     } catch (error) {
         console.log('An error occurred:', error);
     }
