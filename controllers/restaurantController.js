@@ -184,6 +184,24 @@ exports.getOrderList = async (req, res) => {
   }
 }
 
+exports.updateStatus = async (req, res) => {
+  try {
+    const {status} = req.body;
+    const query = `UPDATE Commandes
+                          SET status = '${status}'
+                          WHERE CommandeID = '${req.params.id}';
+
+                          `;
+    const restaurants = await executeQuery(query);
+    if (!restaurants[0]) {
+      return res.status(404).json({ message: 'No status found' });
+    }
+    res.status(200).json(restaurants);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 exports.getNbOrders = async (req, res) => {
   try {
     const query = `SELECT COUNT(c.CommandeID) AS nbOrders

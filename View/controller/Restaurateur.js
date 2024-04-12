@@ -1,6 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IP } from '../config';
+import * as navigation from "react-dom/test-utils";
+import {useNavigation} from "@react-navigation/native";
 
 
 const Restaurateur = async () => {
@@ -57,6 +59,25 @@ const nbOrders = async () => {
         }
     );
     return nb_data.data[0].nbOrders;
+}
+
+const acceptAnOrder = async (order) => {
+    const navigation = useNavigation();
+    console.log('Getting count orders')
+    const token = await AsyncStorage.getItem('token');
+    console.log(token)
+    console.log("http://" + IP + ":3000/api/restaurants/orders/" + order)
+    const verify = await axios.put(
+        "http://" + IP + ":3000/api/restaurants/status/" + order,
+        {
+            status: "Accepted"
+        },{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    return verify.data;
 }
 
 async function getRestaurantMenu(restaurantId) {
@@ -342,4 +363,4 @@ async function addArticleToMenu(menuId, articleId) {
     }
 }
 
-export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, getRestaurantArticles, getMenuDetails, deleteMenu, createMenu, updateMenu, createArticle, updateArticle, deleteArticle, addArticleToMenu, nbOrders };
+export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, acceptAnOrder, getRestaurantArticles, getMenuDetails, deleteMenu, createMenu, updateMenu, createArticle, updateArticle, deleteArticle, addArticleToMenu, nbOrders };

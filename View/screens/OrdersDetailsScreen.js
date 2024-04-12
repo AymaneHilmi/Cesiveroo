@@ -2,12 +2,25 @@ import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'reac
 import React from 'react'
 import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import * as Icon from "react-native-feather";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Picker } from '@react-native-picker/picker';
+import {getMenuDetails, acceptAnOrder} from "../controller/Restaurateur";
 
 export default function OrdersDetailsScreen() {
+    const navigation = useNavigation();
+    const route = useRoute(); // hook useRoute pour accéder à l'objet route
+    const { CommandeID } = route.params;
+
+    const acceptOrder = async (orderId) => {
+        console.log('Order ID:', orderId)
+        const response = await acceptAnOrder(orderId);
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'PreparingOrder' }],
+        });
+    }
     return (
         <View style={{ flex: 1, backgroundColor: "#E8E8E8", height: '100%' }}>
             < View style={{
@@ -67,7 +80,7 @@ export default function OrdersDetailsScreen() {
                 <View>
                     <TouchableOpacity
                         style={{ backgroundColor: themeColors.bgColor(1) }}
-                        onPress={() => navigation.navigate('PreparingOrder')}
+                        onPress={() => acceptOrder(CommandeID)}
                         className="p-3 rounded-full">
                         <Text className="text-white text-center font-bold text-lg">Accept Order</Text>
                     </TouchableOpacity>
