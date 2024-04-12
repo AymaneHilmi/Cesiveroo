@@ -75,7 +75,7 @@ export default function MenuScreen() {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
                         <TouchableOpacity onPress={() => navigation.navigate('MenuAdd', { restaurantInfos })}
                             style={{
-                                backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
+                                backgroundColor: '#20cfbd', padding: 15, width: '100%', borderRadius: 10,
                                 alignSelf: 'center', alignItems: 'center',
                             }} >
                             <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Creer un menu </Text>
