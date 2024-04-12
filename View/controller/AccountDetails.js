@@ -29,7 +29,7 @@ const modifyUserInfos = async (newFirstName, newLastName, newEmail, newPhone, im
     // vérifier que first name est un string qui contient pas d'expace
     if (newFirstName.length === 0 || newFirstName.includes(" ")) {
         return 'Invalid First Name';
-    } else if ({ newLastName }.length === 0 || newLastName.includes(" ")) {
+    } else if (newLastName.length === 0 || newLastName.includes(" ")) {
         return 'Invalid Last Name';
     } else if (newEmail.length === 0 || !newEmail.includes('@') || !newEmail.includes('.') || newEmail.length < 5) {
         return 'Invalid email';

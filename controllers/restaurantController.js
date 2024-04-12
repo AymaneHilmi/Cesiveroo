@@ -221,7 +221,6 @@ exports.getNbOrders = async (req, res) => {
 // Récupérer tous les menus d'un restaurant
 exports.getAllMenus = async (req, res) => {
   try {
-    console.log(req.params.id + "id");
     const query = `SELECT * FROM Menus WHERE RestaurantID = '${req.params.id}'`;
     const menus = await executeQuery(query);
     res.status(200).json(menus);
@@ -245,7 +244,6 @@ exports.getAllArticles = async (req, res) => {
 exports.verifyToken = async (req, res) => {
   try {
     const role = req.role;
-    console.log(req.client)
     // Récuperer le mail à partir du middleware
     const decoded = req.client;
     // Récupérer les détails du client à partir de la base de données

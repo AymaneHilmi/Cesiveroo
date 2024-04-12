@@ -16,8 +16,7 @@ export default function ArticlesScreen() {
     const fetchArticles = async () => {
         try {
             const response = await getRestaurantArticles(restaurantId);
-            console.log('Articles:', response);
-            setArticles(response);
+            setArticles(response || []);
         } catch (error) {
             console.error('Error fetching articles:', error);
         }
@@ -44,7 +43,7 @@ export default function ArticlesScreen() {
                 </View>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} className="mt- pt-5" contentContainerStyle={{}}>
-                {articles.map((article, index) => (
+                {articles.length > 0 && articles.map((article, index) => (
                     <TouchableOpacity
                         key={index}
                         onPress={() => navigation.navigate('ArticlesDetails', { article, restaurantInfos })}
@@ -58,6 +57,11 @@ export default function ArticlesScreen() {
                         </View>
                     </TouchableOpacity>
                 ))}
+                {articles.length === 0 && (
+                    <View style={{ alignItems: 'center', marginTop: 20 }}>
+                        <Text>No articles available</Text>
+                    </View>
+                )}
             </ScrollView>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ArticlesAdd', { restaurantInfos })}

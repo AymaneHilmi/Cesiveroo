@@ -112,7 +112,7 @@ IF OBJECT_ID('Commandes', 'U') IS NULL
 BEGIN
     CREATE TABLE Commandes
     (
-        CommandeID NVARCHAR(36) PRIMARY KEY IDENTITY(1,1),
+        CommandeID NVARCHAR(36) PRIMARY KEY,
         ClientID NVARCHAR(36),
         LivreurID NVARCHAR(36),
         RestaurantID NVARCHAR(36),

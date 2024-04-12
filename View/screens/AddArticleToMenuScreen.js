@@ -20,7 +20,6 @@ export default function AddArticleToMenuScreen() {
     const handleGetRestaurantArticles = async (ArticleID) => {
         try {
             const response = await getRestaurantArticles(restaurantId, ArticleID);
-            console.log('Restaurant articles:', response);
             setArticles(response);
         } catch (error) {
             console.error('Error getting restaurant articles:', error);

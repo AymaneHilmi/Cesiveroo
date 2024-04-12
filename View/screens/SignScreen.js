@@ -32,9 +32,7 @@ export default function SignScreen() {
     const [error, setError] = useState("");
     const navigation = useNavigation();
     const handleSign = async () => {
-        console.log(name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password, selectedValue, selectedCategories)
         const response = await Register(name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, password, navigation, selectedValue, selectedCategories);
-        console.log(response);
         if (response === 'Success registration') {
             navigation.navigate('Login');
         } else {

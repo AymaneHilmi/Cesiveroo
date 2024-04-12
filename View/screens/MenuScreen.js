@@ -12,16 +12,13 @@ export default function MenuScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const restaurantInfos = route.params.restaurantInfos
-    console.log('Restaurant Infos:', restaurantInfos);
     // Récuperer le restaurantId
     const restaurantId = restaurantInfos.restaurantId;
-    console.log('RestaurantId:', restaurantId);
     const [menus, setMenus] = useState([]);
     useEffect(() => {
         const fetchMenus = async () => {
             try {
                 const response = await getRestaurantMenu(restaurantId);
-                console.log('Menus:', response);
                 setMenus(response);
             } catch (error) {
                 console.error('Error fetching menus:', error);
@@ -78,7 +75,7 @@ export default function MenuScreen() {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
                         <TouchableOpacity onPress={() => navigation.navigate('MenuAdd', { restaurantInfos })}
                             style={{
-                                backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
+                                backgroundColor: '#20cfbd', padding: 15, width: '100%', borderRadius: 10,
                                 alignSelf: 'center', alignItems: 'center',
                             }} >
                             <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Creer un menu </Text>

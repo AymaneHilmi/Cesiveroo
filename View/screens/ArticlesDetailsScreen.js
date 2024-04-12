@@ -13,14 +13,12 @@ export default function ArticlesDetailsScreen() {
     const restaurantId = restaurantInfos.restaurantId;
     const article = route.params.article;
     const articleId = article.ArticleID;
-    console.log('Les articles:', article);
     const [name, setName] = useState(article.Name);
     const [price, setPrice] = useState(article.Price);
     const [ingredients, setIngredients] = useState(article.Ingredients);
     const handleUpdateArticle = async () => {
         try {
             const response = await updateArticle(articleId, name, price, ingredients);
-            console.log('Update Article:', response);
 
             navigation.reset({
                 index: 0,
@@ -34,7 +32,6 @@ export default function ArticlesDetailsScreen() {
     const handleDeleteArticle = async () => {
         try {
             const response = await deleteArticle(articleId);
-            console.log('Delete Article:', response);
 
             navigation.reset({
                 index: 0,

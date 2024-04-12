@@ -23,7 +23,6 @@ const ordersList = async () => {
             }
         }
     );
-    console.log(orders.data)
     return orders.data
 }
 

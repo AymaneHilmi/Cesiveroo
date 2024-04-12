@@ -16,7 +16,6 @@ export default function FeaturedRow() {
             setRestaurantInfos(data);
             const categoriesWithRestaurants = Object.keys(data).filter(category => data[category].length > 0);
             setRestaurantCategories(categoriesWithRestaurants);
-            console.log(data);
         });
     }, []);
 

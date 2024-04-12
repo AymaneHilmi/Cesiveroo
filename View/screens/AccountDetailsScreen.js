@@ -22,7 +22,6 @@ export default function AccountDetailsScreen() {
             try {
                 const data = await UserInfos();
 
-                console.log(data)
                 // Assuming data contains firstName and lastName for the full name
                 setFirstName(data.firstName)
                 setLastName(data.lastName);
@@ -55,7 +54,14 @@ export default function AccountDetailsScreen() {
             setError('Invalid phone');
         } else if (response === 'Invalid street number') {
             setError('Invalid street number');
+        } else {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Account' }],
+            });
+            navigation.navigate('Home');
         }
+
     };
 
     const handlePickImage = async () => {
