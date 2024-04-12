@@ -19,7 +19,7 @@ export default function HomeScreen() {
         Home().then((data) => {
             setClient(data.client);
             setAddress(data.address);
-        });
+        })
     }, [
         client,
         address

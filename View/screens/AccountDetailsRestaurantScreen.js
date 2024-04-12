@@ -27,6 +27,10 @@ export default function AccountDetailsRestaurantScreen() {
     const [error, setError] = useState('');
     const handleSave = async () => {
         try {
+            if (name === '' || email === '' || streetNumber === '' || streetName === '' || city === '' || postalCode === '' || bankInfo === '' || category === '') {
+                setError('Please fill all the fields');
+                return;
+            }
             const response = await updateRestaurantInfos(restaurantInfos.restaurantId, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath);
             navigation.navigate('Restaurateur', { restaurantInfos: response });
         } catch (error) {

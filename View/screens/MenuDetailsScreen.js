@@ -33,7 +33,7 @@ export default function MenuDetailsScreen() {
     const handleGetMenuDetails = async () => {
         try {
             const response = await getMenuDetails(menu.MenuID);
-            setResponse(response);
+            setResponse(response || []);
 
         } catch (error) {
             console.error('Error getting menu details:', error);

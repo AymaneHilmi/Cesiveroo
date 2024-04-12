@@ -54,7 +54,14 @@ export default function AccountDetailsScreen() {
             setError('Invalid phone');
         } else if (response === 'Invalid street number') {
             setError('Invalid street number');
+        } else {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Account' }],
+            });
+            navigation.navigate('Home');
         }
+
     };
 
     const handlePickImage = async () => {
