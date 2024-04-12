@@ -76,7 +76,7 @@ exports.createMenu = async (req, res) => {
 // Mettre à jour un menu
 exports.updateMenu = async (req, res) => {
   try {
-    const { name, ingredients, price } = req.body;
+    const { name, price } = req.body;
     // Vérifiez si le restaurantID du menu correspond à celui de l'utilisateur connecté
     const checkQuery = `SELECT RestaurantID FROM Menus WHERE MenuID = ${req.params.id}`;
     const checkResult = await executeQuery(checkQuery);
@@ -85,10 +85,10 @@ exports.updateMenu = async (req, res) => {
     }
     const query = `
       UPDATE Menus
-      SET name = '${name}', ingredients = '${ingredients}', price = ${price}
+      SET name = '${name}', price = ${price}
       WHERE MenuID = '${req.params.id}'`;
     await executeQuery(query);
-    res.status(200).json({ name, ingredients, price });
+    res.status(200).json({ name, price });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -109,6 +109,9 @@ exports.deleteMenu = async (req, res) => {
     }
     const query = `DELETE FROM Menus WHERE MenuID = ${req.params.id}`;
     const menu = await executeQuery(query);
+    // Supprimer également dans ArticlesMenus
+    const query2 = `DELETE FROM ArticlesMenus WHERE MenuID = ${req.params.id}`;
+    await executeQuery(query2);
     res.status(200).json({ message: 'Menu deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });

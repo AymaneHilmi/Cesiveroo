@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
-import { deleteMenu, getRestaurantMenu, getMenuDetails } from '../controller/Restaurateur';
+import { deleteMenu, getRestaurantMenu, getMenuDetails, addArticleToMenu } from '../controller/Restaurateur';
 import { useState } from 'react';
 export default function MenuDetailsScreen() {
     const navigation = useNavigation();
@@ -39,6 +39,22 @@ export default function MenuDetailsScreen() {
 
         } catch (error) {
             console.error('Error getting menu details:', error);
+        }
+    }
+    // Ajouter un article au menu
+    const handleAddArticleToMenu = async () => {
+        try {
+            const response = await addArticleToMenu(menu.MenuID, articleId);
+            console.log('Article added to menu:', response);
+            // Reset the MenuScreen
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Menu', params: { restaurantInfos } }]
+            });
+            // Navigate to MenuScreen
+            navigation.navigate('Menu', { restaurantInfos });
+        } catch (error) {
+            console.error('Error adding article to menu:', error);
         }
     }
     useEffect(() => {
@@ -80,6 +96,26 @@ export default function MenuDetailsScreen() {
                             <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 5 }}>Price: ${response.articles[index].details.Price}</Text>
                         </View>
                     ))}
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
+                    <TouchableOpacity style={{
+                        backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
+                        alignSelf: 'center', alignItems: 'center',
+                    }} >
+                        <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>delete </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
+                        alignSelf: 'center', alignItems: 'center',
+                    }} >
+                        <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
+                        alignSelf: 'center', alignItems: 'center',
+                    }} >
+                        <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Add Article</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
