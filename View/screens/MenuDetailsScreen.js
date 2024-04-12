@@ -42,21 +42,6 @@ export default function MenuDetailsScreen() {
         }
     }
     // Ajouter un article au menu
-    const handleAddArticleToMenu = async () => {
-        try {
-            const response = await addArticleToMenu(menu.MenuID, articleId);
-            console.log('Article added to menu:', response);
-            // Reset the MenuScreen
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Menu', params: { restaurantInfos } }]
-            });
-            // Navigate to MenuScreen
-            navigation.navigate('Menu', { restaurantInfos });
-        } catch (error) {
-            console.error('Error adding article to menu:', error);
-        }
-    }
     useEffect(() => {
         handleGetMenuDetails();
     }
@@ -98,26 +83,22 @@ export default function MenuDetailsScreen() {
                     ))}
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
-                    <TouchableOpacity style={{
-                        backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
-                        alignSelf: 'center', alignItems: 'center',
-                    }} >
+                    <TouchableOpacity onPress={handleDeleteMenu}
+                        style={{
+                            backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
+                            alignSelf: 'center', alignItems: 'center',
+                        }} >
                         <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>delete </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                        alignSelf: 'center', alignItems: 'center',
-                    }} >
-                        <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Save</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
-                        alignSelf: 'center', alignItems: 'center',
-                    }} >
+                    <TouchableOpacity onPress={() => navigation.navigate('AddArticleToMenu', { restaurantInfos, menuId: menu.MenuID })}
+                        style={{
+                            backgroundColor: '#20CFBE', padding: 15, width: '40%', borderRadius: 10,
+                            alignSelf: 'center', alignItems: 'center',
+                        }} >
                         <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Add Article</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView >
     )
 }
