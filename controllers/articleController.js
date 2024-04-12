@@ -98,12 +98,13 @@ exports.deleteArticle = async (req, res) => {
     if (req.client.id !== article[0].RestaurantID) {
       return res.status(403).json({ message: 'Unauthorized' });
     }
-    // Delete the article
-    const deleteQuery = `DELETE FROM Articles WHERE ArticleID = ${req.params.id}`;
-    await executeQuery(deleteQuery);
     // Supprimer également dans ArticlesMenus
     const deleteQuery2 = `DELETE FROM ArticlesMenus WHERE ArticleID = ${req.params.id}`;
     await executeQuery(deleteQuery2);
+    // Delete the article
+    const deleteQuery = `DELETE FROM Articles WHERE ArticleID = ${req.params.id}`;
+    await executeQuery(deleteQuery);
+
     res.status(200).json({ message: 'Article deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
