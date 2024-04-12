@@ -21,7 +21,6 @@ export default function MenuAddScreen() {
     const handleCreateMenu = async () => {
         try {
             const response = await createMenu(restaurantId, name, price);
-            console.log('Menu created:', response);
             // Reset the MenuScreen
             navigation.reset({
                 index: 0,

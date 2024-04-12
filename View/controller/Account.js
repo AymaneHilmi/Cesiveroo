@@ -42,7 +42,6 @@ export const deleteAccountById = async (ClientID) => {
                 }
             }
         );
-        console.log("2:", ClientID); // Log pour le débogage
 
         if (response.status === 200) {
             console.log("Client deleted successfully"); // Log pour le succès

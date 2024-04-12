@@ -16,7 +16,6 @@ export default function ArticlesScreen() {
     const fetchArticles = async () => {
         try {
             const response = await getRestaurantArticles(restaurantId);
-            console.log('Articles:', response);
             setArticles(response);
         } catch (error) {
             console.error('Error fetching articles:', error);

@@ -20,7 +20,6 @@ export default function ServiceCommercialScreen() {
             try {
                 const result = await deleteAccountById(selectedClient);
                 Alert.alert("Success", "Client deleted successfully"); // Affiche un message de succès
-                console.log(result); // Optionnel: afficher le résultat dans la console
             } catch (error) {
                 Alert.alert("Error", "Failed to delete client: " + error.message); // Affiche un message d'erreur
             }
@@ -33,7 +32,6 @@ export default function ServiceCommercialScreen() {
 
     useEffect(() => {
         getAllClients().then(data => {
-            console.log("Clients Data:", data);  // Debug pour voir les données chargées
             setClients(data);
             if (data.length > 0) {
                 setSelectedClient(data[0].ClientID);  // Utiliser ClientID ici

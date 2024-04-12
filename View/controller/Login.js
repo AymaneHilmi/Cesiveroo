@@ -35,20 +35,19 @@ const Login = async (email, password, navigation, selectedValue) => {
       if (role === 'client') {
         console.log('Navigating to Home')
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('Home');
+        navigation.navigate('Home', { clientInfos: verify.data });
       } else if (role === 'restaurant') {
         console.log('Navigating to Restaurateur')
         // Naviguer vers l'écran d'accueil et passer les informations du restaurant
         navigation.navigate('Restaurateur', { restaurantInfos: verify.data });
-        console.log('Navigated to Homdqz')
       } else if (role === 'commercial') {
-        console.log('Navigating to ServiceCommercial')
+        console.log('Navigating to ServiceCommercial', verify.data)
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('ServiceCommercial');
+        navigation.navigate('ServiceCommercial', { commercialInfos: verify.data });
       } else if (role === 'livreur') {
-        console.log('Navigating to Driver')
+        console.log('Navigating to Driver', verify.data)
         // Naviguer vers l'écran d'accueil
-        navigation.navigate('Driver');
+        navigation.navigate('Driver', { driverInfos: verify.data });
       }
 
     }

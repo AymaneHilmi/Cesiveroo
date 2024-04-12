@@ -25,21 +25,9 @@ export default function AccountDetailsRestaurantScreen() {
     const [category, setCategory] = useState(restaurantInfos.category);
     const [imgPath, setImgPath] = useState(restaurantInfos.imgPath);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        console.log('Restaurant Infos:', restaurantInfos);
-    }
-
-        , [])
     const handleSave = async () => {
         try {
-            console.log('Name:', name);
-            console.log('Email:', email);
-            console.log('Street Number:', streetNumber);
-            console.log('Street Name:', streetName);
-            console.log('Image:', imgPath);
             const response = await updateRestaurantInfos(restaurantInfos.restaurantId, name, email, phone, streetNumber, streetName, city, postalCode, bankInfo, category, imgPath);
-            console.log('Response:', response);
             navigation.navigate('Restaurateur', { restaurantInfos: response });
         } catch (error) {
             console.error('Error updating restaurant infos:', error);

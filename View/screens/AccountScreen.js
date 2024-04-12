@@ -16,7 +16,6 @@ export default function AccountScreen() {
 
     const deleteAccount = async () => {
         const response = await deleteMyAccount();
-        console.log(response)
         navigation.navigate('Login');
     };
     return (

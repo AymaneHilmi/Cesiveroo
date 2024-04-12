@@ -24,10 +24,7 @@ export default function RestaurateurScreen() {
     const [orders, setOrders] = useState([]);
     const handleArticlesNumber = async (restaurantId) => {
         try {
-            console.log('RestaurantId:', restaurantId);
             const response = await getRestaurantArticles(restaurantId);
-            console.log('Articles:', response);
-            console.log('Articles Number:', response.length);
             setArticlesNumber(response.length);
         } catch (error) {
             console.error('Error getting articles:', error);
@@ -35,7 +32,6 @@ export default function RestaurateurScreen() {
     }
     useEffect(() => {
         Restaurateur().then((response) => {
-            console.log('Restaurant Infos:', response);
             setName(response.name);
 
             // Récuperer le nombre d'articles
@@ -43,7 +39,6 @@ export default function RestaurateurScreen() {
             handleArticlesNumber(response.restaurantId);
         });
         nbOrders().then((response) => {
-            console.log('Orders:', response);
             setNbOders(response);
         });
     }

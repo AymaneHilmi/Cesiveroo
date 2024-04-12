@@ -22,7 +22,6 @@ export default function AccountDetailsScreen() {
             try {
                 const data = await UserInfos();
 
-                console.log(data)
                 // Assuming data contains firstName and lastName for the full name
                 setFirstName(data.firstName)
                 setLastName(data.lastName);
