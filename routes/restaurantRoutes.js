@@ -12,8 +12,14 @@ router.get('/infos/:id', authenticate, authorizeRestaurant, restaurantController
 // Route pour récuperer les informations du restaurant
 router.get('/infos', authenticate, authorizeRestaurant, restaurantController.getAllRestaurantsInfos);
 
+// Route pour récuperer les informations du restaurant
+router.get('/orders/nb/:id', authenticate, authorizeRestaurant, restaurantController.getNbOrders);
+
 // Route pour récupérer un restaurant par ID
 router.get('/:id', authenticate, authorizeRestaurant, restaurantController.getRestaurantById);
+
+// Route pour récupérer un restaurant par ID
+router.get('/orders/:id', authenticate, authorizeRestaurant, restaurantController.getOrderList);
 
 // Route pour mettre à jour un restaurant existant
 router.put('/:id', authenticate, authorizeRestaurant, restaurantController.updateRestaurant);

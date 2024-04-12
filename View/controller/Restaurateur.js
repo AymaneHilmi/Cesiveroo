@@ -35,6 +35,30 @@ const Restaurateur = async () => {
     }
 }
 
+const nbOrders = async () => {
+    console.log('Getting count orders')
+    const token = await AsyncStorage.getItem('token');
+    const verify = await axios.post(
+        "http://" + IP + ":3000/api/restaurants/verify",
+        // Body de la requête (s'il y en a un)
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    const nb_data = await axios.get(
+        "http://" + IP + ":3000/api/restaurants/orders/nb/" + verify.data.RestaurantID,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    return nb_data.data[0].nbOrders;
+}
+
 async function getRestaurantMenu(restaurantId) {
     try {
         const token = await AsyncStorage.getItem('token');
@@ -315,4 +339,4 @@ async function addArticleToMenu(menuId, articleId) {
     }
 }
 
-export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, getRestaurantArticles, getMenuDetails, deleteMenu, createMenu, updateMenu, createArticle, updateArticle, deleteArticle, addArticleToMenu };
+export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, getRestaurantArticles, getMenuDetails, deleteMenu, createMenu, updateMenu, createArticle, updateArticle, deleteArticle, addArticleToMenu, nbOrders };

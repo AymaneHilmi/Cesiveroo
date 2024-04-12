@@ -1,12 +1,20 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native';
 import * as Icon from "react-native-feather";
+import ordersList from "../controller/Orders";
 
 export default function OrdersScreen() {
     const navigation = useNavigation();
+
+    useEffect(() => {
+            ordersList().then((response) => {
+                // console.log('Orders:', response);
+            });
+        }
+        , []);
     return (
         <SafeAreaView style={{ backgroundColor: "#E8E8E8", height: "100%" }}>
             {/* top button */}

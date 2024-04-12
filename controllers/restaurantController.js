@@ -167,6 +167,39 @@ exports.getAllRestaurantsInfos = async (req, res) => {
   }
 }
 
+exports.getOrderList = async (req, res) => {
+  try {
+    const query = `SELECT CommandeID, orderDate AS DateCommand, status
+                          FROM Commandes
+                          WHERE RestaurantID = '${req.params.id}'
+                          ORDER BY orderDate DESC;
+                          `;
+    const restaurants = await executeQuery(query);
+    if (!restaurants[0]) {
+      return res.status(404).json({ message: 'No orders found' });
+    }
+    res.status(200).json(restaurants);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.getNbOrders = async (req, res) => {
+  try {
+    const query = `SELECT COUNT(c.CommandeID) AS nbOrders
+                          FROM Commandes c
+                          JOIN Restaurants r ON c.RestaurantID = r.RestaurantID
+                          WHERE r.RestaurantID = '${req.params.id}'`;
+    const restaurants = await executeQuery(query);
+    if (!restaurants[0]) {
+      return res.status(404).json({ message: 'No orders found' });
+    }
+    res.status(200).json(restaurants);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 // Récupérer tous les menus d'un restaurant
 exports.getAllMenus = async (req, res) => {
   try {

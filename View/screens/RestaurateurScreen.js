@@ -7,7 +7,7 @@ import FeaturedRow from '../components/featuredRow';
 import * as Icon from "react-native-feather";
 import LinearGradient from 'react-native-linear-gradient';
 import { useRoute } from '@react-navigation/native';
-import { Restaurateur, getRestaurantMenu, getRestaurantArticles } from '../controller/Restaurateur';
+import { Restaurateur, getRestaurantMenu, getRestaurantArticles, nbOrders } from '../controller/Restaurateur';
 import { useEffect, useState } from 'react';
 
 // Récupérer les informations du restaurant
@@ -16,6 +16,7 @@ export default function RestaurateurScreen() {
     const route = useRoute();
     const [name, setName] = useState('');
     const [restaurantInfos, setRestaurantInfos] = useState({});
+    const [nbOders, setNbOders] = useState(0);
     // Récuperer le nombre d'articles
     const [articles, setArticles] = useState([]);
     const [articlesNumber, setArticlesNumber] = useState(0);
@@ -36,11 +37,15 @@ export default function RestaurateurScreen() {
         Restaurateur().then((response) => {
             console.log('Restaurant Infos:', response);
             setName(response.name);
+
             // Récuperer le nombre d'articles
             setRestaurantInfos(response);
             handleArticlesNumber(response.restaurantId);
-        }
-        );
+        });
+        nbOrders().then((response) => {
+            console.log('Orders:', response);
+            setNbOders(response);
+        });
     }
         , []);
 
@@ -87,7 +92,7 @@ export default function RestaurateurScreen() {
                         <View style={{ justifyContent: 'space-between', backgroundColor: '#c6e2e9', width: '46%', height: 150, borderRadius: 20, marginTop: 10, marginLeft: 10, marginRight: 10 }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Orders</Text>
                             <View style={{ flexDirection: 'row' }} >
-                                <Text style={{ fontSize: 70, fontWeight: 'bold', marginLeft: 20, marginBottom: 10 }}>47</Text>
+                                <Text style={{ fontSize: 70, fontWeight: 'bold', marginLeft: 20, marginBottom: 10 }}>{nbOders || 0}</Text>
                                 <Icon.ShoppingCart height={50} width={50} stroke="black" className="mt-5 ml-4" />
                             </View>
                         </View>
