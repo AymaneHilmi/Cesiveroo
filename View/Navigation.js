@@ -27,6 +27,7 @@ import AccountDriverScreen from './screens/AccountDriverScreen';
 import AccountDetailsDriverScreen from './screens/AccountDetailsDriverScreen';
 import MenuAddScreen from './screens/MenuAddScreen';
 import ArticlesAddScreen from './screens/ArticlesAddScreen';
+import AddArticleToMenuScreen from './screens/AddArticleToMenuScreen';
 const Stack = createNativeStackNavigator();
 
 
@@ -59,12 +60,12 @@ export default function Navigation() {
                 <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
                 <Stack.Screen name="Articles" component={ArticlesScreen} />
                 <Stack.Screen name="Menu" component={MenuScreen} />
-                <Stack.Screen name="MenuDetails" options={{ presentation: 'modal', headerShown: false }} component={MenuDetailsScreen} />
+                <Stack.Screen name="MenuDetails" options={{ headerShown: false }} component={MenuDetailsScreen} />
+                <Stack.Screen name="AddArticleToMenu" options={{ headerShown: false, presentation: 'modal' }} component={AddArticleToMenuScreen} />
                 <Stack.Screen name="Orders" component={OrdersScreen} />
                 <Stack.Screen name="MenuAdd" options={{ presentation: 'modal', headerShown: false }} component={MenuAddScreen} />
                 <Stack.Screen name="ArticlesAdd" options={{ presentation: 'modal', headerShown: false }} component={ArticlesAddScreen} />
                 <Stack.Screen name="OrdersDetails" options={{ presentation: 'modal', headerShown: false }} component={OrdersDetailsScreen} />
-
                 {/* Service Commercial */}
 
                 {/* Driver */}

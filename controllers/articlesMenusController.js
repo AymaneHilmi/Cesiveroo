@@ -77,7 +77,6 @@ exports.unlinkArticleFromMenu = async (req, res) => {
 exports.getArticlesByMenu = async (req, res) => {
     try {
         const MenuID = req.params.id;
-        console.log(MenuID)
         const query = `SELECT * FROM ArticlesMenus WHERE MenuID = '${MenuID}'`;
         const articles = await executeQuery(query);
         res.status(200).json(articles);
@@ -91,7 +90,6 @@ exports.getMenusByArticle = async (req, res) => {
     try {
         const ArticleID = req.params.id;
         // Convert string in Int
-        console.log(ArticleID)
         const query = `SELECT * FROM ArticlesMenus WHERE ArticleID = '${ArticleID}'`;
         const menus = await executeQuery(query);
         res.status(200).json(menus);

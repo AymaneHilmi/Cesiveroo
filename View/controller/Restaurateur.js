@@ -270,16 +270,19 @@ async function createArticle(restaurantId, name, ingredients, price) {
 }
 
 // Modifier un article
-async function updateArticle(articleId, name, description, price) {
+async function updateArticle(articleId, name, price, ingredients) {
     try {
         const token = await AsyncStorage.getItem('token');
         console.log('Token:', token)
         console.log('ArticleId:', articleId)
+        console.log('Name:', name)
+        console.log('Ingredients:', ingredients)
+        console.log('Price:', price)
         const response = await axios.put("http://" + IP + ":3000/api/articles/" + articleId,
             {
-                name: name,
-                description: description,
-                price: price
+                Name: name,
+                Ingredients: ingredients,
+                Price: price
             },
             {
                 headers: {

@@ -28,10 +28,7 @@ export default function ServiceCommercialScreen() {
             Alert.alert("Error", "No client selected"); // Gère le cas où aucun client n'est sélectionné
         }
 
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Account' }],
-        });
+
     };
 
     useEffect(() => {
