@@ -37,12 +37,12 @@ export default function Navigation() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }} >
-
+                <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="ServiceCommercial" component={ServiceCommercialScreen} />
                 <Stack.Screen name="Sign" component={SignScreen} />
                 <Stack.Screen name="Maps" component={MapsScreen} />
                 <Stack.Screen name="Cart" options={{ presentation: 'modal', headerShown: false }} component={CartScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="ArticlesDetails" options={{ presentation: 'modal', headerShown: false }} component={ArticlesDetailsScreen} />
 
                 {/* User Screens */}
                 <Stack.Screen name="Home" component={HomeScreen} />
@@ -58,7 +58,6 @@ export default function Navigation() {
                 <Stack.Screen name="AccountRestaurateur" component={AccountRestaurateurScreen} />
                 <Stack.Screen name="AccountRestorateurDetails" component={AccountDetailsRestaurantScreen} />
                 <Stack.Screen name="Articles" component={ArticlesScreen} />
-                <Stack.Screen name="ArticlesDetails" options={{ presentation: 'modal', headerShown: false }} component={ArticlesDetailsScreen} />
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="MenuDetails" options={{ presentation: 'modal', headerShown: false }} component={MenuDetailsScreen} />
                 <Stack.Screen name="Orders" component={OrdersScreen} />

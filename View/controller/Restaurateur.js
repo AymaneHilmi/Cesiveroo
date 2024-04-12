@@ -170,5 +170,149 @@ async function deleteMenu(menuId) {
     }
 }
 
+// Créer un menu
+async function createMenu(restaurantId, name, price) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('RestaurantId:', restaurantId)
+        const response = await axios.post("http://" + IP + ":3000/api/menus",
+            {
+                RestaurantID: restaurantId,
+                name: name,
+                price: price
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
 
-export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, getRestaurantArticles, getMenuDetails, deleteMenu };
+// Modifier un menu
+async function updateMenu(menuId, name, price) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('MenuId:', menuId)
+        const response = await axios.put("http://" + IP + ":3000/api/menus/" + menuId,
+            {
+                name: name,
+                price: price
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
+
+// Créer un article
+async function createArticle(restaurantId, name, ingredients, price) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('RestaurantID:', restaurantId)
+        const response = await axios.post("http://" + IP + ":3000/api/articles",
+            {
+                RestaurantID: restaurantId,
+                Name: name,
+                Ingredients: ingredients,
+                Price: price
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
+
+// Modifier un article
+async function updateArticle(articleId, name, description, price) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('ArticleId:', articleId)
+        const response = await axios.put("http://" + IP + ":3000/api/articles/" + articleId,
+            {
+                name: name,
+                description: description,
+                price: price
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
+
+// Supprimer un article
+
+async function deleteArticle(articleId) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('ArticleId:', articleId)
+        const response = await axios.delete("http://" + IP + ":3000/api/articles/" + articleId,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
+// Add article to menu
+async function addArticleToMenu(menuId, articleId) {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('MenuId:', menuId)
+        console.log('ArticleId:', articleId)
+        const response = await axios.post("http://" + IP + ":3000/api/articles-menus",
+            {
+                MenuID: menuId,
+                ArticleID: articleId
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log('An error occurred:', error);
+        // Gérer les erreurs
+    }
+}
+
+export { Restaurateur, getRestaurantMenu, updateRestaurantInfos, getRestaurantArticles, getMenuDetails, deleteMenu, createMenu, updateMenu, createArticle, updateArticle, deleteArticle, addArticleToMenu };

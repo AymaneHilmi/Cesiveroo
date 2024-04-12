@@ -101,6 +101,9 @@ exports.deleteArticle = async (req, res) => {
     // Delete the article
     const deleteQuery = `DELETE FROM Articles WHERE ArticleID = ${req.params.id}`;
     await executeQuery(deleteQuery);
+    // Supprimer également dans ArticlesMenus
+    const deleteQuery2 = `DELETE FROM ArticlesMenus WHERE ArticleID = ${req.params.id}`;
+    await executeQuery(deleteQuery2);
     res.status(200).json({ message: 'Article deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });

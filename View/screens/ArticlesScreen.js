@@ -13,17 +13,16 @@ export default function ArticlesScreen() {
     const restaurantInfos = route.params.restaurantInfos;
     const restaurantId = restaurantInfos.restaurantId;
     const [articles, setArticles] = useState([]);
-
+    const fetchArticles = async () => {
+        try {
+            const response = await getRestaurantArticles(restaurantId);
+            console.log('Articles:', response);
+            setArticles(response);
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+    };
     useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const response = await getRestaurantArticles(restaurantId);
-                console.log('Articles:', response);
-                setArticles(response);
-            } catch (error) {
-                console.error('Error fetching articles:', error);
-            }
-        };
         fetchArticles();
     }, []);
 
@@ -48,7 +47,7 @@ export default function ArticlesScreen() {
                 {articles.map((article, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => navigation.navigate('ArticleDetails', { article })}
+                        onPress={() => navigation.navigate('ArticlesDetails', { article, restaurantInfos })}
                         style={{ paddingHorizontal: 10, marginTop: 10, marginHorizontal: 10, backgroundColor: 'white', borderRadius: 10, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ marginLeft: 10 }}>
@@ -60,6 +59,15 @@ export default function ArticlesScreen() {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 20 }}>
+                <TouchableOpacity onPress={() => navigation.navigate('ArticlesAdd', { restaurantInfos })}
+                    style={{
+                        backgroundColor: 'red', padding: 15, width: '40%', borderRadius: 10,
+                        alignSelf: 'center', alignItems: 'center',
+                    }} >
+                    <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>Creer un article </Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }

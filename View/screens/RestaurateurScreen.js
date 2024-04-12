@@ -15,18 +15,19 @@ export default function RestaurateurScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const [name, setName] = useState('');
-    const [restaurantId, setRestaurantId] = useState('');
     const [restaurantInfos, setRestaurantInfos] = useState({});
     // Récuperer le nombre d'articles
     const [articles, setArticles] = useState([]);
+    const [articlesNumber, setArticlesNumber] = useState(0);
     // Récuperer le nombre de commandes
     const [orders, setOrders] = useState([]);
-    const handleArticlesNumber = async () => {
+    const handleArticlesNumber = async (restaurantId) => {
         try {
-            console.log('RestaurantId:', restaurantInfos.restaurantId)
-            const response = await getRestaurantArticles(restaurantInfos.restaurantId);
+            console.log('RestaurantId:', restaurantId);
+            const response = await getRestaurantArticles(restaurantId);
             console.log('Articles:', response);
-            setArticles(response);
+            console.log('Articles Number:', response.length);
+            setArticlesNumber(response.length);
         } catch (error) {
             console.error('Error getting articles:', error);
         }
@@ -37,7 +38,7 @@ export default function RestaurateurScreen() {
             setName(response.name);
             // Récuperer le nombre d'articles
             setRestaurantInfos(response);
-            handleArticlesNumber();
+            handleArticlesNumber(response.restaurantId);
         }
         );
     }
@@ -93,7 +94,7 @@ export default function RestaurateurScreen() {
                         <View style={{ justifyContent: 'space-between', backgroundColor: '#FFDAB9', width: '46%', height: 150, borderRadius: 20, marginTop: 10, marginLeft: 10, marginRight: 10 }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Articles</Text>
                             <View style={{ flexDirection: 'row' }} >
-                                <Text style={{ fontSize: 70, fontWeight: 'bold', marginLeft: 20, marginBottom: 10 }}>12</Text>
+                                <Text style={{ fontSize: 70, fontWeight: 'bold', marginLeft: 20, marginBottom: 10 }}>{articlesNumber}</Text>
                                 <Image source={require('../assets/images/couvert.png')} style={{ width: 50, height: 50 }} className="mt-5 ml-4" />
                             </View>
                         </View>
