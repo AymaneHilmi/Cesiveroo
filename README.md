@@ -1,23 +1,72 @@
-# Cesiveroo une application qui va révolutionner la livraison de nourriture
+ # Cesiveroo: Revolutionizing Food Delivery  
+ **Cesiveroo** is a modern food delivery application designed to connect customers, restaurants, delivery personnel, and service teams seamlessly.  
 
-## Notre Backend : SQL Server et MongoDB
-Démarer le Backend: `docker compose up`
+ ## Features  
+ - Multi-role support: Customers, restaurants, and delivery personnel.  
+ - Scalable and secure architecture.  
+ - Built with **React Native**, **Express.js**, **SQL Server**, **MongoDB**, and **Docker**.  
 
-### MongoDB
-**Se connecter à notre base en terminal**
-<br>
-`docker exec -it mongodb mongosh --port 27017`
+ ---  
 
-### SQL Server
-**Se connecter à notre base en terminal**
-<br>
-`docker exec -it sqlserver /bin/bash`
-<br>
-`/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Mdpsecurise12."`
+ ## Getting Started  
 
-**Récupérer les noms de base de données**
-Remarque: Pour faire ça en terminal il faut avoir réalisé l'étape précédente
-<br>
-`SELECT name FROM master.sys.databases;`
-<br>
-`GO`
+ ### Prerequisites  
+ - **Docker** installed on your machine.  
+ - **Node.js** (if you plan to test the frontend).  
+
+ ### Starting the Backend  
+ To launch the backend, simply run:  
+ ```bash
+ docker compose up
+ ```  
+
+ ---  
+
+ ## Backend Details  
+
+ ### MongoDB  
+ MongoDB is used to store dynamic data for real-time application needs.  
+
+ #### Connect to MongoDB via terminal:  
+ ```bash
+ docker exec -it mongodb mongosh --port 27017
+ ```  
+
+ ### SQL Server  
+ SQL Server is used for structured data storage.  
+
+ #### Connect to SQL Server via terminal:  
+ ```bash
+ docker exec -it sqlserver /bin/bash
+ /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Mdpsecurise12."
+ ```  
+
+ #### Retrieve database names:  
+ Once connected to the SQL Server terminal, run the following commands to list the available databases:  
+ ```sql
+ SELECT name FROM master.sys.databases;
+ GO
+ ```  
+
+ ---  
+
+ ## Project Architecture  
+
+ - **Frontend:** React Native for a seamless user experience across platforms.  
+ - **Backend:** Express.js API for handling requests and business logic.  
+ - **Databases:** SQL Server for structured data, MongoDB for flexible, NoSQL storage.  
+ - **Containerization:** Docker ensures a consistent and portable development environment.  
+
+ ---  
+
+ ## Future Improvements  
+ - Adding unit tests for critical components.  
+ - Implementing CI/CD pipelines.  
+ - Enhancing real-time communication using WebSocket.  
+
+ ---  
+
+ ## Authors  
+ Developed by a team of 3 engineering students as part of an academic project.  
+
+ Feel free to contribute or ask questions by opening an issue or submitting a pull request!  
